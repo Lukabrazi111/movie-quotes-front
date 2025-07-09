@@ -1,1 +1,17 @@
 @import "tailwindcss";
+
+button {
+    cursor: pointer;
+}
+
+@theme {
+    /* Red colors */
+    --color-primary: #E31221;
+    --color-primary-hover: #CC0E10;
+    --color-disabled: #EC4C57;
+    /* Dark colors */
+    --color-dark: #181623;
+
+    /* Light colors */
+    --color-cream: #DDCCAA;
+}
