@@ -48,6 +48,12 @@ button {
 
 @font-face {
     font-family: "Helvetica Neue";
+    src: url("@/assets/fonts/helvetica-neue-5/HelveticaNeueMedium.otf") format("opentype");
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: "Helvetica Neue";
     src: url("@/assets/fonts/helvetica-neue-5/HelveticaNeueLight.otf") format("opentype");
     font-weight: 300;
 }

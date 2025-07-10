@@ -3,14 +3,18 @@
         <BaseContainer>
             <div class="flex items-center justify-between px-4 py-8">
                 <div>
-                    <h1 class="text-cream uppercase text-md font-helvetica">Movie quotes</h1>
+                    <h1 class="text-cream uppercase text-md font-helvetica font-normal">
+                        Movie quotes
+                    </h1>
                 </div>
 
                 <div class="flex items-center space-x-6 text-white">
                     <!-- Add dropdown menu -->
 
                     <BaseButton>Sign up</BaseButton>
-                    <button class="border px-5 py-1.5 rounded font-light font-helvetica">Log in</button>
+                    <button class="border px-5 py-1.5 rounded font-normal font-helvetica">
+                        Log in
+                    </button>
                 </div>
             </div>
 
