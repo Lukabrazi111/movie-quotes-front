@@ -10,6 +10,26 @@
 
                 <div class="flex items-center space-x-6 text-white">
                     <!-- Add dropdown menu -->
+                    <div class="relative">
+                        <div
+                            @click="open = !open"
+                            class="hover:bg-gray-700 transition-colors flex items-center space-x-5 px-4 py-1.5 cursor-pointer"
+                            :class="{
+                                'rounded-t': open,
+                                rounded: !open,
+                            }"
+                        >
+                            <span>{{ selectedLanguage }}</span>
+                            <ArrowIcon :open="open" />
+                        </div>
+                        <div
+                            v-show="open"
+                            @click="toggleLanguage"
+                            class="absolute right-0 hover:bg-gray-700 rounded-b text-white w-full text-center py-1.5 cursor-pointer transition-colors"
+                        >
+                            {{ nextLanguage }}
+                        </div>
+                    </div>
 
                     <BaseButton>Sign up</BaseButton>
                     <button class="border px-5 py-1.5 rounded font-normal font-helvetica">
@@ -33,9 +53,33 @@
 <script>
 import BaseButton from '@/components/ui/BaseButton.vue';
 import BaseContainer from '@/components/BaseContainer.vue';
+import ArrowIcon from '@/components/icons/ArrowIcon.vue';
 
 export default {
     name: 'HeaderGuest',
-    components: { BaseContainer, BaseButton },
+    components: { ArrowIcon, BaseContainer, BaseButton },
+
+    data() {
+        return {
+            selectedLanguage: 'Eng',
+            open: false,
+        };
+    },
+
+    methods: {
+        toggleLanguage() {
+            const language = this.selectedLanguage;
+            this.selectedLanguage = language === 'Eng' ? 'Geo' : 'Eng';
+            this.open = false;
+        },
+    },
+
+    computed: {
+        nextLanguage() {
+            return this.selectedLanguage === 'Eng' ? 'Geo' : 'Eng';
+        },
+    },
 };
 </script>
+
+<style></style>
