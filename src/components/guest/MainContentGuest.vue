@@ -16,10 +16,16 @@
                     'pt-135': index === 2,
                 }"
             >
-                <h1 class="font-bold text-4xl w-full max-w-2xl leading-16">“{{ data.quote }}”</h1>
-                <p class="text-gray-200 text-xl mt-4 font-bold font-helvetica">
-                    {{ data.movie }}, <span>{{ data.year }}</span>
-                </p>
+                <div id="h1-quote" class="ml-10 relative flex items-start">
+                    <div>
+                        <h1 class="font-bold text-4xl w-full max-w-2xl leading-16">
+                            “{{ data.quote }}”
+                        </h1>
+                        <p class="text-gray-200 text-xl mt-4 font-bold font-helvetica">
+                            {{ data.movie }}, <span>{{ data.year }}</span>
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -37,3 +43,15 @@ export default {
     },
 };
 </script>
+
+<style>
+#h1-quote::before {
+    display: inline-block;
+    content: '';
+    border-top: 0.15rem solid white;
+    border-radius: 5px;
+    width: 3rem;
+    margin: 0 1rem;
+    transform: translateY(1.8rem);
+}
+</style>
