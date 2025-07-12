@@ -1,5 +1,5 @@
 <template>
-    <header class="bg-dark h-[80vh]">
+    <header class="bg-dark h-[80vh]" ref="headerRef">
         <BaseContainer>
             <div class="flex items-center justify-between px-4 py-8">
                 <div>
@@ -71,6 +71,10 @@ export default {
         this.useScrollToSection = useScrollToSectionStore();
     },
 
+    mounted() {
+        this.useScrollToSection.scrollTo(this.$refs.headerRef);
+    },
+
     methods: {
         toggleLanguage() {
             const language = this.selectedLanguage;
@@ -80,7 +84,7 @@ export default {
 
         scrollToSection() {
             const sectionRef = this.useScrollToSection.specificRef;
-            return this.useScrollToSection.scrollToSection(sectionRef);
+            return this.useScrollToSection.scrollTo(sectionRef);
         },
     },
 

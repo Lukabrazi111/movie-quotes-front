@@ -6,7 +6,7 @@ export const useScrollToSectionStore = defineStore('scrollToSection', {
     }),
 
     actions: {
-        scrollToSection(view) {
+        scrollTo(view) {
             view.scrollIntoView({ behavior: 'smooth' });
         },
     },
