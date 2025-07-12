@@ -9,6 +9,7 @@
             <div id="backgroundColor" class="absolute inset-0 z-0"></div>
 
             <div
+                ref="mainContentRef"
                 class="relative z-10 flex flex-col items-start justify-center text-white w-full max-w-5/6 mx-auto font-montserrat"
                 :class="{
                     'pt-80': index === 0,
@@ -32,14 +33,30 @@
 </template>
 
 <script>
+import { useScrollToSectionStore } from '@/stores/scroll-to-section.js';
+
 export default {
     name: 'MainContentGuest',
+
+    data() {
+        return {
+            useScrollToSection: null,
+        };
+    },
 
     props: {
         movieQuotes: {
             type: Array,
             required: true,
         },
+    },
+
+    created() {
+        this.useScrollToSection = useScrollToSectionStore();
+    },
+
+    mounted() {
+        this.useScrollToSection.specificRef = this.$refs.mainContentRef[0];
     },
 };
 </script>

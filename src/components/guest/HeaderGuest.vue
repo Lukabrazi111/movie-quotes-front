@@ -9,7 +9,6 @@
                 </div>
 
                 <div class="flex items-center space-x-6 text-white">
-                    <!-- Add dropdown menu -->
                     <div class="relative">
                         <div
                             @click="open = !open"
@@ -44,7 +43,7 @@
                 >
                     Find any quote in millions of movie lines
                 </h1>
-                <BaseButton>Get started</BaseButton>
+                <BaseButton @scrollToContent="scrollToSection">Get started</BaseButton>
             </div>
         </BaseContainer>
     </header>
@@ -54,6 +53,7 @@
 import BaseButton from '@/components/ui/BaseButton.vue';
 import BaseContainer from '@/components/BaseContainer.vue';
 import ArrowIcon from '@/components/icons/ArrowIcon.vue';
+import { useScrollToSectionStore } from '@/stores/scroll-to-section.js';
 
 export default {
     name: 'HeaderGuest',
@@ -63,7 +63,12 @@ export default {
         return {
             selectedLanguage: 'Eng',
             open: false,
+            useScrollToSection: null,
         };
+    },
+
+    created() {
+        this.useScrollToSection = useScrollToSectionStore();
     },
 
     methods: {
@@ -71,6 +76,11 @@ export default {
             const language = this.selectedLanguage;
             this.selectedLanguage = language === 'Eng' ? 'Geo' : 'Eng';
             this.open = false;
+        },
+
+        scrollToSection() {
+            const sectionRef = this.useScrollToSection.specificRef;
+            return this.useScrollToSection.scrollToSection(sectionRef);
         },
     },
 
