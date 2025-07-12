@@ -9,8 +9,15 @@ button {
     --color-primary: #E31221;
     --color-primary-hover: #CC0E10;
     --color-disabled: #EC4C57;
-    /* Dark colors */
+
+    /*
+        Dark colors
+        TODO: maybe need to change variables
+    */
     --color-dark: #181623;
+
+    /*Form background color */
+    --color-form-dark: #222030;
 
     /* Light colors */
     --color-cream: #DDCCAA;

@@ -2,7 +2,7 @@
     <svg
         class="transition-transform"
         :class="{
-            'rotate-180': open,
+            'rotate-180': isOpenLanguageDropdown,
         }"
         width="12"
         height="8"
@@ -22,7 +22,7 @@ export default {
     name: 'ArrowIcon',
 
     props: {
-        open: {
+        isOpenLanguageDropdown: {
             type: Boolean,
             required: true,
         },

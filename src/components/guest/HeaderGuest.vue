@@ -11,29 +11,27 @@
                 <div class="flex items-center space-x-6 text-white">
                     <div class="relative">
                         <div
-                            @click="open = !open"
-                            class="hover:bg-gray-700 transition-colors flex items-center space-x-5 px-4 py-1.5 cursor-pointer"
+                            @click="isOpenLanguageDropdown = !isOpenLanguageDropdown"
+                            class="hover:bg-gray-700 transition-colors flex items-center space-x-5 px-4 py-1.5 cursor-pointer font-light"
                             :class="{
-                                'rounded-t': open,
-                                rounded: !open,
+                                'rounded-t': isOpenLanguageDropdown,
+                                rounded: !isOpenLanguageDropdown,
                             }"
                         >
                             <span>{{ selectedLanguage }}</span>
-                            <ArrowIcon :open="open" />
+                            <ArrowIcon :isOpenLanguageDropdown="isOpenLanguageDropdown" />
                         </div>
                         <div
-                            v-show="open"
+                            v-show="isOpenLanguageDropdown"
                             @click="toggleLanguage"
-                            class="absolute right-0 hover:bg-gray-700 rounded-b text-white w-full text-center py-1.5 cursor-pointer transition-colors"
+                            class="absolute right-0 hover:bg-gray-700 rounded-b text-white w-full text-center py-1.5 cursor-pointer transition-colors font-light"
                         >
                             {{ nextLanguage }}
                         </div>
                     </div>
 
-                    <BaseButton>Sign up</BaseButton>
-                    <button class="border px-5 py-1.5 rounded font-normal font-helvetica">
-                        Log in
-                    </button>
+                    <BaseButton @click="toggleSignUpModal">Sign up</BaseButton>
+                    <SecondaryButton>Log in</SecondaryButton>
                 </div>
             </div>
 
@@ -43,27 +41,32 @@
                 >
                     Find any quote in millions of movie lines
                 </h1>
-                <BaseButton @scrollToContent="scrollToSection">Get started</BaseButton>
+                <BaseButton @click="scrollToSection">Get started</BaseButton>
             </div>
         </BaseContainer>
     </header>
+
+    <SignUpModal v-show="visibleSignUpModal" v-model="visibleSignUpModal" />
 </template>
 
 <script>
 import BaseButton from '@/components/ui/BaseButton.vue';
 import BaseContainer from '@/components/BaseContainer.vue';
 import ArrowIcon from '@/components/icons/ArrowIcon.vue';
+import SignUpModal from '@/components/modals/SignUpModal.vue';
 import { useScrollToSectionStore } from '@/stores/scroll-to-section.js';
+import SecondaryButton from '@/components/ui/SecondaryButton.vue';
 
 export default {
     name: 'HeaderGuest',
-    components: { ArrowIcon, BaseContainer, BaseButton },
+    components: { SecondaryButton, ArrowIcon, BaseContainer, BaseButton, SignUpModal },
 
     data() {
         return {
             selectedLanguage: 'Eng',
-            open: false,
+            isOpenLanguageDropdown: false,
             useScrollToSection: null,
+            visibleSignUpModal: false,
         };
     },
 
@@ -79,7 +82,11 @@ export default {
         toggleLanguage() {
             const language = this.selectedLanguage;
             this.selectedLanguage = language === 'Eng' ? 'Geo' : 'Eng';
-            this.open = false;
+            this.isOpenLanguageDropdown = false;
+        },
+
+        toggleSignUpModal() {
+            this.visibleSignUpModal = !this.visibleSignUpModal;
         },
 
         scrollToSection() {
