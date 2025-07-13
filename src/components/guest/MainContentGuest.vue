@@ -19,11 +19,11 @@
             >
                 <div id="h1-quote" class="ml-10 relative flex items-start">
                     <div>
-                        <h1 class="font-bold text-4xl w-full max-w-2xl leading-16">
+                        <h1 class="font-bold! font-montserrat! text-4xl w-full max-w-2xl leading-16">
                             “{{ data.quote }}”
                         </h1>
-                        <p class="text-gray-200 text-xl mt-4 font-bold font-helvetica">
-                            {{ data.movie }}, <span>{{ data.year }}</span>
+                        <p class="text-gray-200 text-xl mt-4 font-bold! font-helvetica">
+                            {{ data.movie }}, <span class="font-bold!">{{ data.year }}</span>
                         </p>
                     </div>
                 </div>

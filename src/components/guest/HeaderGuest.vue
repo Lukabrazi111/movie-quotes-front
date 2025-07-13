@@ -31,13 +31,13 @@
                     </div>
 
                     <BaseButton @click="toggleSignUpModal">Sign up</BaseButton>
-                    <SecondaryButton>Log in</SecondaryButton>
+                    <SecondaryButton @click="toggleSignInModal">Log in</SecondaryButton>
                 </div>
             </div>
 
             <div class="flex flex-col items-center justify-center space-y-5 text-center h-[50vh]">
                 <h1
-                    class="text-5xl w-full max-w-xl text-cream leading-18 font-montserrat font-bold"
+                    class="text-5xl w-full max-w-xl text-cream leading-18 font-montserrat! font-bold!"
                 >
                     Find any quote in millions of movie lines
                 </h1>
@@ -47,6 +47,7 @@
     </header>
 
     <SignUpModal v-show="visibleSignUpModal" v-model="visibleSignUpModal" />
+    <LoginModal v-show="visibleLoginModal" v-model="visibleLoginModal" />
 </template>
 
 <script>
@@ -56,10 +57,11 @@ import ArrowIcon from '@/components/icons/ArrowIcon.vue';
 import SignUpModal from '@/components/modals/SignUpModal.vue';
 import { useScrollToSectionStore } from '@/stores/scroll-to-section.js';
 import SecondaryButton from '@/components/ui/SecondaryButton.vue';
+import LoginModal from '@/components/modals/LoginModal.vue';
 
 export default {
     name: 'HeaderGuest',
-    components: { SecondaryButton, ArrowIcon, BaseContainer, BaseButton, SignUpModal },
+    components: { LoginModal, SecondaryButton, ArrowIcon, BaseContainer, BaseButton, SignUpModal },
 
     data() {
         return {
@@ -67,6 +69,7 @@ export default {
             isOpenLanguageDropdown: false,
             useScrollToSection: null,
             visibleSignUpModal: false,
+            visibleLoginModal: false,
         };
     },
 
@@ -87,6 +90,10 @@ export default {
 
         toggleSignUpModal() {
             this.visibleSignUpModal = !this.visibleSignUpModal;
+        },
+
+        toggleSignInModal() {
+            this.visibleLoginModal = !this.visibleLoginModal;
         },
 
         scrollToSection() {
