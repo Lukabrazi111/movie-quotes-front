@@ -101,23 +101,23 @@ export default {
             const sectionRef = this.useScrollToSection.specificRef;
             return this.useScrollToSection.scrollTo(sectionRef);
         },
-    },
 
-    watch: {
-        visibleSignUpModal(value) {
+        setOverflowHidden(value) {
             if (value) {
                 document.body.classList.add('overflow-hidden');
             } else {
                 document.body.classList.remove('overflow-hidden');
             }
         },
+    },
+
+    watch: {
+        visibleSignUpModal(value) {
+            return this.setOverflowHidden(value);
+        },
 
         visibleLoginModal(value) {
-            if (value) {
-                document.body.classList.add('overflow-hidden');
-            } else {
-                document.body.classList.remove('overflow-hidden');
-            }
+            return this.setOverflowHidden(value);
         },
     },
 
