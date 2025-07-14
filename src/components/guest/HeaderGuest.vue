@@ -46,6 +46,7 @@
         </BaseContainer>
     </header>
 
+    <!-- Modals -->
     <SignUpModal v-show="visibleSignUpModal" v-model="visibleSignUpModal" />
     <LoginModal v-show="visibleLoginModal" v-model="visibleLoginModal" />
 </template>
@@ -102,6 +103,24 @@ export default {
         },
     },
 
+    watch: {
+        visibleSignUpModal(value) {
+            if (value) {
+                document.body.classList.add('overflow-hidden');
+            } else {
+                document.body.classList.remove('overflow-hidden');
+            }
+        },
+
+        visibleLoginModal(value) {
+            if (value) {
+                document.body.classList.add('overflow-hidden');
+            } else {
+                document.body.classList.remove('overflow-hidden');
+            }
+        },
+    },
+
     computed: {
         nextLanguage() {
             return this.selectedLanguage === 'Eng' ? 'Geo' : 'Eng';
@@ -109,5 +128,3 @@ export default {
     },
 };
 </script>
-
-<style></style>
