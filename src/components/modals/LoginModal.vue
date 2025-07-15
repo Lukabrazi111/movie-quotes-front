@@ -14,7 +14,7 @@
                 placeholder="Enter your email"
             />
 
-            <CustomInput
+            <PasswordInput
                 :required="false"
                 name="login_password"
                 labelName="password"
@@ -25,7 +25,7 @@
 
         <div class="mt-3 flex items-center justify-between">
             <div class="flex items-center space-x-3 text-white">
-                <input type="checkbox" name="remember_me" id="remember_me"/>
+                <input type="checkbox" name="remember_me" id="remember_me" />
                 <label for="remember_me">Remember me</label>
             </div>
 
@@ -57,10 +57,12 @@ import BaseButton from '@/components/ui/BaseButton.vue';
 import CustomInput from '@/components/ui/form/CustomInput.vue';
 import SecondaryButton from '@/components/ui/SecondaryButton.vue';
 import FormFooterModal from '@/components/ui/form/FormFooterModal.vue';
+import PasswordInput from '@/components/ui/form/PasswordInput.vue';
 
 export default {
     name: 'LoginModal',
     components: {
+        PasswordInput,
         FormFooterModal,
         SecondaryButton,
         CustomInput,
