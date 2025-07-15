@@ -52,7 +52,7 @@
 <script>
 import ModalFormLayout from '@/components/layouts/ModalFormLayout.vue';
 import FormTitleModal from '@/components/ui/form/FormTitleModal.vue';
-import GoogleIcon from '@/components/icons/GoogleIcon.vue';
+import GoogleIcon from '@/components/icons/modalForms/GoogleIcon.vue';
 import BaseButton from '@/components/ui/BaseButton.vue';
 import CustomInput from '@/components/ui/form/CustomInput.vue';
 import SecondaryButton from '@/components/ui/SecondaryButton.vue';

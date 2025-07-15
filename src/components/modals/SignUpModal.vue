@@ -17,14 +17,14 @@
                 placeholder="Enter your email"
             />
 
-            <CustomInput
+            <PasswordInput
                 name="signup_password"
                 labelName="password"
                 type="password"
                 placeholder="At least 8 & max.15 lower case characters"
             />
 
-            <CustomInput
+            <PasswordInput
                 name="password_confirmation"
                 labelName="confirm password"
                 type="password"
@@ -52,15 +52,17 @@
 <script>
 import BaseButton from '@/components/ui/BaseButton.vue';
 import SecondaryButton from '@/components/ui/SecondaryButton.vue';
-import GoogleIcon from '@/components/icons/GoogleIcon.vue';
+import GoogleIcon from '@/components/icons/modalForms/GoogleIcon.vue';
 import CustomInput from '@/components/ui/form/CustomInput.vue';
 import FormTitleModal from '@/components/ui/form/FormTitleModal.vue';
 import ModalFormLayout from '@/components/layouts/ModalFormLayout.vue';
 import FormFooterModal from '@/components/ui/form/FormFooterModal.vue';
+import PasswordInput from '@/components/ui/form/PasswordInput.vue';
 
 export default {
     name: 'SignUpModal',
     components: {
+        PasswordInput,
         FormFooterModal,
         ModalFormLayout,
         FormTitleModal,
