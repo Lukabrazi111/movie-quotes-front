@@ -78,10 +78,6 @@ export default {
 
     methods: {
         toggleModal() {
-            if (this.modelValue) {
-                this.$router.push({ name: 'register' });
-            }
-
             return this.$emit('update:modelValue', !this.modelValue);
         },
     },
