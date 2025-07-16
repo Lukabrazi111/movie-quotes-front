@@ -1,7 +1,7 @@
 <template>
     <header class="bg-dark h-[80vh]" ref="headerRef">
         <BaseContainer>
-            <div class="flex items-center justify-between px-4 py-8">
+            <nav class="flex items-center justify-between px-4 py-8">
                 <div>
                     <h1 class="text-cream uppercase text-md font-helvetica font-normal">
                         Movie quotes
@@ -30,10 +30,22 @@
                         </div>
                     </div>
 
-                    <BaseButton @click="toggleSignUpModal">Sign up</BaseButton>
-                    <SecondaryButton @click="toggleSignInModal">Log in</SecondaryButton>
+                    <router-link
+                        class="bg-primary hover:bg-primary-hover px-5 py-1.5 rounded transition-colors text-white font-light font-helvetica"
+                        :to="{ name: 'register' }"
+                        @click="toggleSignUpModal"
+                    >
+                        Sign up
+                    </router-link>
+                    <router-link
+                        class="border px-5 py-1.5 rounded font-light font-helvetica"
+                        :to="{ name: 'login' }"
+                        @click="toggleSignInModal"
+                    >
+                        Log in
+                    </router-link>
                 </div>
-            </div>
+            </nav>
 
             <div class="flex flex-col items-center justify-center space-y-5 text-center h-[50vh]">
                 <h1
@@ -57,12 +69,11 @@ import BaseContainer from '@/components/BaseContainer.vue';
 import ArrowIcon from '@/components/icons/ArrowIcon.vue';
 import SignUpModal from '@/components/modals/SignUpModal.vue';
 import { useScrollToSectionStore } from '@/stores/scroll-to-section.js';
-import SecondaryButton from '@/components/ui/SecondaryButton.vue';
 import LoginModal from '@/components/modals/LoginModal.vue';
 
 export default {
     name: 'HeaderGuest',
-    components: { LoginModal, SecondaryButton, ArrowIcon, BaseContainer, BaseButton, SignUpModal },
+    components: { LoginModal, ArrowIcon, BaseContainer, BaseButton, SignUpModal },
 
     data() {
         return {
@@ -106,6 +117,7 @@ export default {
             if (value) {
                 document.body.classList.add('overflow-hidden');
             } else {
+                this.$router.push({ name: 'landing' });
                 document.body.classList.remove('overflow-hidden');
             }
         },
@@ -113,11 +125,11 @@ export default {
 
     watch: {
         visibleSignUpModal(value) {
-            return this.setOverflowHidden(value);
+            this.setOverflowHidden(value);
         },
 
         visibleLoginModal(value) {
-            return this.setOverflowHidden(value);
+            this.setOverflowHidden(value);
         },
     },
 

@@ -45,7 +45,7 @@
         </div>
 
         <!-- Need to change link -->
-        <FormFooterModal linkText="Login" link="/" text="Already have an account?" />
+        <FormFooterModal linkText="Login" link="/login" text="Already have an account?" />
     </ModalFormLayout>
 </template>
 

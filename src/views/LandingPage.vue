@@ -16,7 +16,7 @@ import MainContentGuest from '@/components/guest/MainContentGuest.vue';
 import FooterGuest from '@/components/guest/FooterGuest.vue';
 
 export default {
-    name: 'HomeView',
+    name: 'LandingPage',
     components: { FooterGuest, HeaderGuest, MainContentGuest },
 
     data() {

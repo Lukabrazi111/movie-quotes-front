@@ -45,7 +45,7 @@
         </div>
 
         <!--  Need to change link -->
-        <FormFooterModal linkText="Sign up" link="/" text="You don't have an account?" />
+        <FormFooterModal linkText="Sign up" link="/register" text="You don't have an account?" />
     </ModalFormLayout>
 </template>
 
@@ -78,6 +78,10 @@ export default {
 
     methods: {
         toggleModal() {
+            if (this.modelValue) {
+                this.$router.push({ name: 'register' });
+            }
+
             return this.$emit('update:modelValue', !this.modelValue);
         },
     },
