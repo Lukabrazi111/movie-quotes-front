@@ -29,7 +29,12 @@
                 <label for="remember_me">Remember me</label>
             </div>
 
-            <router-link to="/" class="text-blue-500 underline">Forgot password</router-link>
+            <button
+                @click.prevent="$emit('switch-reset-password-modal')"
+                class="text-blue-500 underline"
+            >
+                Forgot password
+            </button>
         </div>
 
         <div class="space-y-4 mt-3">
@@ -79,11 +84,12 @@ export default {
 
     props: {
         modelValue: Boolean,
+        visibleResetPasswordModal: Boolean,
     },
 
     methods: {
         toggleModal() {
-            return this.$emit('update:modelValue', !this.modelValue);
+            this.$emit('update:modelValue', !this.modelValue);
         },
         switchModal(route) {
             this.$emit('switch-modal', route.name);

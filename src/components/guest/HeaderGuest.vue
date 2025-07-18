@@ -30,8 +30,8 @@
                         </div>
                     </div>
 
-                    <BaseButton @click="toggleSignUpModal"> Sign up</BaseButton>
-                    <SecondaryButton @click="toggleSignInModal"> Log in</SecondaryButton>
+                    <BaseButton @click="toggleSignUpModal">Sign up</BaseButton>
+                    <SecondaryButton @click="toggleSignInModal">Log in</SecondaryButton>
                 </div>
             </nav>
 
@@ -54,8 +54,14 @@
     />
     <LoginModal
         @switch-modal="handleModalSwitch"
+        @switch-reset-password-modal="toggleResetPasswordModal"
         v-show="visibleLoginModal"
         v-model="visibleLoginModal"
+    />
+    <ResetPasswordModal
+        @switch-to-login-modal="toggleSignInModal"
+        v-show="visibleResetPasswordModal"
+        v-model="visibleResetPasswordModal"
     />
 </template>
 
@@ -67,10 +73,19 @@ import SignUpModal from '@/components/modals/SignUpModal.vue';
 import { useScrollToSectionStore } from '@/stores/scroll-to-section.js';
 import LoginModal from '@/components/modals/LoginModal.vue';
 import SecondaryButton from '@/components/ui/SecondaryButton.vue';
+import ResetPasswordModal from '@/components/modals/ResetPasswordModal.vue';
 
 export default {
     name: 'HeaderGuest',
-    components: { SecondaryButton, LoginModal, ArrowIcon, BaseContainer, BaseButton, SignUpModal },
+    components: {
+        ResetPasswordModal,
+        SecondaryButton,
+        LoginModal,
+        ArrowIcon,
+        BaseContainer,
+        BaseButton,
+        SignUpModal,
+    },
 
     data() {
         return {
@@ -79,6 +94,7 @@ export default {
             useScrollToSection: null,
             visibleSignUpModal: false,
             visibleLoginModal: false,
+            visibleResetPasswordModal: false,
         };
     },
 
@@ -91,6 +107,7 @@ export default {
 
         if (routeName === 'login') this.visibleLoginModal = true;
         if (routeName === 'register') this.visibleSignUpModal = true;
+        if (routeName === 'reset-password') this.visibleResetPasswordModal = true;
 
         this.useScrollToSection.scrollTo(this.$refs.headerRef);
     },
@@ -107,7 +124,13 @@ export default {
         },
 
         toggleSignInModal() {
+            this.visibleResetPasswordModal = false;
             this.visibleLoginModal = !this.visibleLoginModal;
+        },
+
+        toggleResetPasswordModal() {
+            this.visibleLoginModal = false;
+            this.visibleResetPasswordModal = !this.visibleResetPasswordModal;
         },
 
         scrollToSection() {
@@ -131,6 +154,10 @@ export default {
             } else if (targetModal === 'register') {
                 this.visibleLoginModal = false;
                 this.visibleSignUpModal = true;
+            } else if (targetModal === 'reset-password') {
+                this.visibleLoginModal = false;
+                this.visibleSignUpModal = false;
+                this.visibleResetPasswordModal = true;
             }
         },
     },
