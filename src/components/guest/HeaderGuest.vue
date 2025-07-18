@@ -30,20 +30,8 @@
                         </div>
                     </div>
 
-                    <router-link
-                        class="bg-primary hover:bg-primary-hover px-5 py-1.5 rounded transition-colors text-white font-light font-helvetica"
-                        :to="{ name: 'register' }"
-                        @click="toggleSignUpModal"
-                    >
-                        Sign up
-                    </router-link>
-                    <router-link
-                        class="border px-5 py-1.5 rounded font-light font-helvetica"
-                        :to="{ name: 'login' }"
-                        @click="toggleSignInModal"
-                    >
-                        Log in
-                    </router-link>
+                    <BaseButton @click="toggleSignUpModal"> Sign up</BaseButton>
+                    <SecondaryButton @click="toggleSignInModal"> Log in</SecondaryButton>
                 </div>
             </nav>
 
@@ -59,8 +47,16 @@
     </header>
 
     <!-- Modals -->
-    <SignUpModal v-show="visibleSignUpModal" v-model="visibleSignUpModal" />
-    <LoginModal v-show="visibleLoginModal" v-model="visibleLoginModal" />
+    <SignUpModal
+        @switch-modal="handleModalSwitch"
+        v-show="visibleSignUpModal"
+        v-model="visibleSignUpModal"
+    />
+    <LoginModal
+        @switch-modal="handleModalSwitch"
+        v-show="visibleLoginModal"
+        v-model="visibleLoginModal"
+    />
 </template>
 
 <script>
@@ -70,10 +66,11 @@ import ArrowIcon from '@/components/icons/ArrowIcon.vue';
 import SignUpModal from '@/components/modals/SignUpModal.vue';
 import { useScrollToSectionStore } from '@/stores/scroll-to-section.js';
 import LoginModal from '@/components/modals/LoginModal.vue';
+import SecondaryButton from '@/components/ui/SecondaryButton.vue';
 
 export default {
     name: 'HeaderGuest',
-    components: { LoginModal, ArrowIcon, BaseContainer, BaseButton, SignUpModal },
+    components: { SecondaryButton, LoginModal, ArrowIcon, BaseContainer, BaseButton, SignUpModal },
 
     data() {
         return {
@@ -119,6 +116,16 @@ export default {
             } else {
                 this.$router.push({ name: 'landing' });
                 document.body.classList.remove('overflow-hidden');
+            }
+        },
+
+        handleModalSwitch(targetModal) {
+            if (targetModal === 'login') {
+                this.visibleSignUpModal = false;
+                this.visibleLoginModal = true;
+            } else if (targetModal === 'register') {
+                this.visibleLoginModal = false;
+                this.visibleSignUpModal = true;
             }
         },
     },

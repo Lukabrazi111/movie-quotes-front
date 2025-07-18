@@ -44,8 +44,12 @@
             </SecondaryButton>
         </div>
 
-        <!-- Need to change link -->
-        <FormFooterModal linkText="Login" link="/login" text="Already have an account?" />
+        <FormFooterModal
+            @switch-modal="switchModal"
+            :link="{ name: 'login' }"
+            linkText="Login"
+            text="Already have an account?"
+        />
     </ModalFormLayout>
 </template>
 
@@ -79,6 +83,10 @@ export default {
     methods: {
         toggleModal() {
             return this.$emit('update:modelValue', !this.modelValue);
+        },
+
+        switchModal(route) {
+            this.$emit('switch-modal', route.name);
         },
     },
 };
