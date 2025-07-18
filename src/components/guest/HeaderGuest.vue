@@ -48,12 +48,12 @@
 
     <!-- Modals -->
     <SignUpModal
-        @switch-modal="handleModalSwitch"
+        @switch-modal="handleSwitchModal"
         v-show="visibleSignUpModal"
         v-model="visibleSignUpModal"
     />
     <LoginModal
-        @switch-modal="handleModalSwitch"
+        @switch-modal="handleSwitchModal"
         @switch-reset-password-modal="toggleResetPasswordModal"
         v-show="visibleLoginModal"
         v-model="visibleLoginModal"
@@ -147,18 +147,26 @@ export default {
             }
         },
 
-        handleModalSwitch(targetModal) {
-            if (targetModal === 'login') {
-                this.visibleSignUpModal = false;
-                this.visibleLoginModal = true;
-            } else if (targetModal === 'register') {
-                this.visibleLoginModal = false;
-                this.visibleSignUpModal = true;
-            } else if (targetModal === 'reset-password') {
-                this.visibleLoginModal = false;
-                this.visibleSignUpModal = false;
-                this.visibleResetPasswordModal = true;
+        handleSwitchModal(targetModal) {
+            this.hideAllModals();
+
+            const mapModals = {
+                login: 'visibleLoginModal',
+                register: 'visibleSignUpModal',
+                'reset-password': 'visibleResetPasswordModal',
+            };
+
+            const target = mapModals[targetModal];
+
+            if (target) {
+                this[target] = true;
             }
+        },
+
+        hideAllModals() {
+            this.visibleLoginModal = false;
+            this.visibleSignUpModal = false;
+            this.visibleResetPasswordModal = false;
         },
     },
 

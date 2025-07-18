@@ -7,6 +7,7 @@
 
         <div class="space-y-5">
             <CustomInput
+                :required="false"
                 name="reset_email"
                 labelName="email"
                 type="text"
@@ -20,9 +21,9 @@
 
         <button class="flex items-center justify-center space-x-4 mx-auto">
             <ArrowLeft />
-            <span class="text-gray-600" @click.prevent="this.$emit('switch-to-login-modal')"
-                >Back to login</span
-            >
+            <span class="text-gray-600" @click.prevent="this.$emit('switch-to-login-modal')">
+                Back to login
+            </span>
         </button>
     </ModalFormLayout>
 </template>
