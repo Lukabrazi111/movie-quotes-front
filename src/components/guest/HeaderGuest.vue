@@ -87,6 +87,11 @@ export default {
     },
 
     mounted() {
+        const routeName = this.$route.name;
+
+        if (routeName === 'login') this.visibleLoginModal = true;
+        if (routeName === 'register') this.visibleSignUpModal = true;
+
         this.useScrollToSection.scrollTo(this.$refs.headerRef);
     },
 
