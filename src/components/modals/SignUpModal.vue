@@ -1,5 +1,5 @@
 <template>
-    <ModalFormLayout @register="register" @click="toggleModal">
+    <ModalFormLayout @submit="register" @click="toggleModal">
         <FormTitleModal title="Create an account" description="Start your journey!" />
 
         <div class="space-y-5">
@@ -12,6 +12,8 @@
                     placeholder="At least 3 & max.15 lower case characters"
                 />
                 <ErrorMessage class="text-red-400" name="signup_name" />
+                <!-- Backend error -->
+                <FieldError v-if="this.errors?.signup_name" :message="this.errors?.signup_name" />
             </div>
 
             <div class="space-y-0.5">
@@ -23,6 +25,8 @@
                     placeholder="Enter your email"
                 />
                 <ErrorMessage class="text-red-400" name="signup_email" />
+                <!-- Backend error -->
+                <FieldError v-if="this.errors?.signup_name" :message="this.errors?.signup_email" />
             </div>
 
             <div class="space-y-0.5">
@@ -79,10 +83,13 @@ import ModalFormLayout from '@/components/layouts/ModalFormLayout.vue';
 import FormFooterModal from '@/components/ui/form/FormFooterModal.vue';
 import PasswordInput from '@/components/ui/form/PasswordInput.vue';
 import { ErrorMessage } from 'vee-validate';
+import { axios } from '@/configs/axios/index.js';
+import FieldError from '@/components/ui/form/FieldError.vue';
 
 export default {
     name: 'SignUpModal',
     components: {
+        FieldError,
         PasswordInput,
         FormFooterModal,
         ModalFormLayout,
@@ -94,13 +101,47 @@ export default {
         ErrorMessage,
     },
 
+    data() {
+        return {
+            errors: {},
+        };
+    },
+
     props: {
         modelValue: Boolean,
     },
 
     methods: {
-        register() {
-            console.log('register');
+        async register(data) {
+            try {
+                const response = await axios.post('/register', {
+                    name: data.signup_name,
+                    email: data.signup_email,
+                    password: data.signup_password,
+                    password_confirmation: data.password_confirmation,
+                });
+
+                console.log(response);
+            } catch (error) {
+                const response = error.response;
+
+                if (response.status === 422) {
+                    const fieldMap = {
+                        name: 'signup_name',
+                        email: 'signup_email',
+                    };
+
+                    const errors = response.data?.errors;
+
+                    for (const [backendField, messages] of Object.entries(errors || {})) {
+                        const field = fieldMap[backendField];
+
+                        if (field) {
+                            this.errors[field] = messages[0];
+                        }
+                    }
+                }
+            }
         },
 
         toggleModal() {
@@ -108,7 +149,7 @@ export default {
         },
 
         switchModal(route) {
-            this.$emit('switch-modal', route.name);
+            this.$emit('switchModal', route.name);
         },
     },
 };

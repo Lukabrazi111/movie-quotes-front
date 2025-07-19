@@ -1,26 +1,33 @@
 <template>
-    <ModalFormLayout @click="toggleModal">
+    <ModalFormLayout @submit="login" @click="toggleModal">
         <FormTitleModal
             title="Log in to your account"
             description="Welcome back! Please enter your details."
         />
 
         <div class="space-y-5">
-            <CustomInput
-                :required="false"
-                name="login_email"
-                labelName="email"
-                type="text"
-                placeholder="Enter your email"
-            />
+            <div class="space-y-0.5">
+                <CustomInput
+                    :required="false"
+                    rules="required"
+                    name="login_email"
+                    labelName="email"
+                    type="text"
+                    placeholder="Enter your email or username"
+                />
+                <ErrorMessage class="text-red-400" name="login_email" />
+            </div>
 
-            <PasswordInput
-                :required="false"
-                name="login_password"
-                labelName="password"
-                type="password"
-                placeholder="Password"
-            />
+            <div class="space-y-0.5">
+                <PasswordInput
+                    :required="false"
+                    rules="required"
+                    name="login_password"
+                    labelName="password"
+                    type="password"
+                    placeholder="Password"
+                />
+            </div>
         </div>
 
         <div class="mt-3 flex items-center justify-between">
@@ -30,7 +37,8 @@
             </div>
 
             <button
-                @click.prevent="$emit('switch-reset-password-modal')"
+                type="button"
+                @click="$emit('switchResetPasswordModal')"
                 class="text-blue-500 underline"
             >
                 Forgot password
@@ -38,7 +46,7 @@
         </div>
 
         <div class="space-y-4 mt-3">
-            <BaseButton class="w-full">Sign in</BaseButton>
+            <BaseButton type="submit" class="w-full">Sign in</BaseButton>
             <SecondaryButton
                 class="flex items-center justify-center space-x-4 mx-auto w-full text-white"
             >
@@ -49,7 +57,6 @@
             </SecondaryButton>
         </div>
 
-        <!--  Need to change link -->
         <FormFooterModal
             @switchModal="switchModal"
             linkText="Sign up"
@@ -68,9 +75,11 @@ import CustomInput from '@/components/ui/form/CustomInput.vue';
 import SecondaryButton from '@/components/ui/SecondaryButton.vue';
 import FormFooterModal from '@/components/ui/form/FormFooterModal.vue';
 import PasswordInput from '@/components/ui/form/PasswordInput.vue';
+import { ErrorMessage } from 'vee-validate';
 
 export default {
     name: 'LoginModal',
+
     components: {
         PasswordInput,
         FormFooterModal,
@@ -80,6 +89,7 @@ export default {
         GoogleIcon,
         ModalFormLayout,
         FormTitleModal,
+        ErrorMessage,
     },
 
     props: {
@@ -88,11 +98,15 @@ export default {
     },
 
     methods: {
+        login() {
+            console.log('login');
+        },
+
         toggleModal() {
             this.$emit('update:modelValue', !this.modelValue);
         },
         switchModal(route) {
-            this.$emit('switch-modal', route.name);
+            this.$emit('switchModal', route.name);
         },
     },
 };
