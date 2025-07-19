@@ -9,10 +9,7 @@ export default {
     name: 'FieldError',
 
     props: {
-        message: {
-            type: String,
-            required: true,
-        },
+        message: String,
     },
 };
 </script>
