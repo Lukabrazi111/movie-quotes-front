@@ -5,7 +5,9 @@
             <span v-show="required" class="text-red-400">*</span>
         </label>
         <div class="relative w-full">
-            <input
+            <Field
+                :label="labelName"
+                :rules="rules"
                 :placeholder="placeholder"
                 :type="showPassword ? 'text' : 'password'"
                 :id="name"
@@ -30,10 +32,11 @@
 <script>
 import HidePasswordIcon from '@/components/icons/modalForms/HidePasswordIcon.vue';
 import ShowPasswordIcon from '@/components/icons/modalForms/ShowPasswordIcon.vue';
+import { Field } from 'vee-validate';
 
 export default {
     name: 'PasswordInput',
-    components: { ShowPasswordIcon, HidePasswordIcon },
+    components: { ShowPasswordIcon, HidePasswordIcon, Field },
 
     data() {
         return {
@@ -67,6 +70,10 @@ export default {
         required: {
             type: Boolean,
             default: true,
+            required: false,
+        },
+        rules: {
+            type: String,
             required: false,
         },
     },

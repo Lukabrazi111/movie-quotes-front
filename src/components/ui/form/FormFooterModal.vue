@@ -27,7 +27,7 @@ export default {
 
     methods: {
         handleModalSwitch() {
-            this.$emit('switch-modal', this.link);
+            this.$emit('switchModal', this.link);
         },
     },
 };

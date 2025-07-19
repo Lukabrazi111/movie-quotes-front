@@ -51,7 +51,7 @@
 
         <!--  Need to change link -->
         <FormFooterModal
-            @switch-modal="switchModal"
+            @switchModal="switchModal"
             linkText="Sign up"
             :link="{ name: 'register' }"
             text="You don't have an account?"

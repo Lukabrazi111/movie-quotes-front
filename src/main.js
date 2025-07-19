@@ -1,4 +1,5 @@
 import './assets/main.css';
+import '@/configs/vee-validate/rules.js';
 
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';

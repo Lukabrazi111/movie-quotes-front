@@ -4,7 +4,9 @@
             {{ labelName.charAt(0).toUpperCase() + labelName.slice(1) }}
             <span v-show="required" class="text-red-400">*</span>
         </label>
-        <input
+        <Field
+            :label="labelName"
+            :rules="rules"
             :placeholder="placeholder"
             :type="type"
             :id="name"
@@ -15,8 +17,14 @@
 </template>
 
 <script>
+import { Field } from 'vee-validate';
+
 export default {
     name: 'CustomInput',
+
+    components: {
+        Field,
+    },
 
     props: {
         name: {
@@ -38,6 +46,10 @@ export default {
         required: {
             type: Boolean,
             default: true,
+            required: false,
+        },
+        rules: {
+            type: String,
             required: false,
         },
     },

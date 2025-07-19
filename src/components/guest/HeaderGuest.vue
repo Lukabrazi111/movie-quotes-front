@@ -53,13 +53,13 @@
         v-model="visibleSignUpModal"
     />
     <LoginModal
-        @switch-modal="handleSwitchModal"
-        @switch-reset-password-modal="toggleResetPasswordModal"
+        @switchModal="handleSwitchModal"
+        @switchResetPasswordModal="toggleResetPasswordModal"
         v-show="visibleLoginModal"
         v-model="visibleLoginModal"
     />
     <ResetPasswordModal
-        @switch-to-login-modal="toggleSignInModal"
+        @switchToLoginModal="toggleSignInModal"
         v-show="visibleResetPasswordModal"
         v-model="visibleResetPasswordModal"
     />
