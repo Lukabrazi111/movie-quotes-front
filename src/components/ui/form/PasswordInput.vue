@@ -30,8 +30,8 @@
 </template>
 
 <script>
-import HidePasswordIcon from '@/components/icons/modalForms/HidePasswordIcon.vue';
-import ShowPasswordIcon from '@/components/icons/modalForms/ShowPasswordIcon.vue';
+import HidePasswordIcon from '@/components/icons/modal/form/HidePasswordIcon.vue';
+import ShowPasswordIcon from '@/components/icons/modal/form/ShowPasswordIcon.vue';
 import { Field } from 'vee-validate';
 
 export default {

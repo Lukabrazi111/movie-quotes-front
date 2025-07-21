@@ -1,8 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import LandingPage from '../views/LandingPage.vue';
-import SignUpModal from '@/components/modals/SignUpModal.vue';
-import LoginModal from '@/components/modals/LoginModal.vue';
-import ResetPasswordModal from '@/components/modals/ResetPasswordModal.vue';
+import SignUpModal from '@/components/modals/auth/SignUpModal.vue';
+import LoginModal from '@/components/modals/auth/LoginModal.vue';
+import ResetPasswordModal from '@/components/modals/auth/ResetPasswordModal.vue';
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),

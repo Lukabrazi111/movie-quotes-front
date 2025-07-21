@@ -48,7 +48,8 @@
 
     <!-- Modals -->
     <SignUpModal
-        @switch-modal="handleSwitchModal"
+        @switchModal="handleSwitchModal"
+        @emailSentModal="closeEmailSentModal"
         v-show="visibleSignUpModal"
         v-model="visibleSignUpModal"
     />
@@ -63,21 +64,25 @@
         v-show="visibleResetPasswordModal"
         v-model="visibleResetPasswordModal"
     />
+
+    <EmailSent v-show="visibleEmailSentModal" v-model="visibleEmailSentModal" />
 </template>
 
 <script>
 import BaseButton from '@/components/ui/BaseButton.vue';
 import BaseContainer from '@/components/BaseContainer.vue';
 import ArrowIcon from '@/components/icons/ArrowIcon.vue';
-import SignUpModal from '@/components/modals/SignUpModal.vue';
-import { useScrollToSectionStore } from '@/stores/scroll-to-section.js';
-import LoginModal from '@/components/modals/LoginModal.vue';
+import SignUpModal from '@/components/modals/auth/SignUpModal.vue';
+import LoginModal from '@/components/modals/auth/LoginModal.vue';
 import SecondaryButton from '@/components/ui/SecondaryButton.vue';
-import ResetPasswordModal from '@/components/modals/ResetPasswordModal.vue';
+import ResetPasswordModal from '@/components/modals/auth/ResetPasswordModal.vue';
+import { useScrollToSectionStore } from '@/stores/scroll-to-section.js';
+import EmailSent from '@/components/modals/auth/EmailSent.vue';
 
 export default {
     name: 'HeaderGuest',
     components: {
+        EmailSent,
         ResetPasswordModal,
         SecondaryButton,
         LoginModal,
@@ -95,6 +100,7 @@ export default {
             visibleSignUpModal: false,
             visibleLoginModal: false,
             visibleResetPasswordModal: false,
+            visibleEmailSentModal: false,
         };
     },
 
@@ -131,6 +137,10 @@ export default {
         toggleResetPasswordModal() {
             this.visibleLoginModal = false;
             this.visibleResetPasswordModal = !this.visibleResetPasswordModal;
+        },
+
+        closeEmailSentModal() {
+            this.visibleEmailSentModal = !this.visibleEmailSentModal;
         },
 
         scrollToSection() {
