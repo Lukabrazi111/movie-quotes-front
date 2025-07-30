@@ -59,30 +59,34 @@
         v-show="visibleLoginModal"
         v-model="visibleLoginModal"
     />
+    <!-- TODO: Need to check here also handleSwitchModal -->
     <ResetPasswordModal
         @switchToLoginModal="toggleSignInModal"
         v-show="visibleResetPasswordModal"
         v-model="visibleResetPasswordModal"
     />
-
-    <EmailSent v-show="visibleEmailSentModal" v-model="visibleEmailSentModal" />
+    <EmailSentModal
+        @switchModal="handleSwitchModal"
+        v-show="visibleEmailSentModal"
+        v-model="visibleEmailSentModal"
+    />
 </template>
 
 <script>
-import BaseButton from '@/components/ui/BaseButton.vue';
+import BaseButton from '@/components/ui/buttons/BaseButton.vue';
 import BaseContainer from '@/components/BaseContainer.vue';
 import ArrowIcon from '@/components/icons/ArrowIcon.vue';
 import SignUpModal from '@/components/modals/auth/SignUpModal.vue';
 import LoginModal from '@/components/modals/auth/LoginModal.vue';
-import SecondaryButton from '@/components/ui/SecondaryButton.vue';
+import SecondaryButton from '@/components/ui/buttons/SecondaryButton.vue';
 import ResetPasswordModal from '@/components/modals/auth/ResetPasswordModal.vue';
 import { useScrollToSectionStore } from '@/stores/scroll-to-section.js';
-import EmailSent from '@/components/modals/auth/EmailSent.vue';
+import EmailSentModal from '@/components/modals/auth/EmailSentModal.vue';
 
 export default {
     name: 'HeaderGuest',
     components: {
-        EmailSent,
+        EmailSentModal,
         ResetPasswordModal,
         SecondaryButton,
         LoginModal,
@@ -101,6 +105,7 @@ export default {
             visibleLoginModal: false,
             visibleResetPasswordModal: false,
             visibleEmailSentModal: false,
+            // visibleResetSuccessSentModal
         };
     },
 
@@ -109,12 +114,6 @@ export default {
     },
 
     mounted() {
-        const routeName = this.$route.name;
-
-        if (routeName === 'login') this.visibleLoginModal = true;
-        if (routeName === 'register') this.visibleSignUpModal = true;
-        if (routeName === 'reset-password') this.visibleResetPasswordModal = true;
-
         this.useScrollToSection.scrollTo(this.$refs.headerRef);
     },
 
@@ -148,8 +147,9 @@ export default {
             return this.useScrollToSection.scrollTo(sectionRef);
         },
 
-        setOverflowHidden(value) {
+        handleModalRouting(value, routeName) {
             if (value) {
+                this.$router.push({ name: routeName });
                 document.body.classList.add('overflow-hidden');
             } else {
                 this.$router.push({ name: 'landing' });
@@ -177,16 +177,22 @@ export default {
             this.visibleLoginModal = false;
             this.visibleSignUpModal = false;
             this.visibleResetPasswordModal = false;
+            this.visibleEmailSentModal = false;
         },
     },
 
     watch: {
         visibleSignUpModal(value) {
-            this.setOverflowHidden(value);
+            this.handleModalRouting(value, 'register');
         },
 
         visibleLoginModal(value) {
-            this.setOverflowHidden(value);
+            this.visibleEmailSentModal = false;
+            this.handleModalRouting(value, 'login');
+        },
+
+        visibleResetPasswordModal(value) {
+            this.handleModalRouting(value, 'reset-password');
         },
     },
 

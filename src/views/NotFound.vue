@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import BaseButton from '@/components/ui/BaseButton.vue';
+import BaseButton from '@/components/ui/buttons/BaseButton.vue';
 import NotFoundIcon from '@/components/icons/not-found/NotFoundIcon.vue';
 import NotFoundShadowIcon from '@/components/icons/not-found/NotFoundShadowIcon.vue';
 

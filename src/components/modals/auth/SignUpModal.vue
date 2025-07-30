@@ -82,8 +82,8 @@
 </template>
 
 <script>
-import BaseButton from '@/components/ui/BaseButton.vue';
-import SecondaryButton from '@/components/ui/SecondaryButton.vue';
+import BaseButton from '@/components/ui/buttons/BaseButton.vue';
+import SecondaryButton from '@/components/ui/buttons/SecondaryButton.vue';
 import GoogleIcon from '@/components/icons/modal/form/GoogleIcon.vue';
 import CustomInput from '@/components/ui/form/CustomInput.vue';
 import FormTitleModal from '@/components/ui/form/FormTitleModal.vue';

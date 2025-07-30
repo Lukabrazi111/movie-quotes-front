@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import BaseButton from '@/components/ui/BaseButton.vue';
+import BaseButton from '@/components/ui/buttons/BaseButton.vue';
 import CustomInput from '@/components/ui/form/CustomInput.vue';
 import FormTitleModal from '@/components/ui/form/FormTitleModal.vue';
 import ModalLayout from '@/components/layouts/ModalLayout.vue';

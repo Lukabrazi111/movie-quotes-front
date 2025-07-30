@@ -72,9 +72,9 @@
 import ModalLayout from '@/components/layouts/ModalLayout.vue';
 import FormTitleModal from '@/components/ui/form/FormTitleModal.vue';
 import GoogleIcon from '@/components/icons/modal/form/GoogleIcon.vue';
-import BaseButton from '@/components/ui/BaseButton.vue';
+import BaseButton from '@/components/ui/buttons/BaseButton.vue';
 import CustomInput from '@/components/ui/form/CustomInput.vue';
-import SecondaryButton from '@/components/ui/SecondaryButton.vue';
+import SecondaryButton from '@/components/ui/buttons/SecondaryButton.vue';
 import FormFooterModal from '@/components/ui/form/FormFooterModal.vue';
 import PasswordInput from '@/components/ui/form/PasswordInput.vue';
 import { Form as FormSection } from 'vee-validate';
