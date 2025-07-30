@@ -1,17 +1,18 @@
-import { defineRule, configure } from 'vee-validate';
+import { configure, defineRule } from 'vee-validate';
 import { all } from '@vee-validate/rules';
 import { localize } from '@vee-validate/i18n';
 
+// TODO: Need to check if field inlcude('_') and change it.
 // Define rules
 Object.entries(all).forEach(([name, rule]) => {
     defineRule(name, rule);
 });
 
+
 defineRule('lowercase', (value, _, ctx) => {
     if (value === value.toLowerCase()) {
         return true;
     }
-
     return `${ctx.field} must be in lowercase`;
 });
 

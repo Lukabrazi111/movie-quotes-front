@@ -6,6 +6,7 @@
             <div class="space-y-5">
                 <div class="space-y-0.5">
                     <CustomInput
+                        v-model="data.name"
                         rules="required|lowercase|min:3|max:15"
                         name="signup_name"
                         labelName="name"
@@ -22,6 +23,7 @@
 
                 <div class="space-y-0.5">
                     <CustomInput
+                        v-model="data.email"
                         rules="required|email"
                         name="signup_email"
                         labelName="email"
@@ -38,6 +40,7 @@
 
                 <div class="space-y-0.5">
                     <PasswordInput
+                        v-model="data.password"
                         rules="required|lowercase|alpha_num|min:8|max:15"
                         name="signup_password"
                         labelName="password"
@@ -49,6 +52,7 @@
 
                 <div class="space-y-0.5">
                     <PasswordInput
+                        v-model="data.password_confirmation"
                         rules="confirmed:@signup_password"
                         name="password_confirmation"
                         labelName="password confirmation"
@@ -92,8 +96,7 @@ import FormFooterModal from '@/components/ui/form/FormFooterModal.vue';
 import PasswordInput from '@/components/ui/form/PasswordInput.vue';
 import FieldError from '@/components/ui/form/FieldError.vue';
 import { axios } from '@/configs/axios/index.js';
-import { Form as FormSection } from 'vee-validate';
-import { ErrorMessage } from 'vee-validate';
+import { ErrorMessage, Form as FormSection } from 'vee-validate';
 
 export default {
     name: 'SignUpModal',
@@ -114,6 +117,12 @@ export default {
 
     data() {
         return {
+            data: {
+                name: '',
+                email: '',
+                password: '',
+                password_confirmation: '',
+            },
             errors: {},
             successMessage: '',
         };
@@ -124,16 +133,12 @@ export default {
     },
 
     methods: {
-        async register(data) {
+        async register() {
             try {
-                const response = await axios.post('/register', {
-                    name: data.signup_name,
-                    email: data.signup_email,
-                    password: data.signup_password,
-                    password_confirmation: data.password_confirmation,
-                });
+                const response = await axios.post('/register', this.data);
 
                 if (response.status === 200) {
+                    this.clearAllFields();
                     this.closeModalWithSuccess();
                 }
             } catch (error) {
@@ -160,6 +165,12 @@ export default {
 
         toggleModal() {
             return this.$emit('update:modelValue', !this.modelValue);
+        },
+
+        clearAllFields() {
+            for (const key in this.data) {
+                this.data[key] = '';
+            }
         },
 
         switchModal(route) {

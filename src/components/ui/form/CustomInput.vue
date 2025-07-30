@@ -4,15 +4,18 @@
             {{ labelName.charAt(0).toUpperCase() + labelName.slice(1) }}
             <span v-show="required" class="text-red-400">*</span>
         </label>
-        <Field
-            :label="labelName"
-            :rules="rules"
-            :placeholder="placeholder"
-            :type="type"
-            :id="name"
-            :name="name"
-            class="w-full px-2 py-1.5 text-gray-900 bg-gray-200 border rounded-lg focus:outline-0"
-        />
+        <Field :rules="rules" :name="name" v-slot="{ field }">
+            <input
+                @input="$emit('update:modelValue', $event.target.value)"
+                v-bind="field"
+                :type="type"
+                :id="name"
+                :name="name"
+                :value="modelValue"
+                :placeholder="placeholder"
+                class="w-full px-2 py-1.5 text-gray-900 bg-gray-200 border rounded-lg focus:outline-0"
+            />
+        </Field>
     </div>
 </template>
 
@@ -27,6 +30,10 @@ export default {
     },
 
     props: {
+        modelValue: {
+            type: String,
+            required: true,
+        },
         name: {
             type: String,
             required: true,

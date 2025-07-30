@@ -8,6 +8,7 @@
 
             <div class="space-y-5">
                 <CustomInput
+                    v-model="email"
                     :required="false"
                     name="reset_email"
                     labelName="email"
@@ -47,6 +48,12 @@ export default {
         CustomInput,
         BaseButton,
         FormSection,
+    },
+
+    data() {
+        return {
+            email: '',
+        }
     },
 
     props: {

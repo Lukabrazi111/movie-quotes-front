@@ -9,6 +9,7 @@
             <div class="space-y-5">
                 <div class="space-y-0.5">
                     <CustomInput
+                        v-model="data.email"
                         :required="false"
                         rules="required"
                         name="login_email"
@@ -21,6 +22,7 @@
 
                 <div class="space-y-0.5">
                     <PasswordInput
+                        v-model="data.password"
                         :required="false"
                         rules="required"
                         name="login_password"
@@ -94,6 +96,15 @@ export default {
         FormTitleModal,
         ErrorMessage,
         FormSection,
+    },
+
+    data() {
+        return {
+            data: {
+                email: '',
+                password: '',
+            }
+        }
     },
 
     props: {

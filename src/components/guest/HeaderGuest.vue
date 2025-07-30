@@ -81,7 +81,7 @@ import LoginModal from '@/components/modals/auth/LoginModal.vue';
 import SecondaryButton from '@/components/ui/buttons/SecondaryButton.vue';
 import ResetPasswordModal from '@/components/modals/auth/ResetPasswordModal.vue';
 import { useScrollToSectionStore } from '@/stores/scroll-to-section.js';
-import EmailSentModal from '@/components/modals/auth/EmailSentModal.vue';
+import EmailSentModal from '@/components/modals/success-info/EmailSentModal.vue';
 
 export default {
     name: 'HeaderGuest',
