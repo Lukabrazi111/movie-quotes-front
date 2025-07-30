@@ -79,8 +79,8 @@
     />
     <EmailVerifiedModal
         @switchModal="handleSwitchModal"
-        v-show="visibleVerifiedEmailModal"
-        v-model="visibleVerifiedEmailModal"
+        v-show="visibleEmailVerifiedModal"
+        v-model="visibleEmailVerifiedModal"
     />
 </template>
 
@@ -119,13 +119,14 @@ export default {
             visibleLoginModal: false,
             visibleResetPasswordModal: false,
             visibleEmailSentModal: false,
-            visibleVerifiedEmailModal: false,
+            visibleEmailVerifiedModal: false,
             // visibleResetSuccessSentModal
         };
     },
 
     created() {
         this.useScrollToSection = useScrollToSectionStore();
+        this.handleRouteModalSwitch(this.$route.path);
     },
 
     mounted() {
@@ -147,6 +148,21 @@ export default {
             }
 
             this[modal] = !this[modal];
+        },
+
+        handleRouteModalSwitch(path) {
+            const segment = path.split('/');
+            const name = segment[segment.length - 1];
+
+            const mapModals = {
+                login: 'visibleLoginModal',
+                register: 'visibleSignUpModal',
+                'reset-password': 'visibleResetPasswordModal',
+            };
+
+            const target = mapModals[name];
+
+            this[target] = !!target;
         },
 
         scrollToSection() {
@@ -185,6 +201,7 @@ export default {
             this.visibleSignUpModal = false;
             this.visibleResetPasswordModal = false;
             this.visibleEmailSentModal = false;
+            this.visibleEmailVerifiedModal = false;
         },
     },
 

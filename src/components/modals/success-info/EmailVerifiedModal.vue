@@ -3,23 +3,23 @@
         <SuccessMessageInfo
             @switchModal="switchModal"
             title="Thank you!"
-            description="Please check your email and follow the instructions to activate your account."
-            :link="{ value: 'https://mail.google.com' }"
-            buttonText="Go to my email"
+            description="You account has beed activated."
+            :link="{ name: 'login' }"
+            buttonText="Login"
         >
-            <SendEmailIcon />
+            <EmailVerifiedIcon />
         </SuccessMessageInfo>
     </ModalLayout>
 </template>
 
 <script>
-import SendEmailIcon from '@/components/icons/modal/SendEmailIcon.vue';
 import SuccessMessageInfo from '@/components/ui/SuccessMessageInfo.vue';
 import ModalLayout from '@/components/layouts/ModalLayout.vue';
+import EmailVerifiedIcon from '@/components/icons/modal/EmailVerifiedIcon.vue';
 
 export default {
     name: 'EmailVerifiedModal',
-    components: { ModalLayout, SuccessMessageInfo, SendEmailIcon },
+    components: { EmailVerifiedIcon, ModalLayout, SuccessMessageInfo },
 
     props: {
         modelValue: Boolean,

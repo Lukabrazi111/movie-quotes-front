@@ -7,20 +7,20 @@
             :link="{ value: 'https://mail.google.com' }"
             buttonText="Go to my email"
         >
-            <SendEmailIcon />
+            <EmailSentIcon />
         </SuccessMessageInfo>
     </ModalLayout>
 </template>
 
 <script>
 import ModalLayout from '@/components/layouts/ModalLayout.vue';
-import SendEmailIcon from '@/components/icons/modal/SendEmailIcon.vue';
+import EmailSentIcon from '@/components/icons/modal/EmailSentIcon.vue';
 import SuccessMessageInfo from '@/components/ui/SuccessMessageInfo.vue';
 
 export default {
     name: 'EmailSentModal',
 
-    components: { SuccessMessageInfo, SendEmailIcon, ModalLayout },
+    components: { SuccessMessageInfo, EmailSentIcon, ModalLayout },
 
     props: {
         modelValue: Boolean,
