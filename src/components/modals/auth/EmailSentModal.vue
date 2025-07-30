@@ -4,8 +4,8 @@
             @switchModal="switchModal"
             title="Thank you!"
             description="Please check your email and follow the instructions to activate your account."
-            :link="{ name: 'login' }"
-            button-text="Login"
+            :link="{ value: 'https://mail.google.com' }"
+            buttonText="Go to my email"
         >
             <SendEmailIcon />
         </SuccessMessageInfo>

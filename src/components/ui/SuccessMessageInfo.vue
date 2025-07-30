@@ -13,7 +13,7 @@
         </div>
 
         <div class="space-y-4 mt-7 mb-7">
-            <a v-if="link === 'https://mail.google.com'" :href="link" target="_blank">
+            <a v-if="link.value && link.value === 'https://mail.google.com'" :href="link.value" target="_blank">
                 <BaseButton class="w-full">{{ buttonText }}</BaseButton>
             </a>
 
