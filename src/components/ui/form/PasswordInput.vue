@@ -9,7 +9,7 @@
                 <input
                     @input="$emit('update:modelValue', $event.target.value)"
                     v-bind="field"
-                    :type="type"
+                    :type="showPassword ? 'text' : 'password'"
                     :id="name"
                     :name="name"
                     :value="modelValue"
