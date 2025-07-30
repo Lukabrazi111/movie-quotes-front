@@ -30,8 +30,14 @@
                         </div>
                     </div>
 
-                    <BaseButton @click="toggleSignUpModal">Sign up</BaseButton>
-                    <SecondaryButton @click="toggleSignInModal">Log in</SecondaryButton>
+                    <BaseButton @click="toggleModal('visibleSignUpModal', 'Sexa Lama')">
+                        Sign up
+                    </BaseButton>
+                    <SecondaryButton
+                        @click="toggleModal('visibleLoginModal', 'visibleResetPasswordModal')"
+                    >
+                        Log in
+                    </SecondaryButton>
                 </div>
             </nav>
 
@@ -49,26 +55,32 @@
     <!-- Modals -->
     <SignUpModal
         @switchModal="handleSwitchModal"
-        @emailSentModal="closeEmailSentModal"
+        @emailSentModal="toggleModal('visibleEmailSentModal')"
         v-show="visibleSignUpModal"
         v-model="visibleSignUpModal"
     />
     <LoginModal
         @switchModal="handleSwitchModal"
-        @switchResetPasswordModal="toggleResetPasswordModal"
+        @switchResetPasswordModal="toggleModal('visibleResetPasswordModal', 'visibleLoginModal')"
         v-show="visibleLoginModal"
         v-model="visibleLoginModal"
     />
     <!-- TODO: Need to check here also handleSwitchModal -->
     <ResetPasswordModal
-        @switchToLoginModal="toggleSignInModal"
+        @switchToLoginModal="toggleModal('visibleLoginModal', 'visibleResetPasswordModal')"
         v-show="visibleResetPasswordModal"
         v-model="visibleResetPasswordModal"
     />
+    <!-- Success Modals -->
     <EmailSentModal
         @switchModal="handleSwitchModal"
         v-show="visibleEmailSentModal"
         v-model="visibleEmailSentModal"
+    />
+    <EmailVerifiedModal
+        @switchModal="handleSwitchModal"
+        v-show="visibleVerifiedEmailModal"
+        v-model="visibleVerifiedEmailModal"
     />
 </template>
 
@@ -82,10 +94,12 @@ import SecondaryButton from '@/components/ui/buttons/SecondaryButton.vue';
 import ResetPasswordModal from '@/components/modals/auth/ResetPasswordModal.vue';
 import { useScrollToSectionStore } from '@/stores/scroll-to-section.js';
 import EmailSentModal from '@/components/modals/success-info/EmailSentModal.vue';
+import EmailVerifiedModal from '@/components/modals/success-info/EmailVerifiedModal.vue';
 
 export default {
     name: 'HeaderGuest',
     components: {
+        EmailVerifiedModal,
         EmailSentModal,
         ResetPasswordModal,
         SecondaryButton,
@@ -105,6 +119,7 @@ export default {
             visibleLoginModal: false,
             visibleResetPasswordModal: false,
             visibleEmailSentModal: false,
+            visibleVerifiedEmailModal: false,
             // visibleResetSuccessSentModal
         };
     },
@@ -124,22 +139,14 @@ export default {
             this.isOpenLanguageDropdown = false;
         },
 
-        toggleSignUpModal() {
-            this.visibleSignUpModal = !this.visibleSignUpModal;
-        },
+        toggleModal(modal, parentModal = '') {
+            if (parentModal.length !== 0) {
+                this[parentModal] = false;
+                this[modal] = !this[modal];
+                return;
+            }
 
-        toggleSignInModal() {
-            this.visibleResetPasswordModal = false;
-            this.visibleLoginModal = !this.visibleLoginModal;
-        },
-
-        toggleResetPasswordModal() {
-            this.visibleLoginModal = false;
-            this.visibleResetPasswordModal = !this.visibleResetPasswordModal;
-        },
-
-        closeEmailSentModal() {
-            this.visibleEmailSentModal = !this.visibleEmailSentModal;
+            this[modal] = !this[modal];
         },
 
         scrollToSection() {

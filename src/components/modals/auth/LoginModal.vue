@@ -9,7 +9,7 @@
             <div class="space-y-5">
                 <div class="space-y-0.5">
                     <CustomInput
-                        v-model="data.email"
+                        v-model="email"
                         :required="false"
                         rules="required"
                         name="login_email"
@@ -22,7 +22,7 @@
 
                 <div class="space-y-0.5">
                     <PasswordInput
-                        v-model="data.password"
+                        v-model="password"
                         :required="false"
                         rules="required"
                         name="login_password"
@@ -79,8 +79,7 @@ import CustomInput from '@/components/ui/form/CustomInput.vue';
 import SecondaryButton from '@/components/ui/buttons/SecondaryButton.vue';
 import FormFooterModal from '@/components/ui/form/FormFooterModal.vue';
 import PasswordInput from '@/components/ui/form/PasswordInput.vue';
-import { Form as FormSection } from 'vee-validate';
-import { ErrorMessage } from 'vee-validate';
+import { ErrorMessage, Form as FormSection } from 'vee-validate';
 
 export default {
     name: 'LoginModal',
@@ -100,11 +99,9 @@ export default {
 
     data() {
         return {
-            data: {
-                email: '',
-                password: '',
-            }
-        }
+            email: '',
+            password: '',
+        };
     },
 
     props: {
