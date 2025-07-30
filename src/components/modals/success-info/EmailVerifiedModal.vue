@@ -38,7 +38,6 @@ export default {
 
     methods: {
         async verifyUser(expires, userId, signature) {
-            console.log(expires, userId, signature);
             try {
                 const response = await axios.get('/verify', {
                     params: {
