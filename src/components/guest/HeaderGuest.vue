@@ -79,7 +79,7 @@
     />
     <EmailVerifiedModal
         @switchModal="handleSwitchModal"
-        @switchLinkedExpiredModal="toggleModal('visibleLinkExpiredModal', 'visibleEmailVerifiedModal')"
+        @switchLinkExpiredModal="toggleModal('visibleLinkExpiredModal', 'visibleEmailVerifiedModal')"
         v-show="visibleEmailVerifiedModal"
         v-model="visibleEmailVerifiedModal"
     />

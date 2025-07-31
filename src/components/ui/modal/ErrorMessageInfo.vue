@@ -13,7 +13,7 @@
         </div>
 
         <div class="space-y-4 mt-7 mb-7">
-            <router-link @click.prevent="sentVerificationLink" :to="link">
+            <router-link @click.prevent="$emit('sendVerificationLink')" :to="link">
                 <BaseButton class="w-full">{{ buttonText }}</BaseButton>
             </router-link>
         </div>
@@ -42,14 +42,6 @@ export default {
         link: {
             type: Object,
             required: true,
-        },
-    },
-
-    methods: {
-        sentVerificationLink() {
-            this.$emit('openEmailSentModal');
-            // TODO: here maybe we are checking if user is exists
-            this.$emit('sendVerificationLink');
         },
     },
 };

@@ -54,12 +54,12 @@ export default {
                 const response = error.response;
 
                 if(response.status === 409) {
-                    // Maybe for the future add another modal
+                    // TODO: need to add dialog modal
                     alert(response.data.message);
                 }
 
                 if (response.status === 410) {
-                    this.$emit('switchLinkedExpiredModal', true);
+                    this.$emit('switchLinkExpiredModal', true);
                 }
             }
         },
