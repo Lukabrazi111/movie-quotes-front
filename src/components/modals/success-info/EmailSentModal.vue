@@ -15,7 +15,7 @@
 <script>
 import ModalLayout from '@/components/layouts/ModalLayout.vue';
 import EmailSentIcon from '@/components/icons/modal/EmailSentIcon.vue';
-import SuccessMessageInfo from '@/components/ui/SuccessMessageInfo.vue';
+import SuccessMessageInfo from '@/components/ui/modal/SuccessMessageInfo.vue';
 
 export default {
     name: 'EmailSentModal',

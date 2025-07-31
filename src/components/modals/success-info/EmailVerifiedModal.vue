@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import SuccessMessageInfo from '@/components/ui/SuccessMessageInfo.vue';
+import SuccessMessageInfo from '@/components/ui/modal/SuccessMessageInfo.vue';
 import ModalLayout from '@/components/layouts/ModalLayout.vue';
 import EmailVerifiedIcon from '@/components/icons/modal/EmailVerifiedIcon.vue';
 import { axios } from '@/configs/axios/index.js';
@@ -51,8 +51,16 @@ export default {
                     this.$emit('update:modelValue', true);
                 }
             } catch (error) {
-                // TODO: Open linked expired modal
-                console.log(error);
+                const response = error.response;
+
+                if(response.status === 409) {
+                    // Maybe for the future add another modal
+                    alert(response.data.message);
+                }
+
+                if (response.status === 410) {
+                    this.$emit('switchLinkedExpiredModal', true);
+                }
             }
         },
 

@@ -45,4 +45,16 @@ const router = createRouter({
     ],
 });
 
+router.beforeEach((to, _, next) => {
+    if (to.path === '/verify') {
+        const hasQueryParams = to.query.expires && to.query.user && to.query.signature;
+
+        if (!hasQueryParams) {
+            return next({ name: 'landing' });
+        }
+    }
+
+    next();
+});
+
 export default router;

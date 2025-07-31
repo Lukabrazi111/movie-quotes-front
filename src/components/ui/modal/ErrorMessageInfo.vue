@@ -13,31 +13,17 @@
         </div>
 
         <div class="space-y-4 mt-7 mb-7">
-            <a v-if="link.value && link.value === 'https://mail.google.com'" :href="link.value" target="_blank">
-                <BaseButton class="w-full">{{ buttonText }}</BaseButton>
-            </a>
-
-            <router-link @click.prevent="handleModalSwitch" v-else :to="link">
+            <router-link @click.prevent="sentVerificationLink" :to="link">
                 <BaseButton class="w-full">{{ buttonText }}</BaseButton>
             </router-link>
         </div>
-
-        <button v-show="skipButton" class="flex items-center justify-center mx-auto">
-            <!-- Need to check if it's working ($emit part) -->
-            <span
-                class="text-gray-500 hover:text-gray-400 transition-colors"
-                @click="this.$emit('closeModal', false)"
-            >
-                Skip, I'll confirm later
-            </span>
-        </button>
     </div>
 </template>
 <script>
 import BaseButton from '@/components/ui/buttons/BaseButton.vue';
 
 export default {
-    name: 'SuccessMessageInfo',
+    name: 'ErrorMessageInfo',
     components: { BaseButton },
 
     props: {
@@ -57,16 +43,13 @@ export default {
             type: Object,
             required: true,
         },
-        skipButton: {
-            type: Boolean,
-            default: false,
-            required: false,
-        },
     },
 
     methods: {
-        handleModalSwitch() {
-            this.$emit('switchModal', this.link);
+        sentVerificationLink() {
+            this.$emit('openEmailSentModal');
+            // TODO: here maybe we are checking if user is exists
+            this.$emit('sendVerificationLink');
         },
     },
 };

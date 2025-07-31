@@ -65,7 +65,7 @@
         v-show="visibleLoginModal"
         v-model="visibleLoginModal"
     />
-    <!-- TODO: Need to check here also handleSwitchModal -->
+    <!-- TODO: Need to check here also handleSwitchModal FIX SWITCHTOMODAL NAME -->
     <ResetPasswordModal
         @switchToLoginModal="toggleModal('visibleLoginModal', 'visibleResetPasswordModal')"
         v-show="visibleResetPasswordModal"
@@ -79,8 +79,14 @@
     />
     <EmailVerifiedModal
         @switchModal="handleSwitchModal"
+        @switchLinkedExpiredModal="toggleModal('visibleLinkExpiredModal', 'visibleEmailVerifiedModal')"
         v-show="visibleEmailVerifiedModal"
         v-model="visibleEmailVerifiedModal"
+    />
+    <LinkExpiredModal
+        @switchEmailSentModal="toggleModal('visibleEmailSentModal')"
+        v-show="visibleLinkExpiredModal"
+        v-model="visibleLinkExpiredModal"
     />
 </template>
 
@@ -95,10 +101,12 @@ import ResetPasswordModal from '@/components/modals/auth/ResetPasswordModal.vue'
 import { useScrollToSectionStore } from '@/stores/scroll-to-section.js';
 import EmailSentModal from '@/components/modals/success-info/EmailSentModal.vue';
 import EmailVerifiedModal from '@/components/modals/success-info/EmailVerifiedModal.vue';
+import LinkExpiredModal from '@/components/modals/error-info/LinkExpiredModal.vue';
 
 export default {
     name: 'HeaderGuest',
     components: {
+        LinkExpiredModal,
         EmailVerifiedModal,
         EmailSentModal,
         ResetPasswordModal,
@@ -120,6 +128,7 @@ export default {
             visibleResetPasswordModal: false,
             visibleEmailSentModal: false,
             visibleEmailVerifiedModal: false,
+            visibleLinkExpiredModal: false,
             // visibleResetSuccessSentModal
         };
     },
@@ -202,6 +211,7 @@ export default {
             this.visibleResetPasswordModal = false;
             this.visibleEmailSentModal = false;
             this.visibleEmailVerifiedModal = false;
+            this.visibleLinkExpiredModal = false;
         },
     },
 
