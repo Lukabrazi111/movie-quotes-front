@@ -83,6 +83,7 @@
         v-show="visibleEmailVerifiedModal"
         v-model="visibleEmailVerifiedModal"
     />
+    <!-- Error Modals -->
     <LinkExpiredModal
         @switchEmailSentModal="toggleModal('visibleEmailSentModal')"
         v-show="visibleLinkExpiredModal"

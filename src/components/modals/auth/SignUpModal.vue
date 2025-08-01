@@ -53,7 +53,7 @@
                 <div class="space-y-0.5">
                     <PasswordInput
                         v-model="data.password_confirmation"
-                        rules="confirmed:@signup_password"
+                        rules="required|confirmed:@signup_password"
                         name="password_confirmation"
                         labelName="password confirmation"
                         type="password"
