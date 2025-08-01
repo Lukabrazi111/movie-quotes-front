@@ -30,6 +30,8 @@
                         type="password"
                         placeholder="Password"
                     />
+                    <!-- Backend error -->
+                    <FieldError v-if="errorMessage" :message="errorMessage" />
                 </div>
             </div>
 
@@ -80,11 +82,16 @@ import SecondaryButton from '@/components/ui/buttons/SecondaryButton.vue';
 import FormFooterModal from '@/components/ui/form/FormFooterModal.vue';
 import PasswordInput from '@/components/ui/form/PasswordInput.vue';
 import { ErrorMessage, Form as FormSection } from 'vee-validate';
+import { axios } from '@/configs/axios/index.js';
+import { useAuthStore } from '@/stores/user/auth.js';
+import { mapStores } from 'pinia';
+import FieldError from '@/components/ui/form/FieldError.vue';
 
 export default {
     name: 'LoginModal',
 
     components: {
+        FieldError,
         PasswordInput,
         FormFooterModal,
         SecondaryButton,
@@ -101,7 +108,12 @@ export default {
         return {
             email: '',
             password: '',
+            errorMessage: '',
         };
+    },
+
+    computed: {
+        ...mapStores(useAuthStore),
     },
 
     props: {
@@ -110,8 +122,36 @@ export default {
     },
 
     methods: {
-        login() {
-            console.log('login');
+        async login() {
+            try {
+                const response = await axios.post('/login', {
+                    email: this.email,
+                    password: this.password,
+                });
+
+                if (response.status === 200) {
+                    const token = response.data.token;
+                    const user = response.data.user;
+
+                    this.authStore.setUser(user);
+                    this.authStore.setToken(token);
+
+                    this.clearFields();
+
+                    this.$router.push({ name: 'news-feed' });
+                }
+            } catch (error) {
+                const response = error.response;
+
+                if (response?.status === 401) {
+                    this.errorMessage = response.data.message;
+                }
+            }
+        },
+
+        clearFields() {
+            this.email = '';
+            this.password = '';
         },
 
         toggleModal() {

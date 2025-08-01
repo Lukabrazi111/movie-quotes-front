@@ -5,6 +5,8 @@ import LoginModal from '@/components/modals/auth/LoginModal.vue';
 import ResetPasswordModal from '@/components/modals/auth/ResetPasswordModal.vue';
 import NotFound from '@/views/NotFound.vue';
 import EmailVerifiedModal from '@/components/modals/success-info/EmailVerifiedModal.vue';
+import NewsFeed from '@/views/NewsFeed.vue';
+import { useAuthStore } from '@/stores/user/auth.js';
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -42,10 +44,31 @@ const router = createRouter({
                 },
             ],
         },
+        {
+            path: '/news-feed',
+            name: 'news-feed',
+            component: NewsFeed,
+            meta: { requiresAuth: true },
+            children: [],
+        },
     ],
 });
 
-router.beforeEach((to, _, next) => {
+router.beforeEach(async (to, _, next) => {
+    const authUser = useAuthStore();
+
+    if (authUser.isAuthenticated) {
+        await authUser.fetchUser(); // fetch user on each request
+    }
+
+    if (to.meta.isGuest && authUser.isAuthenticated) {
+        return next({ name: 'news-feed' });
+    }
+
+    if (to.meta.requiresAuth && !authUser.isAuthenticated) {
+        return next({ name: 'login' });
+    }
+
     if (to.path === '/verify') {
         const hasQueryParams = to.query.expires && to.query.user && to.query.signature;
 
