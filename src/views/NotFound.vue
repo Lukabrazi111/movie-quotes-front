@@ -1,6 +1,6 @@
 <template>
     <div
-        class="flex flex-col items-center justify-center bg-primary-dark text-white w-full h-screen space-y-7"
+        class="flex flex-col items-center justify-center bg-gradient-primary text-white w-full h-screen space-y-7"
     >
         <div class="flex flex-col items-center justify-center space-y-6">
             <NotFoundIcon />

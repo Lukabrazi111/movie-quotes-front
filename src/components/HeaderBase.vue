@@ -2,7 +2,7 @@
     <HeaderLayout
         class="bg-secondary-dark"
         :class="{
-            'bg-primary-dark! h-[80vh]': !this.authStore.isAuthenticated,
+            'bg-gradient-primary h-[80vh]': !this.authStore.isAuthenticated,
         }"
         ref="headerRef"
     >
@@ -48,7 +48,6 @@
         v-show="visibleLoginModal"
         v-model="visibleLoginModal"
     />
-    <!-- TODO: Need to check here also handleSwitchModal FIX SWITCHTOMODAL NAME -->
     <ResetPasswordModal
         @switchLoginModal="toggleModal('visibleLoginModal', 'visibleResetPasswordModal')"
         v-show="visibleResetPasswordModal"

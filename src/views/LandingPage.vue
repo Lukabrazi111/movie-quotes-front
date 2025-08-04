@@ -5,19 +5,19 @@
         <!-- Movie and Quotes -->
         <MainContentGuest :movie-quotes="movieQuotes" />
 
-        <FooterGuest />
+        <FooterBase />
     </main>
 </template>
 
 <script>
 import { MovieQuotesData } from '@/stores/movie-quotes-data.js';
 import MainContentGuest from '@/components/guest/MainContentGuest.vue';
-import FooterGuest from '@/components/guest/FooterGuest.vue';
-import HeaderBase from '@/components/auth/HeaderBase.vue';
+import FooterBase from '@/components/FooterBase.vue';
+import HeaderBase from '@/components/HeaderBase.vue';
 
 export default {
     name: 'LandingPage',
-    components: { HeaderBase, FooterGuest, MainContentGuest },
+    components: { HeaderBase, FooterBase, MainContentGuest },
 
     data() {
         return {
