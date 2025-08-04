@@ -1,56 +1,41 @@
 <template>
-    <header class="bg-dark h-[80vh]" ref="headerRef">
-        <BaseContainer>
-            <nav class="flex items-center justify-between px-4 py-8">
-                <div>
-                    <h1 class="text-cream uppercase text-md font-helvetica font-normal">
-                        Movie quotes
-                    </h1>
-                </div>
+    <HeaderLayout
+        class="bg-form-dark"
+        :class="{
+            'bg-dark! h-[80vh]': !this.authStore.isAuthenticated,
+        }"
+        ref="headerRef"
+    >
+        <template v-slot:nav-content>
+            <!-- TODO: Need to add notification button, if user is authorized -->
+            <BellNotificationIcon v-if="this.authStore.isAuthenticated" />
 
-                <div class="flex items-center space-x-6 text-white">
-                    <div class="relative">
-                        <div
-                            @click="isOpenLanguageDropdown = !isOpenLanguageDropdown"
-                            class="hover:bg-gray-700 transition-colors flex items-center space-x-5 px-4 py-1.5 cursor-pointer font-light"
-                            :class="{
-                                'rounded-t': isOpenLanguageDropdown,
-                                rounded: !isOpenLanguageDropdown,
-                            }"
-                        >
-                            <span>{{ selectedLanguage }}</span>
-                            <ArrowIcon :isOpenLanguageDropdown="isOpenLanguageDropdown" />
-                        </div>
-                        <div
-                            v-show="isOpenLanguageDropdown"
-                            @click="toggleLanguage"
-                            class="absolute right-0 hover:bg-gray-700 rounded-b text-white w-full text-center py-1.5 cursor-pointer transition-colors font-light"
-                        >
-                            {{ nextLanguage }}
-                        </div>
-                    </div>
+            <!-- TODO: Need to change button to logout if user is authorized -->
+            <div class="space-x-6" v-if="!this.authStore.isAuthenticated">
+                <BaseButton @click="toggleModal('visibleSignUpModal')">Sign up</BaseButton>
+                <SecondaryButton
+                    @click="toggleModal('visibleLoginModal', 'visibleResetPasswordModal')"
+                >
+                    Log in
+                </SecondaryButton>
+            </div>
 
-                    <BaseButton @click="toggleModal('visibleSignUpModal', 'Sexa Lama')">
-                        Sign up
-                    </BaseButton>
-                    <SecondaryButton
-                        @click="toggleModal('visibleLoginModal', 'visibleResetPasswordModal')"
-                    >
-                        Log in
-                    </SecondaryButton>
-                </div>
-            </nav>
+            <div v-else class="space-x-6 order-3">
+                <SecondaryButton @click="logout">Logout</SecondaryButton>
+            </div>
+        </template>
 
+        <template v-slot:header-content v-if="!this.authStore.isAuthenticated">
             <div class="flex flex-col items-center justify-center space-y-5 text-center h-[50vh]">
                 <h1
                     class="text-5xl w-full max-w-xl text-cream leading-18 font-montserrat! font-bold!"
                 >
                     Find any quote in millions of movie lines
                 </h1>
-                <BaseButton @click="scrollToSection">Get started</BaseButton>
+                <BaseButton @click="scrollToSpecificSection">Get started</BaseButton>
             </div>
-        </BaseContainer>
-    </header>
+        </template>
+    </HeaderLayout>
 
     <!-- Modals -->
     <SignUpModal
@@ -79,7 +64,9 @@
     />
     <EmailVerifiedModal
         @switchModal="handleSwitchModal"
-        @switchLinkExpiredModal="toggleModal('visibleLinkExpiredModal', 'visibleEmailVerifiedModal')"
+        @switchLinkExpiredModal="
+            toggleModal('visibleLinkExpiredModal', 'visibleEmailVerifiedModal')
+        "
         v-show="visibleEmailVerifiedModal"
         v-model="visibleEmailVerifiedModal"
     />
@@ -93,61 +80,79 @@
 
 <script>
 import BaseButton from '@/components/ui/buttons/BaseButton.vue';
-import BaseContainer from '@/components/BaseContainer.vue';
-import ArrowIcon from '@/components/icons/ArrowIcon.vue';
 import SignUpModal from '@/components/modals/auth/SignUpModal.vue';
 import LoginModal from '@/components/modals/auth/LoginModal.vue';
 import SecondaryButton from '@/components/ui/buttons/SecondaryButton.vue';
 import ResetPasswordModal from '@/components/modals/auth/ResetPasswordModal.vue';
-import { useScrollToSectionStore } from '@/stores/scroll-to-section.js';
 import EmailSentModal from '@/components/modals/success-info/EmailSentModal.vue';
 import EmailVerifiedModal from '@/components/modals/success-info/EmailVerifiedModal.vue';
 import LinkExpiredModal from '@/components/modals/error-info/LinkExpiredModal.vue';
+import HeaderLayout from '@/components/layouts/HeaderLayout.vue';
+import BellNotificationIcon from '@/components/icons/header/BellNotificationIcon.vue';
+import { mapStores } from 'pinia';
+import { useScrollToSectionStore } from '@/stores/scroll-to-section.js';
+import { useAuthStore } from '@/stores/user/auth.js';
+import { axios } from '@/configs/axios/index.js';
 
 export default {
     name: 'HeaderGuest',
     components: {
+        BellNotificationIcon,
         LinkExpiredModal,
         EmailVerifiedModal,
         EmailSentModal,
         ResetPasswordModal,
         SecondaryButton,
         LoginModal,
-        ArrowIcon,
-        BaseContainer,
         BaseButton,
         SignUpModal,
+        HeaderLayout,
     },
 
     data() {
         return {
-            selectedLanguage: 'Eng',
-            isOpenLanguageDropdown: false,
-            useScrollToSection: null,
             visibleSignUpModal: false,
             visibleLoginModal: false,
             visibleResetPasswordModal: false,
             visibleEmailSentModal: false,
             visibleEmailVerifiedModal: false,
             visibleLinkExpiredModal: false,
-            // visibleResetSuccessSentModal
         };
     },
 
+    computed: {
+        ...mapStores(useScrollToSectionStore, useAuthStore),
+    },
+
     created() {
-        this.useScrollToSection = useScrollToSectionStore();
         this.handleRouteModalSwitch(this.$route.path);
     },
 
     mounted() {
-        this.useScrollToSection.scrollTo(this.$refs.headerRef);
+        this.$nextTick(() => {
+            const headerEl = this.$refs.headerRef?.$el || this.$refs.headerRef;
+
+            if (headerEl && this.scrollToSectionStore?.scrollTo) {
+                this.scrollToSectionStore.scrollTo(this.$refs.headerRef.$el);
+            } else {
+                console.warn('Missing scroll target or function');
+            }
+        });
     },
 
     methods: {
-        toggleLanguage() {
-            const language = this.selectedLanguage;
-            this.selectedLanguage = language === 'Eng' ? 'Geo' : 'Eng';
-            this.isOpenLanguageDropdown = false;
+        async logout() {
+            try {
+                const response = await axios.post('/logout');
+
+                if (response.status === 200) {
+                    this.authStore.logout();
+                    this.$router.push({ name: 'landing' });
+                }
+                console.log(response);
+            } catch (error) {
+                console.log(error);
+            }
         },
 
         toggleModal(modal, parentModal = '') {
@@ -175,9 +180,9 @@ export default {
             this[target] = !!target;
         },
 
-        scrollToSection() {
-            const sectionRef = this.useScrollToSection.specificRef;
-            return this.useScrollToSection.scrollTo(sectionRef);
+        scrollToSpecificSection() {
+            const sectionRef = this.scrollToSectionStore.specificRef;
+            return this.scrollToSectionStore.scrollTo(sectionRef);
         },
 
         handleModalRouting(value, routeName) {
@@ -228,12 +233,6 @@ export default {
 
         visibleResetPasswordModal(value) {
             this.handleModalRouting(value, 'reset-password');
-        },
-    },
-
-    computed: {
-        nextLanguage() {
-            return this.selectedLanguage === 'Eng' ? 'Geo' : 'Eng';
         },
     },
 };
