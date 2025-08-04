@@ -16,14 +16,11 @@ button {
     --color-primary-hover: #CC0E10;
     --color-disabled: #EC4C57;
 
-    /*
-        Dark colors
-        TODO: maybe need to change variables
-    */
-    --color-dark: #181623;
+    /* Main dark */
+    --color-primary-dark: #181623;
 
-    /*Form background color */
-    --color-form-dark: #222030;
+    /* Form background color */
+    --color-secondary-dark: #222030;
 
     /* Light colors */
     --color-cream: #DDCCAA;

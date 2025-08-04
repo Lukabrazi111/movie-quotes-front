@@ -1,16 +1,14 @@
 <template>
     <HeaderLayout
-        class="bg-form-dark"
+        class="bg-secondary-dark"
         :class="{
-            'bg-dark! h-[80vh]': !this.authStore.isAuthenticated,
+            'bg-primary-dark! h-[80vh]': !this.authStore.isAuthenticated,
         }"
         ref="headerRef"
     >
         <template v-slot:nav-content>
-            <!-- TODO: Need to add notification button, if user is authorized -->
             <BellNotificationIcon v-if="this.authStore.isAuthenticated" />
 
-            <!-- TODO: Need to change button to logout if user is authorized -->
             <div class="space-x-6" v-if="!this.authStore.isAuthenticated">
                 <BaseButton @click="toggleModal('visibleSignUpModal')">Sign up</BaseButton>
                 <SecondaryButton
@@ -52,7 +50,7 @@
     />
     <!-- TODO: Need to check here also handleSwitchModal FIX SWITCHTOMODAL NAME -->
     <ResetPasswordModal
-        @switchToLoginModal="toggleModal('visibleLoginModal', 'visibleResetPasswordModal')"
+        @switchLoginModal="toggleModal('visibleLoginModal', 'visibleResetPasswordModal')"
         v-show="visibleResetPasswordModal"
         v-model="visibleResetPasswordModal"
     />

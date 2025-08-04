@@ -23,7 +23,7 @@
 
             <button class="flex items-center justify-center space-x-4 mx-auto">
                 <ArrowLeft />
-                <span class="text-gray-500" @click.prevent="this.$emit('switch-to-login-modal')">
+                <span class="text-gray-500" @click.prevent="this.$emit('switch-login-modal')">
                     Back to login
                 </span>
             </button>

@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-dark text-cream font-helvetica font-normal py-5">
+    <div class="bg-primary-dark text-cream font-helvetica font-normal py-5">
         <BaseContainer>
             <p class="uppercase">© 2025 movie quotes. All rights reserved.</p>
         </BaseContainer>
