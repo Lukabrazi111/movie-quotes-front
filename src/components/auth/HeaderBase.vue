@@ -142,17 +142,9 @@ export default {
 
     methods: {
         async logout() {
-            try {
-                const response = await axios.post('/logout');
-
-                if (response.status === 200) {
-                    this.authStore.logout();
-                    this.$router.push({ name: 'landing' });
-                }
-                console.log(response);
-            } catch (error) {
-                console.log(error);
-            }
+            await axios.post('/logout');
+            this.authStore.logout();
+            this.$router.push({ name: 'landing' });
         },
 
         toggleModal(modal, parentModal = '') {
