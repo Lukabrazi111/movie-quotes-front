@@ -92,7 +92,7 @@ import { useAuthStore } from '@/stores/user/auth.js';
 import { axios } from '@/configs/axios/index.js';
 
 export default {
-    name: 'HeaderGuest',
+    name: 'HeaderBase',
     components: {
         BellNotificationIcon,
         LinkExpiredModal,

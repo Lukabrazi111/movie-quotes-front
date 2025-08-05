@@ -1,14 +1,14 @@
 <template>
-    <BaseContainer>
-        <h1>News Feed</h1>
-    </BaseContainer>
+    <AppLayout>
+        <router-view />
+    </AppLayout>
 </template>
 
 <script>
-import BaseContainer from '@/components/BaseContainer.vue';
+import AppLayout from '@/components/layouts/AppLayout.vue';
 
 export default {
     name: 'MainContent',
-    components: { BaseContainer }
-}
+    components: { AppLayout },
+};
 </script>

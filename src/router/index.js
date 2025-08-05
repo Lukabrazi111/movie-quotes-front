@@ -5,8 +5,11 @@ import LoginModal from '@/components/modals/auth/LoginModal.vue';
 import ResetPasswordModal from '@/components/modals/auth/ResetPasswordModal.vue';
 import NotFound from '@/views/NotFound.vue';
 import EmailVerifiedModal from '@/components/modals/success-info/EmailVerifiedModal.vue';
-import NewsFeed from '@/views/NewsFeed.vue';
+import HomePage from '@/views/HomePage.vue';
 import { useAuthStore } from '@/stores/user/auth.js';
+import NewsFeed from '@/components/pages/NewsFeed.vue';
+import UserProfile from '@/components/pages/UserProfile.vue';
+import MovieList from '@/components/pages/MovieList.vue';
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -46,10 +49,25 @@ const router = createRouter({
         },
         {
             path: '/news-feed',
-            name: 'news-feed',
-            component: NewsFeed,
+            component: HomePage,
             meta: { requiresAuth: true },
-            children: [],
+            children: [
+                {
+                    path: '',
+                    name: 'news-feed',
+                    component: NewsFeed,
+                },
+                {
+                    path: '/profile',
+                    name: 'profile',
+                    component: UserProfile,
+                },
+                {
+                    path: '/movies',
+                    name: 'movies',
+                    component: MovieList,
+                },
+            ],
         },
     ],
 });

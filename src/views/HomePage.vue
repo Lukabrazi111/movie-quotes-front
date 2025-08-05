@@ -1,10 +1,12 @@
 <template>
-    <HeaderBase />
+    <main>
+        <HeaderBase />
 
-    <!-- MainContent -->
-    <MainContent />
+        <!-- MainContent -->
+        <MainContent />
 
-    <FooterBase />
+        <FooterBase />
+    </main>
 </template>
 
 <script>
@@ -13,7 +15,7 @@ import FooterBase from '@/components/FooterBase.vue';
 import MainContent from '@/components/auth/MainContent.vue';
 
 export default {
-    name: 'NewsFeed',
+    name: 'HomePage',
 
     components: {
         MainContent,
