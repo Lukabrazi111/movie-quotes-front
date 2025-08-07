@@ -6,12 +6,12 @@
                     <router-link
                         :to="{ name: 'profile' }"
                         class="flex items-center space-x-4 w-full py-1"
-                        :class="{
-                            'text-red-500': $route.matched.some(({ name }) => name === 'profile'),
-                        }"
                     >
                         <img
                             class="w-full max-w-16 h-16 object-cover rounded-full"
+                            :class="{
+                                'border-red-600 border-2': $route.name === 'profile',
+                            }"
                             src="/src/assets/images/person.jpg"
                             alt="profile-image"
                         />
@@ -23,21 +23,15 @@
                     <router-link
                         :to="{ name: 'news-feed' }"
                         class="pl-4 flex items-center space-x-8 w-full py-5 pt-7"
-                        :class="{
-                            'text-red-500': $route.matched.some(({ name }) => name === 'news-feed'),
-                        }"
                     >
-                        <HomeIcon />
+                        <HomeIcon :color="homeIconColor" />
                         <span>News Feed</span>
                     </router-link>
                     <router-link
                         :to="{ name: 'movies' }"
                         class="pl-4 flex items-center space-x-8 w-full py-5"
-                        :class="{
-                            'text-red-500': $route.matched.some(({ name }) => name === 'movies'),
-                        }"
                     >
-                        <CameraIcon />
+                        <CameraIcon :color="cameraIconColor" />
                         <span>List of movies</span>
                     </router-link>
                 </aside>
@@ -55,5 +49,35 @@ import HomeIcon from '@/components/icons/sidebar/HomeIcon.vue';
 export default {
     name: 'AppLayout',
     components: { HomeIcon, CameraIcon, BaseContainer },
+
+    data() {
+        return {
+            homeIconColor: 'white',
+            cameraIconColor: 'white',
+        };
+    },
+
+    methods: {
+        setColorOnRoute(name) {
+            this.homeIconColor = 'white';
+            this.cameraIconColor = 'white';
+
+            if (name === 'news-feed') {
+                this.homeIconColor = 'red';
+            } else if (name === 'movies') {
+                this.cameraIconColor = 'red';
+            }
+        },
+    },
+
+    mounted() {
+        this.setColorOnRoute(this.$route.name);
+    },
+
+    watch: {
+        $route(to) {
+            this.setColorOnRoute(to.name);
+        },
+    },
 };
 </script>
