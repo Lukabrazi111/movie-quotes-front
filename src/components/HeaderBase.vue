@@ -7,7 +7,14 @@
         ref="headerRef"
     >
         <template v-slot:nav-content>
-            <BellNotificationIcon v-if="this.authStore.isAuthenticated" />
+            <div class="relative">
+                <div
+                    class="bg-red-500 text-white text-center rounded-full absolute -top-2.5 -right-2 w-6 h-6"
+                >
+                    3
+                </div>
+                <BellNotificationIcon v-if="this.authStore.isAuthenticated" />
+            </div>
 
             <div class="space-x-6" v-if="!this.authStore.isAuthenticated">
                 <BaseButton @click="toggleModal('visibleSignUpModal')">Sign up</BaseButton>

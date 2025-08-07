@@ -42,9 +42,7 @@
                     </router-link>
                 </aside>
 
-                <div>
-                    <slot />
-                </div>
+                <slot />
             </div>
         </BaseContainer>
     </section>
