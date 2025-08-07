@@ -1,12 +1,10 @@
 <template>
-    <section class="bg-gradient-primary py-6 h-[100vh]">
+    <section class="bg-gradient-primary py-6 min-h-full">
         <BaseContainer>
             <div class="flex">
-                <aside
-                    class="text-white flex flex-col items-start justify-start w-full max-w-sm"
-                >
+                <aside class="text-white flex flex-col items-start justify-start w-full max-w-sm">
                     <router-link
-                        :to="{name: 'profile'}"
+                        :to="{ name: 'profile' }"
                         class="flex items-center space-x-4 w-full py-1"
                         :class="{
                             'text-red-500': $route.matched.some(({ name }) => name === 'profile'),
@@ -23,7 +21,7 @@
                         </div>
                     </router-link>
                     <router-link
-                        :to="{name: 'news-feed'}"
+                        :to="{ name: 'news-feed' }"
                         class="pl-4 flex items-center space-x-8 w-full py-5 pt-7"
                         :class="{
                             'text-red-500': $route.matched.some(({ name }) => name === 'news-feed'),
@@ -33,12 +31,10 @@
                         <span>News Feed</span>
                     </router-link>
                     <router-link
-                        :to="{name: 'movies'}"
+                        :to="{ name: 'movies' }"
                         class="pl-4 flex items-center space-x-8 w-full py-5"
                         :class="{
-                            'text-red-500': $route.matched.some(
-                                ({ name }) => name === 'movies',
-                            ),
+                            'text-red-500': $route.matched.some(({ name }) => name === 'movies'),
                         }"
                     >
                         <CameraIcon />
@@ -46,7 +42,9 @@
                     </router-link>
                 </aside>
 
-                <slot />
+                <div class="overflow-scroll">
+                    <slot />
+                </div>
             </div>
         </BaseContainer>
     </section>

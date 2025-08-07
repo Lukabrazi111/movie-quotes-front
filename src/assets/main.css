@@ -20,8 +20,9 @@ button {
     --color-primary-hover: #CC0E10;
     --color-disabled: #EC4C57;
 
-    /* Main dark */
+    /* Dark colors */
     --color-primary-dark: #181623;
+    --color-border-gray: #EFEFEF4D;
 
     /* Form background color */
     --color-secondary-dark: #222030;

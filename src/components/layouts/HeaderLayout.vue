@@ -1,7 +1,7 @@
 <template>
     <header>
         <BaseContainer>
-            <nav class="flex items-center justify-between px-4 py-8">
+            <nav class="flex items-center justify-between px-4 py-6">
                 <div>
                     <h1 class="text-cream uppercase text-md font-helvetica font-normal">
                         Movie quotes
