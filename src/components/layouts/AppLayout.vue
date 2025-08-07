@@ -1,7 +1,7 @@
 <template>
-    <section class="bg-gradient-primary py-6 min-h-full">
+    <section class="bg-gradient-primary py-6">
         <BaseContainer>
-            <div class="flex">
+            <div class="flex min-h-screen">
                 <aside class="text-white flex flex-col items-start justify-start w-full max-w-sm">
                     <router-link
                         :to="{ name: 'profile' }"
@@ -42,7 +42,7 @@
                     </router-link>
                 </aside>
 
-                <div class="overflow-scroll">
+                <div>
                     <slot />
                 </div>
             </div>
