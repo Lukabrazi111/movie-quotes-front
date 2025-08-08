@@ -3,6 +3,7 @@
         <BaseContainer>
             <div class="flex min-h-screen">
                 <aside class="text-white flex flex-col items-start justify-start w-full max-w-sm">
+                    <!-- Profile -->
                     <router-link
                         :to="{ name: 'profile' }"
                         class="flex items-center space-x-4 w-full py-1"
@@ -20,6 +21,7 @@
                             <span class="text-gray-400">Edit your profile</span>
                         </div>
                     </router-link>
+                    <!-- News Feed -->
                     <router-link
                         :to="{ name: 'news-feed' }"
                         class="pl-4 flex items-center space-x-8 w-full py-5 pt-7"
@@ -27,6 +29,7 @@
                         <HomeIcon :color="homeIconColor" />
                         <span>News Feed</span>
                     </router-link>
+                    <!-- Movies -->
                     <router-link
                         :to="{ name: 'movies' }"
                         class="pl-4 flex items-center space-x-8 w-full py-5"

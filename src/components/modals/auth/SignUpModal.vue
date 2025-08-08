@@ -6,18 +6,18 @@
             <div class="space-y-5">
                 <div class="space-y-0.5">
                     <CustomInput
-                        v-model="data.name"
+                        v-model="data.username"
                         rules="required|lowercase|min:3|max:15"
-                        name="signup_name"
-                        labelName="name"
+                        name="signup_username"
+                        labelName="Username"
                         type="text"
                         placeholder="At least 3 & max.15 lower case characters"
                     />
-                    <ErrorMessage class="text-red-400" name="signup_name" />
+                    <ErrorMessage class="text-red-400" name="signup_username" />
                     <!-- Backend error -->
                     <FieldError
-                        v-if="this.errors?.signup_name"
-                        :message="this.errors?.signup_name"
+                        v-if="this.errors?.signup_username"
+                        :message="this.errors?.signup_username"
                     />
                 </div>
 
@@ -33,7 +33,7 @@
                     <ErrorMessage class="text-red-400" name="signup_email" />
                     <!-- Backend error -->
                     <FieldError
-                        v-if="this.errors?.signup_name"
+                        v-if="this.errors?.signup_email"
                         :message="this.errors?.signup_email"
                     />
                 </div>
@@ -118,7 +118,7 @@ export default {
     data() {
         return {
             data: {
-                name: '',
+                username: '',
                 email: '',
                 password: '',
                 password_confirmation: '',
@@ -145,7 +145,7 @@ export default {
 
                 if (response.status === 422) {
                     const fieldMap = {
-                        name: 'signup_name',
+                        username: 'signup_username',
                         email: 'signup_email',
                     };
 

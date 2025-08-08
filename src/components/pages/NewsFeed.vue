@@ -1,27 +1,16 @@
 <template>
-    <section class="w-full max-w-3xl">
+    <AuthContentLayout>
         <NewsHeader />
         <NewsList />
-    </section>
+    </AuthContentLayout>
 </template>
 <script>
 import NewsHeader from '@/components/news-feed/NewsHeader.vue';
 import NewsList from '@/components/news-feed/NewsList.vue';
+import AuthContentLayout from '@/components/layouts/AuthContentLayout.vue';
 
 export default {
     name: 'NewsFeed',
-    components: { NewsList, NewsHeader },
-
-    data() {
-        return {
-            isOpenSearchInput: false,
-        };
-    },
-
-    methods: {
-        toggleSearchInput() {
-            this.isOpenSearchInput = !this.isOpenSearchInput;
-        },
-    },
+    components: { NewsList, NewsHeader, AuthContentLayout },
 };
 </script>

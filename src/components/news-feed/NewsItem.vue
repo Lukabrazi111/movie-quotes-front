@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-[#11101A] rounded-lg px-5 py-4 space-y-4">
+    <div class="bg-content-dark rounded-lg px-5 py-4 space-y-4">
         <router-link :to="{ name: 'profile' }" class="flex items-center space-x-4 w-full py-1">
             <img
                 class="w-full max-w-12 h-12 object-cover rounded-full"
@@ -57,32 +57,16 @@
         </section>
 
         <!-- Comment post -->
-        <div class="flex items-center space-x-4">
-            <router-link :to="{ name: 'profile' }" class="w-full max-w-12 h-12 transform">
-                <img
-                    class="w-full max-w-12 h-12 object-cover rounded-full"
-                    src="/src/assets/images/person.jpg"
-                    alt="profile-image"
-                />
-            </router-link>
-
-            <div class="bg-[#24222F] w-full rounded-lg">
-                <input
-                    class="w-full py-2 px-3 focus:outline-0 placeholder:text-[#CED4DA]"
-                    type="text"
-                    placeholder="Write a comment"
-                    name="comment"
-                />
-            </div>
-        </div>
+        <NewsCommentPost />
     </div>
 </template>
 <script>
 import CommentIcon from '@/components/icons/news-feed/CommentIcon.vue';
 import LikeIcon from '@/components/icons/news-feed/LikeIcon.vue';
+import NewsCommentPost from '@/components/news-feed/NewsCommentPost.vue';
 
 export default {
     name: 'NewsItem',
-    components: { LikeIcon, CommentIcon },
+    components: { NewsCommentPost, LikeIcon, CommentIcon },
 };
 </script>

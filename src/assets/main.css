@@ -24,8 +24,9 @@ button {
     --color-primary-dark: #181623;
     --color-border-gray: #EFEFEF4D;
 
-    /* Form background color */
+    /* Background colors */
     --color-secondary-dark: #222030;
+    --color-content-dark: #11101A;
 
     /* Light colors */
     --color-cream: #DDCCAA;
