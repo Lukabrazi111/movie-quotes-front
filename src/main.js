@@ -1,14 +1,14 @@
 import './assets/main.css';
 import '@/configs/vee-validate/rules.js';
 
+import App from './App.vue';
+import router from './router';
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
+import clickOutsideDirective from '@/helpers/click-outside-directive.js';
 
 // Packages
 import PrimeVue from 'primevue/config';
-
-import App from './App.vue';
-import router from './router';
 
 // PrimeVue
 import Aura from '@primeuix/themes/aura';
@@ -24,7 +24,11 @@ app.use(PrimeVue, {
     },
 });
 
+// Use apps
 app.use(createPinia());
 app.use(router);
+
+// Directives
+app.directive('click-outside', clickOutsideDirective);
 
 app.mount('#app');
