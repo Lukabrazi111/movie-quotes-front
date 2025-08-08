@@ -7,7 +7,7 @@
         ref="headerRef"
     >
         <template v-slot:nav-content>
-            <div class="relative">
+            <div class="relative" v-if="this.authStore.isAuthenticated">
                 <div
                     class="bg-red-500 text-white text-center rounded-full absolute -top-2.5 -right-2 w-6 h-6"
                 >
