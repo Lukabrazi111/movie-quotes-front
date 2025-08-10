@@ -13,8 +13,13 @@
                     class="w-full max-w-sm px-2 py-1.5 text-gray-900 bg-gray-200 border rounded-lg focus:outline-0"
                     placeholder="Username"
                     v-model="this.localUser.username"
+                    disabled
                 />
-                <button type="button" @click="$emit('toggleEditableUsername', true)" class="hover:underline">
+                <button
+                    type="button"
+                    @click="$emit('toggleEditableUsername')"
+                    class="hover:underline"
+                >
                     Edit
                 </button>
             </div>
@@ -29,13 +34,14 @@
                 id="new_username"
                 class="w-full max-w-sm px-2 py-1.5 text-gray-900 bg-gray-200 border rounded-lg focus:outline-0"
                 placeholder="Enter new username"
-                v-model="user.new_username"
+                v-model="user.username"
             />
         </div>
 
         <div class="flex flex-col w-full space-y-1">
             <CustomInput
                 :required="false"
+                :disabled="true"
                 class="w-full max-w-sm"
                 v-model="this.localUser.email"
                 rules="required|email"
@@ -56,9 +62,16 @@
                     id="password"
                     class="w-full max-w-sm px-2 py-1.5 text-gray-900 bg-gray-200 border rounded-lg focus:outline-0"
                     placeholder="Password"
-                    :value="user.password"
+                    value="password"
+                    disabled
                 />
-                <button type="button" @click="$emit('toggleEditablePassword', true)" class="hover:underline">Edit</button>
+                <button
+                    type="button"
+                    @click="$emit('toggleEditablePassword')"
+                    class="hover:underline"
+                >
+                    Edit
+                </button>
             </div>
         </div>
 
@@ -82,7 +95,7 @@
                 <PasswordInput
                     class="w-full! max-w-sm!"
                     :required="false"
-                    v-model="user.new_password"
+                    v-model="user.password"
                     rules="required"
                     name="new_password"
                     labelName="New password"
@@ -96,7 +109,7 @@
                 <PasswordInput
                     class="w-full! max-w-sm!"
                     :required="false"
-                    v-model="user.new_password_confirmation"
+                    v-model="user.password_confirmation"
                     rules="required"
                     name="new_password_confirmation"
                     labelName="Confirm new password"
@@ -137,11 +150,8 @@ export default {
             localUser: { ...this.currentUser },
             user: {
                 username: '',
-                email: '',
                 password: 'password123',
-                new_username: '',
-                new_password: '',
-                new_password_confirmation: '',
+                password_confirmation: '',
             },
         };
     },

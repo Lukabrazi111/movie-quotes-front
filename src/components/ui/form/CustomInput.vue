@@ -8,6 +8,7 @@
             <input
                 @input="$emit('update:modelValue', $event.target.value)"
                 v-bind="field"
+                :disabled="disabled"
                 :type="type"
                 :id="name"
                 :name="name"
@@ -53,6 +54,11 @@ export default {
         required: {
             type: Boolean,
             default: true,
+            required: false,
+        },
+        disabled: {
+            type: Boolean,
+            default: false,
             required: false,
         },
         rules: {

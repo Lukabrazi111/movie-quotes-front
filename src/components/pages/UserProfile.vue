@@ -23,9 +23,12 @@
             />
         </section>
 
-        <div v-if="editableUsername || editablePassword" class="flex items-center space-x-8 justify-end mt-10">
-            <button class="text-gray-main hover:text-white transition-colors">Cancel</button>
-            <BaseButton>Save Changes</BaseButton>
+        <div
+            v-if="editableUsername || editablePassword"
+            class="flex items-center space-x-8 justify-end mt-10"
+        >
+            <button @click="cancelUpdate" class="text-gray-main hover:text-white transition-colors">Cancel</button>
+            <BaseButton @click="updateProfile">Save Changes</BaseButton>
         </div>
     </AuthContentLayout>
 </template>
@@ -35,6 +38,7 @@ import UserProfileForm from '@/components/user-profile/UserProfileForm.vue';
 import BaseButton from '@/components/ui/buttons/BaseButton.vue';
 import { useAuthStore } from '@/stores/user/auth.js';
 import { mapState } from 'pinia';
+import { axios } from '@/configs/axios/index.js';
 
 export default {
     name: 'UserProfile',
@@ -44,6 +48,11 @@ export default {
         return {
             editableUsername: false,
             editablePassword: false,
+            formUser: {
+                username: '',
+                password: '',
+                password_confirmation: '',
+            },
         };
     },
 
@@ -59,6 +68,22 @@ export default {
         toggleEditablePassword() {
             this.editablePassword = !this.editablePassword;
         },
-    }
+
+        updateProfile() {
+            try {
+                const response = axios.put('/profile', this.formUser);
+
+                console.log(response);
+            } catch (error) {
+                const response = error.response;
+                console.error(response);
+            }
+        },
+
+        cancelUpdate() {
+            this.editableUsername = false;
+            this.editablePassword = false;
+        }
+    },
 };
 </script>
