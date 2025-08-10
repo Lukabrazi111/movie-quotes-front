@@ -14,10 +14,16 @@
             </div>
 
             <!-- Form -->
-            <UserProfileForm />
+            <UserProfileForm
+                :currentUser="this.currentUser"
+                @toggleEditableUsername="toggleEditableUsername"
+                @toggleEditablePassword="toggleEditablePassword"
+                :editableUsername="editableUsername"
+                :editablePassword="editablePassword"
+            />
         </section>
 
-        <div class="flex items-center space-x-8 justify-end mt-10">
+        <div v-if="editableUsername || editablePassword" class="flex items-center space-x-8 justify-end mt-10">
             <button class="text-gray-main hover:text-white transition-colors">Cancel</button>
             <BaseButton>Save Changes</BaseButton>
         </div>
@@ -27,9 +33,32 @@
 import AuthContentLayout from '@/components/layouts/AuthContentLayout.vue';
 import UserProfileForm from '@/components/user-profile/UserProfileForm.vue';
 import BaseButton from '@/components/ui/buttons/BaseButton.vue';
+import { useAuthStore } from '@/stores/user/auth.js';
+import { mapState } from 'pinia';
 
 export default {
     name: 'UserProfile',
     components: { BaseButton, AuthContentLayout, UserProfileForm },
+
+    data() {
+        return {
+            editableUsername: false,
+            editablePassword: false,
+        };
+    },
+
+    computed: {
+        ...mapState(useAuthStore, ['currentUser']),
+    },
+
+    methods: {
+        toggleEditableUsername() {
+            this.editableUsername = !this.editableUsername;
+        },
+
+        toggleEditablePassword() {
+            this.editablePassword = !this.editablePassword;
+        },
+    }
 };
 </script>
