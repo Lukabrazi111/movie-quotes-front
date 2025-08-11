@@ -15,7 +15,6 @@
         <div class="flex flex-col items-center justify-center space-y-6 w-full max-w-sm mt-24">
             <div class="flex flex-col space-y-1 w-full">
                 <label for="username">Username</label>
-                <!-- TODO: Placeholder needs to be changed on username from database -->
                 <div class="flex items-center space-x-4 w-full">
                     <input
                         type="text"
