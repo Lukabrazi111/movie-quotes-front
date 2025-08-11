@@ -3,8 +3,8 @@ import { axios } from '@/configs/axios/index.js';
 
 export const useAuthStore = defineStore('auth', {
     state: () => ({
-        token: localStorage.getItem('auth_token') || null,
-        user: JSON.parse(localStorage.getItem('user')) || null,
+        token: localStorage.getItem('auth_token') || '',
+        user: JSON.parse(localStorage.getItem('user')) || {},
     }),
 
     getters: {
@@ -39,8 +39,8 @@ export const useAuthStore = defineStore('auth', {
         },
 
         logout() {
-            this.token = null;
-            this.user = null;
+            this.token = '';
+            this.user = {};
             localStorage.removeItem('auth_token');
             localStorage.removeItem('user');
         },
