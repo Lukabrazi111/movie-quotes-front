@@ -26,12 +26,19 @@
         </div>
 
         <div class="flex flex-col items-center justify-center space-y-6 w-full max-w-sm mt-24">
-            <!-- Success page -->
+            <!-- Success notification -->
             <div
                 v-if="successMessage"
                 class="bg-green-400 text-white w-full py-1 px-4 text-center rounded-lg font-semibold!"
             >
                 {{ successMessage }}
+            </div>
+
+            <div
+                v-if="errorMessage"
+                class="bg-red-400 text-white w-full py-1 px-4 text-center rounded-lg font-semibold!"
+            >
+                {{ errorMessage }}
             </div>
 
             <div class="flex flex-col space-y-1 w-full">
@@ -219,6 +226,7 @@ export default {
                 password_confirmation: '',
             },
             successMessage: '',
+            errorMessage: '',
             lowerChars: false,
             eightOrMoreChars: false,
         };
@@ -294,9 +302,12 @@ export default {
                 }
             } catch (error) {
                 const response = error.response;
-                console.log(response);
-                if(response.status === 422) {
 
+                if (response.status === 422) {
+                    this.errorMessage = response.data?.message;
+                    setTimeout(() => {
+                        this.errorMessage = '';
+                    }, 5000);
                 }
             }
         },
