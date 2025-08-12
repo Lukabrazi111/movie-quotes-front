@@ -13,11 +13,15 @@
                             :class="{
                                 'border-red-600 border-2': $route.name === 'profile',
                             }"
-                            src="/src/assets/images/person.jpg"
+                            :src="
+                                this.currentUser?.avatar
+                                    ? this.currentUser.avatar
+                                    : '/public/images/profile/no-profile-picture.jpg'
+                            "
                             alt="profile-image"
                         />
                         <div class="flex flex-col">
-                            <h3 class="text-lg">Luka Khangoshvili</h3>
+                            <h3 class="text-lg">{{ this.currentUser.username }}</h3>
                             <span class="text-gray-400">Edit your profile</span>
                         </div>
                     </router-link>
@@ -48,6 +52,8 @@
 import BaseContainer from '@/components/BaseContainer.vue';
 import CameraIcon from '@/components/icons/sidebar/CameraIcon.vue';
 import HomeIcon from '@/components/icons/sidebar/HomeIcon.vue';
+import { useAuthStore } from '@/stores/user/auth.js';
+import { mapState } from 'pinia';
 
 export default {
     name: 'AppLayout',
@@ -58,6 +64,10 @@ export default {
             homeIconColor: 'white',
             cameraIconColor: 'white',
         };
+    },
+
+    computed: {
+        ...mapState(useAuthStore, ['currentUser']),
     },
 
     methods: {

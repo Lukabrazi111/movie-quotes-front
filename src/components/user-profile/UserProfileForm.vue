@@ -284,8 +284,6 @@ export default {
                         },
                     });
 
-                    console.log(response);
-
                     if (response.status === 200) {
                         this.localCurrentUser.avatar = response.data?.user?.avatar;
                         this.successMessage = response.data?.message;
@@ -295,7 +293,11 @@ export default {
                     }
                 }
             } catch (error) {
-                console.error(error);
+                const response = error.response;
+                console.log(response);
+                if(response.status === 422) {
+
+                }
             }
         },
 
