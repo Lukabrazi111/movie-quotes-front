@@ -102,8 +102,20 @@
 
                 <div>
                     <ul class="flex flex-col items-start space-y-1">
-                        <li class="text-gray-400"><span>•</span> 8 or more characters</li>
-                        <li><span class="text-green-400">•</span> 15 lowercase character</li>
+                        <li
+                            class="text-gray-400"
+                            :class="{
+                                'text-white': eightOrMoreChars,
+                            }"
+                        >
+                            <span :class="{'text-green-400': eightOrMoreChars}">•</span> 8 or more characters
+                        </li>
+                        <li
+                            class="text-gray-400"
+                            :class="{'text-white': lowerChars}"
+                        >
+                            <span :class="{'text-green-400': lowerChars}">•</span> lowercase character
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -112,6 +124,7 @@
             <div class="w-full space-y-8">
                 <div v-show="this.editablePassword" class="flex flex-col w-full space-y-1 pr-10.5">
                     <PasswordInput
+                        @input="checkPasswordRule"
                         class="w-full! max-w-sm!"
                         :required="false"
                         v-model="user.password"
@@ -194,6 +207,8 @@ export default {
                 password_confirmation: '',
             },
             successMessage: '',
+            lowerChars: false,
+            eightOrMoreChars: false,
         };
     },
 
@@ -221,7 +236,7 @@ export default {
                             username: '',
                             password: '',
                             password_confirmation: '',
-                        }
+                        };
 
                         if (payload.username) {
                             this.localCurrentUser.username = payload.username;
@@ -247,9 +262,10 @@ export default {
             }
         },
 
-        clearErrorMessages() {
-            this.errors.username = '';
-            this.errors.password = '';
+        checkPasswordRule() {
+            const value = this.user?.password;
+            this.eightOrMoreChars = value.length >= 8;
+            this.lowerChars = (value && value === value.toLowerCase());
         },
     },
 
