@@ -6,11 +6,23 @@
         <!-- Image -->
         <div class="flex flex-col items-center justify-center absolute -top-24 space-y-4">
             <img
-                src="/src/assets/images/person.jpg"
+                :src="
+                    localCurrentUser?.avatar
+                        ? localCurrentUser.avatar
+                        : '/public/images/profile/no-profile-picture.jpg'
+                "
                 alt="user-profile"
                 class="w-full max-w-44 h-44 rounded-full object-cover"
             />
-            <span>Upload new photo</span>
+            <label for="avatar" class="hover:underline cursor-pointer">Upload new photo</label>
+            <input
+                @change="handleImageUpload"
+                hidden
+                type="file"
+                id="avatar"
+                name="avatar"
+                accept="image/*"
+            />
         </div>
 
         <div class="flex flex-col items-center justify-center space-y-6 w-full max-w-sm mt-24">
@@ -108,13 +120,12 @@
                                 'text-white': eightOrMoreChars,
                             }"
                         >
-                            <span :class="{'text-green-400': eightOrMoreChars}">•</span> 8 or more characters
+                            <span :class="{ 'text-green-400': eightOrMoreChars }">•</span> 8 or more
+                            characters
                         </li>
-                        <li
-                            class="text-gray-400"
-                            :class="{'text-white': lowerChars}"
-                        >
-                            <span :class="{'text-green-400': lowerChars}">•</span> lowercase character
+                        <li class="text-gray-400" :class="{ 'text-white': lowerChars }">
+                            <span :class="{ 'text-green-400': lowerChars }">•</span> lowercase
+                            character
                         </li>
                     </ul>
                 </div>
@@ -202,6 +213,7 @@ export default {
                 password: '',
             },
             user: {
+                avatar: {},
                 username: '',
                 password: '',
                 password_confirmation: '',
@@ -215,16 +227,7 @@ export default {
     methods: {
         async updateProfile() {
             try {
-                let payload = {};
-
-                if (this.user?.username.trim() !== '') payload.username = this.user.username;
-                if (
-                    this.user?.password.trim() !== '' &&
-                    this.user?.password_confirmation.trim() !== ''
-                ) {
-                    payload.password = this.user.password;
-                    payload.password_confirmation = this.user.password_confirmation;
-                }
+                const payload = this.buildProfilePayload();
 
                 if (payload.username || payload.password) {
                     const response = await axios.put('/profile', payload);
@@ -241,6 +244,8 @@ export default {
                         if (payload.username) {
                             this.localCurrentUser.username = payload.username;
                         }
+
+                        this.$emit('cancelUpdate');
 
                         setTimeout(() => {
                             this.successMessage = '';
@@ -262,10 +267,57 @@ export default {
             }
         },
 
+        async handleImageUpload(event) {
+            this.user.avatar = await event.target.files[0];
+
+            try {
+                const profileImage = this.user?.avatar;
+
+                let formData = new FormData();
+                formData.append('avatar', profileImage);
+                formData.append('_method', 'put');
+
+                if (profileImage) {
+                    const response = await axios.post('/profile', formData, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data',
+                        },
+                    });
+
+                    console.log(response);
+
+                    if (response.status === 200) {
+                        this.localCurrentUser.avatar = response.data?.user?.avatar;
+                        this.successMessage = response.data?.message;
+                        setTimeout(() => {
+                            this.successMessage = '';
+                        }, 3000);
+                    }
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        },
+
+        buildProfilePayload() {
+            let payload = {};
+
+            if (this.user?.username.trim() !== '') payload.username = this.user.username;
+            if (
+                this.user?.password.trim() !== '' &&
+                this.user?.password_confirmation.trim() !== ''
+            ) {
+                payload.password = this.user.password;
+                payload.password_confirmation = this.user.password_confirmation;
+            }
+
+            return payload;
+        },
+
         checkPasswordRule() {
             const value = this.user?.password;
             this.eightOrMoreChars = value.length >= 8;
-            this.lowerChars = (value && value === value.toLowerCase());
+            this.lowerChars = value && value === value.toLowerCase();
         },
     },
 
