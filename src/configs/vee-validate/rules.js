@@ -10,7 +10,7 @@ Object.entries(all).forEach(([name, rule]) => {
 
 
 defineRule('lowercase', (value, _, ctx) => {
-    if (value === value.toLowerCase()) {
+    if (value && value === value.toLowerCase()) {
         return true;
     }
     return `${ctx.field} must be in lowercase`;
