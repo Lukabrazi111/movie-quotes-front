@@ -144,7 +144,7 @@ export default {
                 const response = error.response;
 
                 if (response?.status === 401) {
-                    this.errorMessage = response.data.message;
+                    this.errorMessage = response.data?.message;
                 }
             }
         },
