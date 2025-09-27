@@ -52,7 +52,7 @@ export default {
             required: true,
         },
     },
-
+    // TODO: need to change this to computed property
     created() {
         this.useScrollToSection = useScrollToSectionStore();
     },

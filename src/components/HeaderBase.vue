@@ -57,6 +57,7 @@
     />
     <ResetPasswordModal
         @switchLoginModal="toggleModal('visibleLoginModal', 'visibleResetPasswordModal')"
+        @emailSentModal="toggleModal('visibleEmailPasswordRecoveryModal')"
         v-show="visibleResetPasswordModal"
         v-model="visibleResetPasswordModal"
     />
@@ -73,6 +74,13 @@
         "
         v-show="visibleEmailVerifiedModal"
         v-model="visibleEmailVerifiedModal"
+    />
+    <!-- Need to finish this modal part -->
+    <EmailPasswordRecoveryModal
+        @switchModal="handleSwitchModal"
+        @switchLoginModal="toggleModal('visibleLoginModal', 'visibleEmailPasswordRecoveryModal')"
+        v-show="visibleEmailPasswordRecoveryModal"
+        v-model="visibleEmailPasswordRecoveryModal"
     />
     <!-- Error Modals -->
     <LinkExpiredModal
@@ -97,10 +105,12 @@ import { mapStores } from 'pinia';
 import { useScrollToSectionStore } from '@/stores/scroll-to-section.js';
 import { useAuthStore } from '@/stores/user/auth.js';
 import { axios } from '@/configs/axios/index.js';
+import EmailPasswordRecoveryModal from '@/components/modals/success-info/EmailPasswordRecoveryModal.vue';
 
 export default {
     name: 'HeaderBase',
     components: {
+        EmailPasswordRecoveryModal,
         BellNotificationIcon,
         LinkExpiredModal,
         EmailVerifiedModal,
@@ -121,6 +131,7 @@ export default {
             visibleEmailSentModal: false,
             visibleEmailVerifiedModal: false,
             visibleLinkExpiredModal: false,
+            visibleEmailPasswordRecoveryModal: false,
         };
     },
 
