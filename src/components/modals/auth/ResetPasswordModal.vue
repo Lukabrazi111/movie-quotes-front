@@ -1,5 +1,5 @@
 <template>
-    <ModalLayout @click="closeModal">
+    <ModalLayout>
         <FormSection @submit="resetPassword" novalidate class="w-full px-10 md:px-20">
             <FormTitleModal
                 title="Create new password"
@@ -56,6 +56,7 @@ import ArrowLeft from '@/components/icons/modal/ArrowLeftIcon.vue';
 import FieldError from '@/components/ui/form/FieldError.vue';
 import PasswordInput from '@/components/ui/form/PasswordInput.vue';
 import { ErrorMessage, Form as FormSection } from 'vee-validate';
+import { axios } from '@/configs/axios/index.js';
 
 export default {
     name: 'ResetPasswordModal',
@@ -70,14 +71,30 @@ export default {
         ErrorMessage,
     },
 
+    props: {
+        modelValue: Boolean,
+    },
+
     data() {
         return {
             data: {
                 password: '',
                 password_confirmation: '',
             },
+            queryParams: {},
             errors: {},
         };
+    },
+
+    mounted() {
+        if (this.$route.path === '/reset-password') {
+            this.queryParams = {
+                expires: this.$route.query.expires,
+                user: this.$route.query.user,
+                signature: this.$route.query.signature,
+                token: this.$route.query.token,
+            };
+        }
     },
 
     methods: {
@@ -85,8 +102,17 @@ export default {
             return this.$emit('update:modelValue', false);
         },
 
-        resetPassword() {
-            return 'Password reset';
+        async resetPassword() {
+            try {
+                const response = await axios.post('/reset-password', this.data, {
+                    params: this.queryParams,
+                });
+
+                console.log(response);
+            } catch (error) {
+                const response = error.response;
+                console.log(response);
+            }
         },
     },
 };

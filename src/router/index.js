@@ -45,11 +45,13 @@ const router = createRouter({
                     path: '/reset-password',
                     name: 'reset-password',
                     component: ResetPasswordModal,
+                    beforeEnter: [resetPasswordParams],
                 },
                 {
                     path: '/verify',
                     name: 'verify-email',
                     component: EmailVerifiedModal,
+                    beforeEnter: [verifyEmailParams],
                 },
             ],
         },
@@ -77,6 +79,18 @@ const router = createRouter({
         },
     ],
 });
+
+function resetPasswordParams(to) {
+    if (!to.query.signature || !to.query.expires || !to.query.token || !to.query.user) {
+        return { name: 'landing' };
+    }
+}
+
+function verifyEmailParams(to) {
+    if (!to.query.signature || !to.query.expires || !to.query.user) {
+        return { name: 'landing' };
+    }
+}
 
 router.beforeEach(async (to, _, next) => {
     const authUser = useAuthStore();

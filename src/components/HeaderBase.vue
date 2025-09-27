@@ -95,7 +95,7 @@
     <!-- Error Modals -->
     <LinkExpiredModal
         @switchEmailSentModal="toggleModal('visibleEmailSentModal')"
-        v-show="visibleLinkExpiredModal"
+        v-if="visibleLinkExpiredModal"
         v-model="visibleLinkExpiredModal"
     />
 </template>
@@ -230,7 +230,7 @@ export default {
             return {
                 login: 'visibleLoginModal',
                 register: 'visibleSignUpModal',
-                'forgot-password': 'visibleForgotPasswordModal',
+                'reset-password': 'visibleResetPasswordModal',
             };
         },
 
