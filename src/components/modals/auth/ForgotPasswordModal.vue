@@ -1,5 +1,5 @@
 <template>
-    <ModalLayout @click="toggleModal">
+    <ModalLayout @click="closeModal">
         <FormSection @submit="forgotPasswordEmailSend" novalidate class="w-full px-10 md:px-20">
             <FormTitleModal
                 title="Forgot password?"
@@ -69,12 +69,12 @@ export default {
     },
 
     methods: {
-        toggleModal() {
-            return this.$emit('update:modelValue', !this.modelValue);
+        closeModal() {
+            return this.$emit('update:modelValue', false);
         },
 
         closeModalWithSuccess() {
-            this.$emit('update:modelValue', false);
+            this.closeModal();
             this.$emit('emailSentModal', true);
         },
 
@@ -94,8 +94,6 @@ export default {
                 if (response.status === 404) {
                     this.errors.email = response.data?.message;
                 }
-
-                
             }
         },
     },

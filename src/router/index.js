@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import LandingPage from '../views/LandingPage.vue';
 import SignUpModal from '@/components/modals/auth/SignUpModal.vue';
 import LoginModal from '@/components/modals/auth/LoginModal.vue';
-import ResetPasswordModal from '@/components/modals/auth/ResetPasswordModal.vue';
+import ForgotPasswordModal from '@/components/modals/auth/ForgotPasswordModal.vue';
 import NotFound from '@/views/NotFound.vue';
 import EmailVerifiedModal from '@/components/modals/success-info/EmailVerifiedModal.vue';
 import HomePage from '@/views/HomePage.vue';
@@ -36,9 +36,9 @@ const router = createRouter({
                     component: LoginModal,
                 },
                 {
-                    path: '/reset-password',
-                    name: 'reset-password',
-                    component: ResetPasswordModal,
+                    path: '/forgot-password',
+                    name: 'forgot-password',
+                    component: ForgotPasswordModal,
                 },
                 {
                     path: '/verify',

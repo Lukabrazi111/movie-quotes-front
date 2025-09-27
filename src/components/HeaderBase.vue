@@ -19,7 +19,7 @@
             <div class="space-x-6" v-if="!this.authStore.isAuthenticated">
                 <BaseButton @click="toggleModal('visibleSignUpModal')">Sign up</BaseButton>
                 <SecondaryButton
-                    @click="toggleModal('visibleLoginModal', 'visibleResetPasswordModal')"
+                    @click="toggleModal('visibleLoginModal', 'visibleForgotPasswordModal')"
                 >
                     Log in
                 </SecondaryButton>
@@ -51,15 +51,15 @@
     />
     <LoginModal
         @switchModal="handleSwitchModal"
-        @switchResetPasswordModal="toggleModal('visibleResetPasswordModal', 'visibleLoginModal')"
+        @switchResetPasswordModal="toggleModal('visibleForgotPasswordModal', 'visibleLoginModal')"
         v-show="visibleLoginModal"
         v-model="visibleLoginModal"
     />
-    <ResetPasswordModal
-        @switchLoginModal="toggleModal('visibleLoginModal', 'visibleResetPasswordModal')"
+    <ForgotPasswordModal
+        @switchLoginModal="toggleModal('visibleLoginModal', 'visibleForgotPasswordModal')"
         @emailSentModal="toggleModal('visibleEmailPasswordRecoveryModal')"
-        v-show="visibleResetPasswordModal"
-        v-model="visibleResetPasswordModal"
+        v-show="visibleForgotPasswordModal"
+        v-model="visibleForgotPasswordModal"
     />
     <!-- Success Modals -->
     <EmailSentModal
@@ -75,7 +75,6 @@
         v-show="visibleEmailVerifiedModal"
         v-model="visibleEmailVerifiedModal"
     />
-    <!-- Need to finish this modal part -->
     <EmailPasswordRecoveryModal
         @switchModal="handleSwitchModal"
         @switchLoginModal="toggleModal('visibleLoginModal', 'visibleEmailPasswordRecoveryModal')"
@@ -95,7 +94,7 @@ import BaseButton from '@/components/ui/buttons/BaseButton.vue';
 import SignUpModal from '@/components/modals/auth/SignUpModal.vue';
 import LoginModal from '@/components/modals/auth/LoginModal.vue';
 import SecondaryButton from '@/components/ui/buttons/SecondaryButton.vue';
-import ResetPasswordModal from '@/components/modals/auth/ResetPasswordModal.vue';
+import ForgotPasswordModal from '@/components/modals/auth/ForgotPasswordModal.vue';
 import EmailSentModal from '@/components/modals/success-info/EmailSentModal.vue';
 import EmailVerifiedModal from '@/components/modals/success-info/EmailVerifiedModal.vue';
 import LinkExpiredModal from '@/components/modals/error-info/LinkExpiredModal.vue';
@@ -115,7 +114,7 @@ export default {
         LinkExpiredModal,
         EmailVerifiedModal,
         EmailSentModal,
-        ResetPasswordModal,
+        ForgotPasswordModal,
         SecondaryButton,
         LoginModal,
         BaseButton,
@@ -127,7 +126,7 @@ export default {
         return {
             visibleSignUpModal: false,
             visibleLoginModal: false,
-            visibleResetPasswordModal: false,
+            visibleForgotPasswordModal: false,
             visibleEmailSentModal: false,
             visibleEmailVerifiedModal: false,
             visibleLinkExpiredModal: false,
@@ -176,11 +175,7 @@ export default {
             const segment = path.split('/');
             const name = segment[segment.length - 1];
 
-            const mapModals = {
-                login: 'visibleLoginModal',
-                register: 'visibleSignUpModal',
-                'reset-password': 'visibleResetPasswordModal',
-            };
+            const mapModals = this.modalRoutes();
 
             const target = mapModals[name];
 
@@ -205,11 +200,7 @@ export default {
         handleSwitchModal(targetModal) {
             this.hideAllModals();
 
-            const mapModals = {
-                login: 'visibleLoginModal',
-                register: 'visibleSignUpModal',
-                'reset-password': 'visibleResetPasswordModal',
-            };
+            const mapModals = this.modalRoutes();
 
             const target = mapModals[targetModal];
 
@@ -218,13 +209,22 @@ export default {
             }
         },
 
+        modalRoutes() {
+            return {
+                login: 'visibleLoginModal',
+                register: 'visibleSignUpModal',
+                'forgot-password': 'visibleForgotPasswordModal',
+            };
+        },
+
         hideAllModals() {
             this.visibleLoginModal = false;
             this.visibleSignUpModal = false;
-            this.visibleResetPasswordModal = false;
+            this.visibleForgotPasswordModal = false;
             this.visibleEmailSentModal = false;
             this.visibleEmailVerifiedModal = false;
             this.visibleLinkExpiredModal = false;
+            this.visibleEmailPasswordRecoveryModal = false;
         },
     },
 
@@ -238,8 +238,8 @@ export default {
             this.handleModalRouting(value, 'login');
         },
 
-        visibleResetPasswordModal(value) {
-            this.handleModalRouting(value, 'reset-password');
+        visibleForgotPasswordModal(value) {
+            this.handleModalRouting(value, 'forgot-password');
         },
     },
 };

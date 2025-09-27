@@ -118,7 +118,7 @@ export default {
 
     props: {
         modelValue: Boolean,
-        visibleResetPasswordModal: Boolean,
+        visibleForgotPasswordModal: Boolean,
     },
 
     methods: {
