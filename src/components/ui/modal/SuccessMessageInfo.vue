@@ -13,7 +13,11 @@
         </div>
 
         <div class="space-y-4 mt-7 mb-7">
-            <a v-if="link.value && link.value === 'https://mail.google.com'" :href="link.value" target="_blank">
+            <a
+                v-if="link.value && link.value === 'https://mail.google.com'"
+                :href="link.value"
+                target="_blank"
+            >
                 <BaseButton class="w-full">{{ buttonText }}</BaseButton>
             </a>
 
@@ -23,7 +27,6 @@
         </div>
 
         <button v-show="skipButton" class="flex items-center justify-center mx-auto">
-            <!-- Need to check if it's working ($emit part) -->
             <span
                 class="text-gray-500 hover:text-gray-400 transition-colors"
                 @click="this.$emit('closeModal', false)"

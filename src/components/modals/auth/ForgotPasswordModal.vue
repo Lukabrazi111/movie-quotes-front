@@ -11,12 +11,12 @@
                     v-model="email"
                     :required="false"
                     rules="required|email"
-                    name="reset_email"
+                    name="forgot_password_email"
                     labelName="email"
                     type="text"
                     placeholder="Enter your email"
                 />
-                <ErrorMessage class="text-red-400" name="reset_email" />
+                <ErrorMessage class="text-red-400" name="forgot_password_email" />
                 <FieldError v-if="this.errors?.email" :message="this.errors?.email" />
             </div>
 
@@ -26,7 +26,7 @@
 
             <button class="flex items-center justify-center space-x-4 mx-auto">
                 <ArrowLeft />
-                <span class="text-gray-500" @click.prevent="this.$emit('switch-login-modal')">
+                <span class="text-gray-500" @click.prevent="this.$emit('switchLoginModal')">
                     Back to login
                 </span>
             </button>
@@ -40,9 +40,9 @@ import CustomInput from '@/components/ui/form/CustomInput.vue';
 import FormTitleModal from '@/components/ui/form/FormTitleModal.vue';
 import ModalLayout from '@/components/layouts/ModalLayout.vue';
 import ArrowLeft from '@/components/icons/modal/ArrowLeftIcon.vue';
+import FieldError from '@/components/ui/form/FieldError.vue';
 import { axios } from '@/configs/axios/index.js';
 import { ErrorMessage, Form as FormSection } from 'vee-validate';
-import FieldError from '@/components/ui/form/FieldError.vue';
 
 export default {
     name: 'ResetPasswordModal',
@@ -62,10 +62,6 @@ export default {
             email: '',
             errors: {},
         };
-    },
-
-    props: {
-        modelValue: Boolean,
     },
 
     methods: {

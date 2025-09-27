@@ -10,6 +10,7 @@ import { useAuthStore } from '@/stores/user/auth.js';
 import NewsFeed from '@/components/pages/NewsFeed.vue';
 import UserProfile from '@/components/pages/UserProfile.vue';
 import MovieList from '@/components/pages/MovieList.vue';
+import ResetPasswordModal from '@/components/modals/auth/ResetPasswordModal.vue';
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -39,6 +40,11 @@ const router = createRouter({
                     path: '/forgot-password',
                     name: 'forgot-password',
                     component: ForgotPasswordModal,
+                },
+                {
+                    path: '/reset-password',
+                    name: 'reset-password',
+                    component: ResetPasswordModal,
                 },
                 {
                     path: '/verify',

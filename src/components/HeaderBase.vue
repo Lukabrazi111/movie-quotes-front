@@ -46,25 +46,31 @@
     <SignUpModal
         @switchModal="handleSwitchModal"
         @emailSentModal="toggleModal('visibleEmailSentModal')"
-        v-show="visibleSignUpModal"
+        v-if="visibleSignUpModal"
         v-model="visibleSignUpModal"
     />
     <LoginModal
         @switchModal="handleSwitchModal"
         @switchResetPasswordModal="toggleModal('visibleForgotPasswordModal', 'visibleLoginModal')"
-        v-show="visibleLoginModal"
+        v-if="visibleLoginModal"
         v-model="visibleLoginModal"
     />
     <ForgotPasswordModal
         @switchLoginModal="toggleModal('visibleLoginModal', 'visibleForgotPasswordModal')"
         @emailSentModal="toggleModal('visibleEmailPasswordRecoveryModal')"
-        v-show="visibleForgotPasswordModal"
+        v-if="visibleForgotPasswordModal"
         v-model="visibleForgotPasswordModal"
+    />
+    <ResetPasswordModal
+        @switchLoginModal="toggleModal('visibleLoginModal', 'visibleResetPasswordModal')"
+        @passwordChanged="toggleModal('visiblePasswordChangedModal')"
+        v-if="visibleResetPasswordModal"
+        v-model="visibleResetPasswordModal"
     />
     <!-- Success Modals -->
     <EmailSentModal
         @switchModal="handleSwitchModal"
-        v-show="visibleEmailSentModal"
+        v-if="visibleEmailSentModal"
         v-model="visibleEmailSentModal"
     />
     <EmailVerifiedModal
@@ -72,14 +78,19 @@
         @switchLinkExpiredModal="
             toggleModal('visibleLinkExpiredModal', 'visibleEmailVerifiedModal')
         "
-        v-show="visibleEmailVerifiedModal"
+        v-if="visibleEmailVerifiedModal"
         v-model="visibleEmailVerifiedModal"
     />
     <EmailPasswordRecoveryModal
         @switchModal="handleSwitchModal"
         @switchLoginModal="toggleModal('visibleLoginModal', 'visibleEmailPasswordRecoveryModal')"
-        v-show="visibleEmailPasswordRecoveryModal"
+        v-if="visibleEmailPasswordRecoveryModal"
         v-model="visibleEmailPasswordRecoveryModal"
+    />
+    <PasswordChangedModal
+        @switchModal="handleSwitchModal"
+        v-if="visiblePasswordChangedModal"
+        v-model="visiblePasswordChangedModal"
     />
     <!-- Error Modals -->
     <LinkExpiredModal
@@ -95,6 +106,7 @@ import SignUpModal from '@/components/modals/auth/SignUpModal.vue';
 import LoginModal from '@/components/modals/auth/LoginModal.vue';
 import SecondaryButton from '@/components/ui/buttons/SecondaryButton.vue';
 import ForgotPasswordModal from '@/components/modals/auth/ForgotPasswordModal.vue';
+import ResetPasswordModal from '@/components/modals/auth/ResetPasswordModal.vue';
 import EmailSentModal from '@/components/modals/success-info/EmailSentModal.vue';
 import EmailVerifiedModal from '@/components/modals/success-info/EmailVerifiedModal.vue';
 import LinkExpiredModal from '@/components/modals/error-info/LinkExpiredModal.vue';
@@ -105,10 +117,13 @@ import { useScrollToSectionStore } from '@/stores/scroll-to-section.js';
 import { useAuthStore } from '@/stores/user/auth.js';
 import { axios } from '@/configs/axios/index.js';
 import EmailPasswordRecoveryModal from '@/components/modals/success-info/EmailPasswordRecoveryModal.vue';
+import PasswordChangedModal from '@/components/modals/success-info/PasswordChangedModal.vue';
 
 export default {
     name: 'HeaderBase',
     components: {
+        PasswordChangedModal,
+        ResetPasswordModal,
         EmailPasswordRecoveryModal,
         BellNotificationIcon,
         LinkExpiredModal,
@@ -131,6 +146,8 @@ export default {
             visibleEmailVerifiedModal: false,
             visibleLinkExpiredModal: false,
             visibleEmailPasswordRecoveryModal: false,
+            visibleResetPasswordModal: false,
+            visiblePasswordChangedModal: false,
         };
     },
 
@@ -225,6 +242,8 @@ export default {
             this.visibleEmailVerifiedModal = false;
             this.visibleLinkExpiredModal = false;
             this.visibleEmailPasswordRecoveryModal = false;
+            this.visibleResetPasswordModal = false;
+            this.visiblePasswordChangedModal = false;
         },
     },
 

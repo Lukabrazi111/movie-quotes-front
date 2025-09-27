@@ -2,14 +2,12 @@
     <ModalLayout @click="closeModal">
         <SuccessMessageInfo
             @switchModal="switchModal"
-            @closeModal="closeModal"
-            title="Check your email"
-            description="We have sent a password recover instructions to your email"
-            :link="{ name: 'login' }"
-            button-text="Go to login modal"
-            :skip-button="true"
+            title="Success!"
+            description="Your Password changed successfully"
+            :link="{ value: 'login' }"
+            buttonText="Log in"
         >
-            <EmailSentIcon />
+            <SuccessIcon />
         </SuccessMessageInfo>
     </ModalLayout>
 </template>
@@ -17,11 +15,12 @@
 <script>
 import ModalLayout from '@/components/layouts/ModalLayout.vue';
 import SuccessMessageInfo from '@/components/ui/modal/SuccessMessageInfo.vue';
-import EmailSentIcon from '@/components/icons/modal/EmailSentIcon.vue';
+import SuccessIcon from '@/components/icons/modal/SuccessIcon.vue';
 
 export default {
-    name: 'EmailPasswordRecoveryModal',
-    components: { EmailSentIcon, SuccessMessageInfo, ModalLayout },
+    name: 'PasswordChangedModal',
+
+    components: { SuccessIcon, SuccessMessageInfo, ModalLayout },
 
     methods: {
         closeModal() {
@@ -29,7 +28,6 @@ export default {
         },
 
         switchModal(route) {
-            this.closeModal();
             this.$emit('switchModal', route.name);
         },
     },
