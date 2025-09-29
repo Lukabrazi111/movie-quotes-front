@@ -88,27 +88,33 @@ export default {
 
     mounted() {
         if (this.$route.path === '/reset-password') {
-            const urlToken = this.$route.query?.token;
-            if (urlToken) {
-                axios
-                    .get(`/reset-password/${urlToken}`)
-                    .then((response) => {
-                        if (response.status === 200) {
-                            this.queryParams = {
-                                expires: this.$route.query.expires,
-                                user: this.$route.query.user,
-                                token: urlToken,
-                                signature: this.$route.query.signature,
-                            };
-                        }
-                    })
-                    .catch((error) => {
-                        if (error.response.status === 404) {
-                            this.closeModal();
-                            return this.$router.push({ name: 'landing' });
-                        }
-                    });
-            }
+            this.queryParams = {
+                expires: this.$route.query.expires,
+                user: this.$route.query.user,
+                signature: this.$route.query.signature,
+            };
+            // TODO: need to change logic here
+            // const urlToken = this.$route.query?.token;
+            // if (urlToken) {
+            //     axios
+            //         .get(`/reset-password/${urlToken}`)
+            //         .then((response) => {
+            //             if (response.status === 200) {
+            //                 this.queryParams = {
+            //                     expires: this.$route.query.expires,
+            //                     user: this.$route.query.user,
+            //                     token: urlToken,
+            //                     signature: this.$route.query.signature,
+            //                 };
+            //             }
+            //         })
+            //         .catch((error) => {
+            //             if (error.response.status === 404) {
+            //                 this.closeModal();
+            //                 return this.$router.push({ name: 'landing' });
+            //             }
+            //         });
+            // }
         }
     },
 

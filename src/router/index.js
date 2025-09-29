@@ -81,13 +81,15 @@ const router = createRouter({
 });
 
 function resetPasswordParams(to) {
-    if (!to.query.signature || !to.query.expires || !to.query.token || !to.query.user) {
+    if (!to.query.signature || !to.query.expires || !to.query.user) {
         return { name: 'landing' };
     }
 }
 
 function verifyEmailParams(to) {
-    if (!to.query.signature || !to.query.expires || !to.query.user) {
+    const hasQueryParams = to.query.expires && to.query.user && to.query.signature;
+
+    if (!hasQueryParams) {
         return { name: 'landing' };
     }
 }
@@ -105,14 +107,6 @@ router.beforeEach(async (to, _, next) => {
 
     if (to.meta.requiresAuth && !authUser.isAuthenticated) {
         return next({ name: 'login' });
-    }
-
-    if (to.path === '/verify') {
-        const hasQueryParams = to.query.expires && to.query.user && to.query.signature;
-
-        if (!hasQueryParams) {
-            return next({ name: 'landing' });
-        }
     }
 
     next();

@@ -4,7 +4,7 @@
             @switchModal="switchModal"
             title="Success!"
             description="Your Password changed successfully"
-            :link="{ value: 'login' }"
+            :link="{ name: 'login' }"
             buttonText="Log in"
         >
             <SuccessIcon />
