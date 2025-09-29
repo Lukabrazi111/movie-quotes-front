@@ -10,7 +10,7 @@
                 <div class="space-y-0.5">
                     <PasswordInput
                         v-model="data.password"
-                        rules="required"
+                        rules="required|lowercase|min:3|max:15"
                         name="reset_password"
                         labelName="password"
                         type="password"
@@ -88,12 +88,27 @@ export default {
 
     mounted() {
         if (this.$route.path === '/reset-password') {
-            this.queryParams = {
-                expires: this.$route.query.expires,
-                user: this.$route.query.user,
-                signature: this.$route.query.signature,
-                token: this.$route.query.token,
-            };
+            const urlToken = this.$route.query?.token;
+            if (urlToken) {
+                axios
+                    .get(`/reset-password/${urlToken}`)
+                    .then((response) => {
+                        if (response.status === 200) {
+                            this.queryParams = {
+                                expires: this.$route.query.expires,
+                                user: this.$route.query.user,
+                                token: urlToken,
+                                signature: this.$route.query.signature,
+                            };
+                        }
+                    })
+                    .catch((error) => {
+                        if (error.response.status === 404) {
+                            this.closeModal();
+                            return this.$router.push({ name: 'landing' });
+                        }
+                    });
+            }
         }
     },
 
@@ -108,7 +123,10 @@ export default {
                     params: this.queryParams,
                 });
 
-                console.log(response);
+                if (response.status === 200) {
+                    this.closeModal();
+                    this.$emit('passwordChanged', true);
+                }
             } catch (error) {
                 const response = error.response;
                 console.log(response);
