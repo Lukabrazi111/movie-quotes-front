@@ -46,31 +46,31 @@
     <SignUpModal
         @switchModal="handleSwitchModal"
         @emailSentModal="toggleModal('visibleEmailSentModal')"
-        v-if="visibleSignUpModal"
+        v-show="visibleSignUpModal"
         v-model="visibleSignUpModal"
     />
     <LoginModal
         @switchModal="handleSwitchModal"
         @switchResetPasswordModal="toggleModal('visibleForgotPasswordModal', 'visibleLoginModal')"
-        v-if="visibleLoginModal"
+        v-show="visibleLoginModal"
         v-model="visibleLoginModal"
     />
     <ForgotPasswordModal
         @switchLoginModal="toggleModal('visibleLoginModal', 'visibleForgotPasswordModal')"
         @emailSentModal="toggleModal('visibleEmailPasswordRecoveryModal')"
-        v-if="visibleForgotPasswordModal"
+        v-show="visibleForgotPasswordModal"
         v-model="visibleForgotPasswordModal"
     />
     <ResetPasswordModal
         @switchLoginModal="toggleModal('visibleLoginModal', 'visibleResetPasswordModal')"
-        @passwordChanged="toggleModal('visiblePasswordChangedModal')"
-        v-if="visibleResetPasswordModal"
+        @passwordChangedModal="toggleModal('visiblePasswordChangedModal')"
+        v-show="visibleResetPasswordModal"
         v-model="visibleResetPasswordModal"
     />
     <!-- Success Modals -->
     <EmailSentModal
         @switchModal="handleSwitchModal"
-        v-if="visibleEmailSentModal"
+        v-show="visibleEmailSentModal"
         v-model="visibleEmailSentModal"
     />
     <EmailVerifiedModal
@@ -78,24 +78,24 @@
         @switchLinkExpiredModal="
             toggleModal('visibleLinkExpiredModal', 'visibleEmailVerifiedModal')
         "
-        v-if="visibleEmailVerifiedModal"
+        v-show="visibleEmailVerifiedModal"
         v-model="visibleEmailVerifiedModal"
     />
     <EmailPasswordRecoveryModal
         @switchModal="handleSwitchModal"
         @switchLoginModal="toggleModal('visibleLoginModal', 'visibleEmailPasswordRecoveryModal')"
-        v-if="visibleEmailPasswordRecoveryModal"
+        v-show="visibleEmailPasswordRecoveryModal"
         v-model="visibleEmailPasswordRecoveryModal"
     />
     <PasswordChangedModal
         @switchModal="handleSwitchModal"
-        v-if="visiblePasswordChangedModal"
+        v-show="visiblePasswordChangedModal"
         v-model="visiblePasswordChangedModal"
     />
     <!-- Error Modals -->
     <LinkExpiredModal
         @switchEmailSentModal="toggleModal('visibleEmailSentModal')"
-        v-if="visibleLinkExpiredModal"
+        v-show="visibleLinkExpiredModal"
         v-model="visibleLinkExpiredModal"
     />
 </template>

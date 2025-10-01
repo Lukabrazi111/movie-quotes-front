@@ -17,8 +17,8 @@
                         placeholder="Confirm password"
                     />
                     <ErrorMessage class="text-red-400" name="reset_password" />
+                    <FieldError v-if="this.errors?.password" :message="this.errors?.password" />
                 </div>
-                <FieldError v-if="this.errors?.password" :message="this.errors?.password" />
 
                 <div class="space-y-0.5">
                     <PasswordInput
@@ -31,7 +31,6 @@
                     />
                     <ErrorMessage class="text-red-400" name="reset_password_confirmation" />
                 </div>
-                <FieldError v-if="this.errors?.email" :message="this.errors?.email" />
             </div>
 
             <div class="space-y-4 mt-7 mb-7">
@@ -71,50 +70,35 @@ export default {
         ErrorMessage,
     },
 
-    props: {
-        modelValue: Boolean,
-    },
-
     data() {
         return {
             data: {
                 password: '',
                 password_confirmation: '',
             },
-            queryParams: {},
+            token: '',
             errors: {},
         };
     },
 
     mounted() {
-        if (this.$route.path === '/reset-password') {
-            this.queryParams = {
-                expires: this.$route.query.expires,
-                user: this.$route.query.user,
-                signature: this.$route.query.signature,
-            };
-            // TODO: need to change logic here
-            // const urlToken = this.$route.query?.token;
-            // if (urlToken) {
-            //     axios
-            //         .get(`/reset-password/${urlToken}`)
-            //         .then((response) => {
-            //             if (response.status === 200) {
-            //                 this.queryParams = {
-            //                     expires: this.$route.query.expires,
-            //                     user: this.$route.query.user,
-            //                     token: urlToken,
-            //                     signature: this.$route.query.signature,
-            //                 };
-            //             }
-            //         })
-            //         .catch((error) => {
-            //             if (error.response.status === 404) {
-            //                 this.closeModal();
-            //                 return this.$router.push({ name: 'landing' });
-            //             }
-            //         });
-            // }
+        const urlToken = this.$route.params.token;
+        if (urlToken) {
+            axios
+                .get(`/reset-password/${urlToken}`)
+                .then((response) => {
+                    if (response.status === 200) {
+                        this.token = urlToken;
+                        this.$emit('update:modelValue', true);
+                    }
+                })
+                .catch((error) => {
+                    if (error.response.status === 404) {
+                        this.closeModal();
+                        alert(error.response.data.message);
+                        return this.$router.push({ name: 'landing' });
+                    }
+                });
         }
     },
 
@@ -125,17 +109,18 @@ export default {
 
         async resetPassword() {
             try {
-                const response = await axios.post('/reset-password', this.data, {
-                    params: this.queryParams,
-                });
+                const response = await axios.post(`/reset-password/${this.token}`, this.data);
 
                 if (response.status === 200) {
                     this.closeModal();
-                    this.$emit('passwordChanged', true);
+                    this.$emit('passwordChangedModal', true);
                 }
             } catch (error) {
                 const response = error.response;
-                console.log(response);
+
+                if(response.status === 422 || response.status === 400) {
+                    this.errors.password = response.data.message;
+                }
             }
         },
     },

@@ -42,10 +42,9 @@ const router = createRouter({
                     component: ForgotPasswordModal,
                 },
                 {
-                    path: '/reset-password',
+                    path: '/reset-password/:token',
                     name: 'reset-password',
                     component: ResetPasswordModal,
-                    beforeEnter: [resetPasswordParams],
                 },
                 {
                     path: '/verify',
@@ -79,12 +78,6 @@ const router = createRouter({
         },
     ],
 });
-
-function resetPasswordParams(to) {
-    if (!to.query.signature || !to.query.expires || !to.query.user) {
-        return { name: 'landing' };
-    }
-}
 
 function verifyEmailParams(to) {
     const hasQueryParams = to.query.expires && to.query.user && to.query.signature;
