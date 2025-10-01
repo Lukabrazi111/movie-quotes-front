@@ -75,8 +75,8 @@
     />
     <EmailVerifiedModal
         @switchModal="handleSwitchModal"
-        @switchLinkExpiredModal="
-            toggleModal('visibleLinkExpiredModal', 'visibleEmailVerifiedModal')
+        @switchLinkExpiredEmailVerificationModal="
+            toggleModal('visibleLinkExpiredEmailVerificationModal', 'visibleEmailVerifiedModal')
         "
         v-show="visibleEmailVerifiedModal"
         v-model="visibleEmailVerifiedModal"
@@ -93,10 +93,10 @@
         v-model="visiblePasswordChangedModal"
     />
     <!-- Error Modals -->
-    <LinkExpiredModal
+    <LinkExpiredEmailVerificationModal
         @switchEmailSentModal="toggleModal('visibleEmailSentModal')"
-        v-show="visibleLinkExpiredModal"
-        v-model="visibleLinkExpiredModal"
+        v-show="visibleLinkExpiredEmailVerificationModal"
+        v-model="visibleLinkExpiredEmailVerificationModal"
     />
 </template>
 
@@ -109,7 +109,7 @@ import ForgotPasswordModal from '@/components/modals/auth/ForgotPasswordModal.vu
 import ResetPasswordModal from '@/components/modals/auth/ResetPasswordModal.vue';
 import EmailSentModal from '@/components/modals/success-info/EmailSentModal.vue';
 import EmailVerifiedModal from '@/components/modals/success-info/EmailVerifiedModal.vue';
-import LinkExpiredModal from '@/components/modals/error-info/LinkExpiredModal.vue';
+import LinkExpiredEmailVerificationModal from '@/components/modals/error-info/LinkExpiredEmailVerificationModal.vue';
 import HeaderLayout from '@/components/layouts/HeaderLayout.vue';
 import BellNotificationIcon from '@/components/icons/header/BellNotificationIcon.vue';
 import { mapStores } from 'pinia';
@@ -126,7 +126,7 @@ export default {
         ResetPasswordModal,
         EmailPasswordRecoveryModal,
         BellNotificationIcon,
-        LinkExpiredModal,
+        LinkExpiredEmailVerificationModal,
         EmailVerifiedModal,
         EmailSentModal,
         ForgotPasswordModal,
@@ -144,7 +144,7 @@ export default {
             visibleForgotPasswordModal: false,
             visibleEmailSentModal: false,
             visibleEmailVerifiedModal: false,
-            visibleLinkExpiredModal: false,
+            visibleLinkExpiredEmailVerificationModal: false,
             visibleEmailPasswordRecoveryModal: false,
             visibleResetPasswordModal: false,
             visiblePasswordChangedModal: false,
@@ -240,7 +240,7 @@ export default {
             this.visibleForgotPasswordModal = false;
             this.visibleEmailSentModal = false;
             this.visibleEmailVerifiedModal = false;
-            this.visibleLinkExpiredModal = false;
+            this.visibleLinkExpiredEmailVerificationModal = false;
             this.visibleEmailPasswordRecoveryModal = false;
             this.visibleResetPasswordModal = false;
             this.visiblePasswordChangedModal = false;

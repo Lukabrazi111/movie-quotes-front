@@ -22,10 +22,6 @@ export default {
     name: 'LinkExpiredModal',
     components: { ErrorMessageInfo, LinkExpiredIcon, ModalLayout },
 
-    props: {
-        modelValue: Boolean,
-    },
-
     data() {
         return {
             userId: '',
@@ -43,14 +39,14 @@ export default {
             try {
                 const response = await axios.post(`/resend-link/${this.userId}`);
 
-                if(response.status === 200) {
+                if (response.status === 200) {
                     this.openEmailSentModal();
                 }
             } catch (error) {
                 const response = error.response;
 
                 // TODO: need to change to dialog notifications
-                if(response.status === 409) {
+                if (response.status === 409) {
                     alert(response.data.message);
                 }
 
@@ -61,7 +57,7 @@ export default {
         },
 
         closeModal() {
-            this.$emit('update:modelValue', !this.modelValue);
+            this.$emit('update:modelValue', false);
         },
 
         openEmailSentModal() {
