@@ -2,7 +2,10 @@
     <ModalLayout @click="toggleModal">
         <header class="text-center border-b border-gray-600 pb-3 relative px-5">
             <h1 class="text-white font-bold! text-lg">Write New Quote</h1>
-            <CloseFormIcon class="text-right absolute -top-1.5 right-3 cursor-pointer" />
+            <CloseFormIcon
+                @click="$emit('update:modelValue', false)"
+                class="text-right absolute -top-1.5 right-3 cursor-pointer"
+            />
         </header>
         <FormSection @submit="createQuote" novalidate class="w-full text-white">
             <div class="px-5 space-y-5 mt-5">
@@ -53,12 +56,27 @@
                     </div>
                 </div>
 
-                <div class="px-3 py-4 cursor-pointer flex items-center justify-between bg-black">
-                    <div class="flex items-center space-x-4">
-                        <StudioCameraIcon color="white" />
-                        <span>Choose movie</span>
+                <div class="relative">
+                    <div
+                        @click="toggleDropdown"
+                        class="px-3 py-4 cursor-pointer flex items-center justify-between bg-black"
+                    >
+                        <div class="flex items-center space-x-4">
+                            <StudioCameraIcon color="white" />
+                            <span>Choose movie</span>
+                        </div>
+                        <ArrowIcon :isOpenDropdown="isOpenDropdown" />
                     </div>
-                    <ArrowIcon :isOpenDropdown="isOpenDropdown" />
+                    <div
+                        v-show="isOpenDropdown"
+                        id="dropdown"
+                        class="z-10 bg-black rounded-b-lg shadow-sm w-full absolute h-auto max-h-80 overflow-auto"
+                    >
+                        <ul>
+                            <li class="hover:bg-gray-600 px-4 py-2 cursor-pointer">First movie</li>
+                            <li class="hover:bg-gray-600 px-4 py-2 cursor-pointer">Second movie</li>
+                        </ul>
+                    </div>
                 </div>
 
                 <BaseButton class="text-center w-full">Post</BaseButton>
@@ -101,6 +119,10 @@ export default {
     methods: {
         toggleModal() {
             return this.$emit('update:modelValue', !this.modelValue);
+        },
+
+        toggleDropdown() {
+            this.isOpenDropdown = !this.isOpenDropdown;
         },
 
         createQuote() {
