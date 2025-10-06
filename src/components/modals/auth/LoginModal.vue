@@ -1,5 +1,5 @@
 <template>
-    <ModalLayout @click="toggleModal">
+    <AuthModalLayout @click="toggleModal">
         <FormSection @submit="login" novalidate class="w-full px-10 md:px-20">
             <FormTitleModal
                 title="Log in to your account"
@@ -69,11 +69,11 @@
                 text="You don't have an account?"
             />
         </FormSection>
-    </ModalLayout>
+    </AuthModalLayout>
 </template>
 
 <script>
-import ModalLayout from '@/components/layouts/ModalLayout.vue';
+import AuthModalLayout from '@/components/layouts/AuthModalLayout.vue';
 import FormTitleModal from '@/components/ui/form/FormTitleModal.vue';
 import GoogleIcon from '@/components/icons/modal/form/GoogleIcon.vue';
 import BaseButton from '@/components/ui/buttons/BaseButton.vue';
@@ -98,7 +98,7 @@ export default {
         CustomInput,
         BaseButton,
         GoogleIcon,
-        ModalLayout,
+        AuthModalLayout,
         FormTitleModal,
         ErrorMessage,
         FormSection,

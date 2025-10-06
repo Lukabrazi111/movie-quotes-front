@@ -38,7 +38,7 @@
 import BaseButton from '@/components/ui/buttons/BaseButton.vue';
 import CustomInput from '@/components/ui/form/CustomInput.vue';
 import FormTitleModal from '@/components/ui/form/FormTitleModal.vue';
-import ModalLayout from '@/components/layouts/ModalLayout.vue';
+import AuthModalLayout from '@/components/layouts/AuthModalLayout.vue';
 import ArrowLeft from '@/components/icons/modal/ArrowLeftIcon.vue';
 import FieldError from '@/components/ui/form/FieldError.vue';
 import { axios } from '@/configs/axios/index.js';
@@ -50,7 +50,7 @@ export default {
         FieldError,
         ErrorMessage,
         ArrowLeft,
-        ModalLayout,
+        ModalLayout: AuthModalLayout,
         FormTitleModal,
         CustomInput,
         BaseButton,

@@ -13,14 +13,14 @@
 </template>
 
 <script>
-import ModalLayout from '@/components/layouts/ModalLayout.vue';
+import AuthModalLayout from '@/components/layouts/AuthModalLayout.vue';
 import EmailSentIcon from '@/components/icons/modal/EmailSentIcon.vue';
 import SuccessMessageInfo from '@/components/ui/modal/SuccessMessageInfo.vue';
 
 export default {
     name: 'EmailSentModal',
 
-    components: { SuccessMessageInfo, EmailSentIcon, ModalLayout },
+    components: { SuccessMessageInfo, EmailSentIcon, ModalLayout: AuthModalLayout },
 
     props: {
         modelValue: Boolean,

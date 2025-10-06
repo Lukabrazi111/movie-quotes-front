@@ -1,5 +1,5 @@
 <template>
-    <ModalLayout>
+    <AuthModalLayout>
         <FormSection @submit="resetPassword" novalidate class="w-full px-10 md:px-20">
             <FormTitleModal
                 title="Create new password"
@@ -44,11 +44,11 @@
                 </span>
             </button>
         </FormSection>
-    </ModalLayout>
+    </AuthModalLayout>
 </template>
 
 <script>
-import ModalLayout from '@/components/layouts/ModalLayout.vue';
+import AuthModalLayout from '@/components/layouts/AuthModalLayout.vue';
 import FormTitleModal from '@/components/ui/form/FormTitleModal.vue';
 import BaseButton from '@/components/ui/buttons/BaseButton.vue';
 import ArrowLeft from '@/components/icons/modal/ArrowLeftIcon.vue';
@@ -65,7 +65,7 @@ export default {
         ArrowLeft,
         BaseButton,
         FormTitleModal,
-        ModalLayout,
+        AuthModalLayout,
         FormSection,
         ErrorMessage,
     },

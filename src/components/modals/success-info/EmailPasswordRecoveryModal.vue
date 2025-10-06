@@ -15,13 +15,13 @@
 </template>
 
 <script>
-import ModalLayout from '@/components/layouts/ModalLayout.vue';
+import AuthModalLayout from '@/components/layouts/AuthModalLayout.vue';
 import SuccessMessageInfo from '@/components/ui/modal/SuccessMessageInfo.vue';
 import EmailSentIcon from '@/components/icons/modal/EmailSentIcon.vue';
 
 export default {
     name: 'EmailPasswordRecoveryModal',
-    components: { EmailSentIcon, SuccessMessageInfo, ModalLayout },
+    components: { EmailSentIcon, SuccessMessageInfo, ModalLayout: AuthModalLayout },
 
     methods: {
         closeModal() {

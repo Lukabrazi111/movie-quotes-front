@@ -1,5 +1,5 @@
 <template>
-    <ModalLayout @click="toggleModal">
+    <AuthModalLayout @click="toggleModal">
         <FormSection @submit="register" novalidate class="w-full px-10 md:px-20">
             <FormTitleModal title="Create an account" description="Start your journey!" />
 
@@ -82,7 +82,7 @@
                 text="Already have an account?"
             />
         </FormSection>
-    </ModalLayout>
+    </AuthModalLayout>
 </template>
 
 <script>
@@ -91,7 +91,7 @@ import SecondaryButton from '@/components/ui/buttons/SecondaryButton.vue';
 import GoogleIcon from '@/components/icons/modal/form/GoogleIcon.vue';
 import CustomInput from '@/components/ui/form/CustomInput.vue';
 import FormTitleModal from '@/components/ui/form/FormTitleModal.vue';
-import ModalLayout from '@/components/layouts/ModalLayout.vue';
+import AuthModalLayout from '@/components/layouts/AuthModalLayout.vue';
 import FormFooterModal from '@/components/ui/form/FormFooterModal.vue';
 import PasswordInput from '@/components/ui/form/PasswordInput.vue';
 import FieldError from '@/components/ui/form/FieldError.vue';
@@ -105,7 +105,7 @@ export default {
         FieldError,
         PasswordInput,
         FormFooterModal,
-        ModalLayout,
+        AuthModalLayout,
         FormTitleModal,
         CustomInput,
         GoogleIcon,

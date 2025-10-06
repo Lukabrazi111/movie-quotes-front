@@ -14,13 +14,13 @@
 
 <script>
 import SuccessMessageInfo from '@/components/ui/modal/SuccessMessageInfo.vue';
-import ModalLayout from '@/components/layouts/ModalLayout.vue';
+import AuthModalLayout from '@/components/layouts/AuthModalLayout.vue';
 import EmailVerifiedIcon from '@/components/icons/modal/EmailVerifiedIcon.vue';
 import { axios } from '@/configs/axios/index.js';
 
 export default {
     name: 'EmailVerifiedModal',
-    components: { EmailVerifiedIcon, ModalLayout, SuccessMessageInfo },
+    components: { EmailVerifiedIcon, ModalLayout: AuthModalLayout, SuccessMessageInfo },
 
     props: {
         modelValue: Boolean,

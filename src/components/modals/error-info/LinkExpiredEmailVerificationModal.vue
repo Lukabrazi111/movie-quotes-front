@@ -13,14 +13,14 @@
 </template>
 
 <script>
-import ModalLayout from '@/components/layouts/ModalLayout.vue';
+import AuthModalLayout from '@/components/layouts/AuthModalLayout.vue';
 import LinkExpiredIcon from '@/components/icons/modal/LinkExpiredIcon.vue';
 import ErrorMessageInfo from '@/components/ui/modal/ErrorMessageInfo.vue';
 import { axios } from '@/configs/axios/index.js';
 
 export default {
     name: 'LinkExpiredModal',
-    components: { ErrorMessageInfo, LinkExpiredIcon, ModalLayout },
+    components: { ErrorMessageInfo, LinkExpiredIcon, ModalLayout: AuthModalLayout },
 
     data() {
         return {

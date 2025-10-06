@@ -1,6 +1,7 @@
 <template>
     <div class="flex items-center space-x-4">
         <button
+            @click="toggleForm"
             class="text-white flex items-center space-x-4 bg-[#24222F] py-3 px-4 rounded-lg"
             :class="{
                 'w-full': !isOpenSearchInput,
@@ -41,24 +42,33 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal -->
+    <CreateNewQuoteFormModal v-model="isOpenForm" v-show="isOpenForm" />
 </template>
 <script>
 import SearchIcon from '@/components/icons/news-feed/SearchIcon.vue';
 import PencilWriteIcon from '@/components/icons/news-feed/PencilWriteIcon.vue';
+import CreateNewQuoteFormModal from '@/components/modals/news-feed/CreateNewQuoteFormModal.vue';
 
 export default {
     name: 'NewsHeader',
-    components: { PencilWriteIcon, SearchIcon },
+    components: { CreateNewQuoteFormModal, PencilWriteIcon, SearchIcon },
     data() {
         return {
             isOpenSearchInput: false,
-        }
+            isOpenForm: false,
+        };
     },
 
     methods: {
         toggleSearchInput() {
             this.isOpenSearchInput = !this.isOpenSearchInput;
-        }
+        },
+
+        toggleForm() {
+            return (this.isOpenForm = !this.isOpenForm);
+        },
     },
 };
 </script>

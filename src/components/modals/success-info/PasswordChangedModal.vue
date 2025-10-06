@@ -13,14 +13,14 @@
 </template>
 
 <script>
-import ModalLayout from '@/components/layouts/ModalLayout.vue';
+import AuthModalLayout from '@/components/layouts/AuthModalLayout.vue';
 import SuccessMessageInfo from '@/components/ui/modal/SuccessMessageInfo.vue';
 import SuccessIcon from '@/components/icons/modal/SuccessIcon.vue';
 
 export default {
     name: 'PasswordChangedModal',
 
-    components: { SuccessIcon, SuccessMessageInfo, ModalLayout },
+    components: { SuccessIcon, SuccessMessageInfo, ModalLayout: AuthModalLayout },
 
     methods: {
         closeModal() {
