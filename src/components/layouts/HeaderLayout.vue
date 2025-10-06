@@ -23,7 +23,7 @@
                             }"
                         >
                             <span>{{ selectedLanguage }}</span>
-                            <ArrowIcon :isOpenLanguageDropdown="isOpenLanguageDropdown" />
+                            <ArrowIcon :isOpenDropdown="isOpenLanguageDropdown" />
                         </div>
                         <div
                             v-show="isOpenLanguageDropdown"

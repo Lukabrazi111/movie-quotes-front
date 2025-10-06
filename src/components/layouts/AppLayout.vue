@@ -50,14 +50,14 @@
 </template>
 <script>
 import BaseContainer from '@/components/BaseContainer.vue';
-import CameraIcon from '@/components/icons/sidebar/CameraIcon.vue';
+import StudioCameraIcon from '@/components/icons/sidebar/StudioCameraIcon.vue';
 import HomeIcon from '@/components/icons/sidebar/HomeIcon.vue';
 import { useAuthStore } from '@/stores/user/auth.js';
 import { mapState } from 'pinia';
 
 export default {
     name: 'AppLayout',
-    components: { HomeIcon, CameraIcon, BaseContainer },
+    components: { HomeIcon, CameraIcon: StudioCameraIcon, BaseContainer },
 
     data() {
         return {

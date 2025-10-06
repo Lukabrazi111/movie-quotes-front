@@ -2,9 +2,12 @@
     <Transition name="modal" appear>
         <div
             id="bgTransparent"
-            class="fixed top-0 left-0 w-full h-full flex items-center justify-center z-50"
+            class="fixed top-0 left-0 h-full w-full flex items-center justify-center z-50"
         >
-            <div @click.stop class="bg-secondary-dark w-full max-w-lg py-11 md:mx-0 mx-10 rounded-md">
+            <div
+                @click.stop
+                class="bg-secondary-dark w-full max-w-2xl py-11 md:mx-0 mx-10 rounded-md fixed top-26"
+            >
                 <slot />
             </div>
         </div>
