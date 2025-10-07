@@ -1,18 +1,16 @@
 <template>
     <ModalLayout @click="toggleModal">
-        <header class="text-center border-b border-gray-600 pb-3 relative px-5">
-            <h1 class="text-white font-bold! text-lg">Write New Quote</h1>
-            <CloseFormIcon
-                @click="$emit('update:modelValue', false)"
-                class="text-right absolute -top-1.5 right-3 cursor-pointer"
-            />
-        </header>
+        <FormHeader
+            @closeDropdown="this.$emit('update:modelValue', false)"
+            title="Write New Quote"
+        />
+
         <FormSection @submit="createQuote" novalidate class="w-full text-white">
             <div class="px-5 space-y-5 mt-5">
                 <div class="flex items-center space-x-3">
                     <img
                         class="w-10 rounded-full bg-center bg-cover"
-                        src="/public/images/profile/no-profile-picture.jpg"
+                        :src="this.user.avatar ?? '/public/images/profile/no-profile-picture.jpg'"
                         alt="profile picture"
                     />
                     <h3>Luka Khangoshvili</h3>
@@ -20,8 +18,8 @@
                 <div class="flex flex-col items-center">
                     <div class="w-full relative">
                         <textarea
-                            name="quote"
-                            id="quote"
+                            name="quote_eng"
+                            id="quote_eng"
                             cols="30"
                             rows="2"
                             class="w-full border-[#6C757D] border px-2 py-1 outline-none placeholder:italic"
@@ -31,8 +29,8 @@
                     </div>
                     <div class="w-full relative">
                         <textarea
-                            name="quote"
-                            id="quote"
+                            name="quote_geo"
+                            id="quote_geo"
                             cols="30"
                             rows="2"
                             class="w-full border-[#6C757D] border px-2 py-1 outline-none placeholder:italic"
@@ -55,7 +53,6 @@
                         </label>
                     </div>
                 </div>
-
                 <div class="relative">
                     <div
                         @click="toggleDropdown"
@@ -79,7 +76,7 @@
                     </div>
                 </div>
 
-                <BaseButton class="text-center w-full">Post</BaseButton>
+                <BaseButton type="submit" class="text-center w-full">Post</BaseButton>
             </div>
         </FormSection>
     </ModalLayout>
@@ -87,12 +84,14 @@
 
 <script>
 import ModalLayout from '@/components/layouts/ModalLayout.vue';
-import { Form as FormSection } from 'vee-validate';
-import CloseFormIcon from '@/components/icons/news-feed/CloseFormIcon.vue';
 import CameraIcon from '@/components/icons/news-feed/CameraIcon.vue';
 import StudioCameraIcon from '@/components/icons/sidebar/StudioCameraIcon.vue';
 import BaseButton from '@/components/ui/buttons/BaseButton.vue';
 import ArrowIcon from '@/components/icons/ArrowIcon.vue';
+import FormHeader from '@/components/modals/auth-form/FormHeader.vue';
+import { Form as FormSection } from 'vee-validate';
+import { mapState } from 'pinia';
+import { useAuthStore } from '@/stores/user/auth.js';
 
 export default {
     name: 'CreateNewQuoteFormModal',
@@ -100,16 +99,20 @@ export default {
         ArrowIcon,
         StudioCameraIcon,
         CameraIcon,
-        CloseFormIcon,
         FormSection,
         ModalLayout,
         BaseButton,
+        FormHeader,
     },
 
     data() {
         return {
             isOpenDropdown: false,
         };
+    },
+
+    computed: {
+        ...mapState(useAuthStore, ['user']),
     },
 
     props: {

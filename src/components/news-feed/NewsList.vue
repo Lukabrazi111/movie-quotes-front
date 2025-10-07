@@ -1,5 +1,5 @@
 <template>
-    <div class="mt-5 text-white">
+    <div class="mt-5 space-y-10 text-white">
         <NewsItem />
     </div>
 </template>
