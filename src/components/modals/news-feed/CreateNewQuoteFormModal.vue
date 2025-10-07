@@ -10,10 +10,10 @@
                 <div class="flex items-center space-x-3">
                     <img
                         class="w-10 rounded-full bg-center bg-cover"
-                        :src="this.user.avatar ?? '/public/images/profile/no-profile-picture.jpg'"
+                        :src="this.user.avatar || '/public/images/profile/no-profile-picture.jpg'"
                         alt="profile picture"
                     />
-                    <h3>Luka Khangoshvili</h3>
+                    <h3>{{ this.user.username }}</h3>
                 </div>
                 <div class="flex flex-col items-center">
                     <div class="w-full relative">
@@ -88,7 +88,7 @@ import CameraIcon from '@/components/icons/news-feed/CameraIcon.vue';
 import StudioCameraIcon from '@/components/icons/sidebar/StudioCameraIcon.vue';
 import BaseButton from '@/components/ui/buttons/BaseButton.vue';
 import ArrowIcon from '@/components/icons/ArrowIcon.vue';
-import FormHeader from '@/components/modals/auth-form/FormHeader.vue';
+import FormHeader from '@/components/modals/dashboard-form/FormHeader.vue';
 import { Form as FormSection } from 'vee-validate';
 import { mapState } from 'pinia';
 import { useAuthStore } from '@/stores/user/auth.js';

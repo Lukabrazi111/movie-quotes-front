@@ -288,7 +288,7 @@ export default {
                 if (profileImage) {
                     const response = await axios.post('/profile', formData, {
                         headers: {
-                            'Content-Type': 'multipart/auth-form-data',
+                            'Content-Type': 'multipart/dashboard-form-data',
                         },
                     });
 

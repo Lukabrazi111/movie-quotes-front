@@ -6,7 +6,7 @@
         >
             <div
                 @click.stop
-                class="bg-secondary-dark w-full max-w-2xl py-11 md:mx-0 mx-10 rounded-md fixed top-26"
+                class="bg-secondary-dark w-full sm:max-w-3xl py-5 md:mx-0 mx-10 rounded-md fixed top-26"
             >
                 <slot />
             </div>
