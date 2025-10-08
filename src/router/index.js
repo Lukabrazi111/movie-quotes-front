@@ -9,7 +9,7 @@ import HomePage from '@/views/HomePage.vue';
 import { useAuthStore } from '@/stores/user/auth.js';
 import NewsFeed from '@/components/pages/NewsFeed.vue';
 import UserProfile from '@/components/pages/UserProfile.vue';
-import MovieList from '@/components/pages/MovieList.vue';
+import Movies from '@/components/pages/Movies.vue';
 import ResetPasswordModal from '@/components/modals/auth/ResetPasswordModal.vue';
 
 const router = createRouter({
@@ -72,7 +72,7 @@ const router = createRouter({
                 {
                     path: '/movies',
                     name: 'movies',
-                    component: MovieList,
+                    component: Movies,
                 },
             ],
         },

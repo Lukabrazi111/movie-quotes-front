@@ -43,7 +43,9 @@
                     </router-link>
                 </aside>
 
-                <slot />
+                <div class="w-full">
+                    <slot />
+                </div>
             </div>
         </BaseContainer>
     </section>
