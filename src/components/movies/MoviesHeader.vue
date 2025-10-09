@@ -31,22 +31,26 @@
                     />
                 </div>
             </div>
-            <BaseButton class="text-nowrap">Add movie</BaseButton>
+            <BaseButton class="text-nowrap" @click="isOpenMovieModal = true">Add movie</BaseButton>
         </div>
     </header>
+
+    <CreateMovieModal v-show="isOpenMovieModal" v-model="isOpenMovieModal" />
 </template>
 
 <script>
 import SearchIcon from '@/components/icons/news-feed/SearchIcon.vue';
 import BaseButton from '@/components/ui/buttons/BaseButton.vue';
+import CreateMovieModal from '@/components/modals/movies/CreateMovieModal.vue';
 
 export default {
     name: 'MoviesHeader',
-    components: { BaseButton, SearchIcon },
+    components: { BaseButton, SearchIcon, CreateMovieModal },
 
     data() {
         return {
             isOpenSearchInput: false,
+            isOpenMovieModal: false,
         };
     },
 
