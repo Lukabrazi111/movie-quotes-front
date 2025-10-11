@@ -33,7 +33,7 @@
                     <ul v-if="this.tags.length > 0" class="flex items-start px-2 space-x-2">
                         <li
                             v-for="tag in tags"
-                            class="text-white bg-gray-400 rounded flex items-center space-x-1 px-1"
+                            class="text-white bg-gray-400 rounded flex items-center space-x-1 px-1 text-nowrap"
                         >
                             <span>{{ tag }}</span>
                             <TagCloseIcon class="cursor-pointer" />

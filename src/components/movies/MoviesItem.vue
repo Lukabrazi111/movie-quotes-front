@@ -10,7 +10,7 @@
             </div>
 
             <div class="space-y-2">
-                <h1 class="uppercase cursor-pointer">{{ title }} ({{ releaseYear }})</h1>
+                <router-link :to="'/movies/1'" class="uppercase cursor-pointer">{{ title }} ({{ releaseYear }})</router-link>
                 <div class="flex items-center space-x-4">
                     <span>{{ comments }}</span>
                     <MovieCommentIcon />
