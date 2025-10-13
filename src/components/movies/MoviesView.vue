@@ -4,7 +4,13 @@
     </header>
 
     <section class="space-y-5">
-        <div class="flex items-start justify-between space-x-6">
+        <div
+            @mouseover="isOpenMovieActionOptions = true"
+            @mouseleave="isOpenMovieActionOptions = false"
+            class="relative flex items-start justify-between space-x-6"
+        >
+            <MovieActionOptions v-show="isOpenMovieActionOptions" />
+
             <div>
                 <img
                     src="/public/images/movie-detail.jpg"
@@ -46,11 +52,19 @@
 
 <script>
 import MovieQuoteLists from '@/components/movies/quotes/MovieQuoteLists.vue';
+import MovieActionOptions from '@/components/movies/MovieActionOptions.vue';
 
 export default {
     name: 'MoviesView',
     components: {
+        MovieActionOptions,
         MovieQuoteLists,
+    },
+
+    data() {
+        return {
+            isOpenMovieActionOptions: false,
+        };
     },
 };
 </script>

@@ -1,5 +1,11 @@
 <template>
     <div id="bgOpacity" class="relative text-white rounded-lg px-5 py-4 space-y-4 max-w-xl">
+        <MovieQuoteOptionsMenu
+            @toggleQuoteOptions="toggleQuoteOptions"
+            @closeQuoteOptions="closeQuoteOptions"
+            v-model="isQuoteOptionsOpen"
+        />
+
         <div class="flex items-center text-center">
             <img
                 src="/images/movie-detail.jpg"
@@ -31,10 +37,30 @@
 <script>
 import CommentIcon from '@/components/icons/news-feed/CommentIcon.vue';
 import LikeIcon from '@/components/icons/news-feed/LikeIcon.vue';
-import BaseButton from '@/components/ui/buttons/BaseButton.vue';
+import MovieQuoteOptionsMenu from '@/components/movies/quotes/MovieQuoteOptionsMenu.vue';
 
 export default {
     name: 'MovieQuoteItem',
-    components: { BaseButton, LikeIcon, CommentIcon },
+    components: {
+        MovieQuoteOptionsMenu,
+        LikeIcon,
+        CommentIcon,
+    },
+
+    data() {
+        return {
+            isQuoteOptionsOpen: false,
+        };
+    },
+
+    methods: {
+        toggleQuoteOptions() {
+            this.isQuoteOptionsOpen = !this.isQuoteOptionsOpen;
+        },
+
+        closeQuoteOptions() {
+            this.isQuoteOptionsOpen = false;
+        },
+    },
 };
 </script>
