@@ -1,20 +1,20 @@
 <template>
-    <div class="grid grid-cols-3 gap-10 items-center">
-        <div class="w-full space-y-2">
-            <div class="mb-4 cursor-pointer">
-                <img
-                    :src="imageUrl ? imageUrl : '/public/images/profile/no-profile-picture.jpg'"
-                    alt="image"
-                    class="rounded-lg"
-                />
-            </div>
+    <div class="w-full space-y-2">
+        <div class="mb-4 cursor-pointer">
+            <img
+                :src="imageUrl ? imageUrl : '/public/images/profile/no-profile-picture.jpg'"
+                alt="image"
+                class="rounded-lg"
+            />
+        </div>
 
-            <div class="space-y-2">
-                <router-link :to="'/movies/1'" class="uppercase cursor-pointer">{{ title }} ({{ releaseYear }})</router-link>
-                <div class="flex items-center space-x-4">
-                    <span>{{ comments }}</span>
-                    <MovieCommentIcon />
-                </div>
+        <div class="space-y-2">
+            <router-link :to="'/movies/1'" class="uppercase cursor-pointer"
+                >{{ title }} ({{ releaseYear }})
+            </router-link>
+            <div class="flex items-center space-x-4">
+                <span>{{ comments }}</span>
+                <MovieCommentIcon />
             </div>
         </div>
     </div>

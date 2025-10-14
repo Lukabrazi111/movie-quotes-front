@@ -1,6 +1,15 @@
 <template>
     <section class="space-y-10 text-white">
-        <MoviesItem title="loki mobius" imageUrl="" releaseYear="2021" comments="10" />
+        <div class="grid grid-cols-3 gap-10 items-center">
+            <MoviesItem title="loki mobius" imageUrl="" releaseYear="2021" comments="10" />
+            <MoviesItem title="loki mobius" imageUrl="" releaseYear="2021" comments="10" />
+            <MoviesItem title="loki mobius" imageUrl="" releaseYear="2021" comments="10" />
+            <MoviesItem title="loki mobius" imageUrl="" releaseYear="2021" comments="10" />
+            <MoviesItem title="loki mobius" imageUrl="" releaseYear="2021" comments="10" />
+            <MoviesItem title="loki mobius" imageUrl="" releaseYear="2021" comments="10" />
+            <MoviesItem title="loki mobius" imageUrl="" releaseYear="2021" comments="10" />
+            <MoviesItem title="loki mobius" imageUrl="" releaseYear="2021" comments="10" />
+        </div>
     </section>
 </template>
 
