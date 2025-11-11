@@ -11,7 +11,7 @@ import NewsFeed from '@/components/pages/NewsFeed.vue';
 import UserProfile from '@/components/pages/UserProfile.vue';
 import Movies from '@/components/pages/Movies.vue';
 import ResetPasswordModal from '@/components/modals/auth/ResetPasswordModal.vue';
-import MoviesView from '@/components/movies/MoviesView.vue';
+import MovieView from '@/components/movies/MovieView.vue';
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -78,7 +78,7 @@ const router = createRouter({
                 {
                     path: '/movies/:id',
                     name: 'movie',
-                    component: MoviesView,
+                    component: MovieView,
                 },
             ],
         },

@@ -4,11 +4,6 @@
             <MoviesItem title="loki mobius" imageUrl="" releaseYear="2021" comments="10" />
             <MoviesItem title="loki mobius" imageUrl="" releaseYear="2021" comments="10" />
             <MoviesItem title="loki mobius" imageUrl="" releaseYear="2021" comments="10" />
-            <MoviesItem title="loki mobius" imageUrl="" releaseYear="2021" comments="10" />
-            <MoviesItem title="loki mobius" imageUrl="" releaseYear="2021" comments="10" />
-            <MoviesItem title="loki mobius" imageUrl="" releaseYear="2021" comments="10" />
-            <MoviesItem title="loki mobius" imageUrl="" releaseYear="2021" comments="10" />
-            <MoviesItem title="loki mobius" imageUrl="" releaseYear="2021" comments="10" />
         </div>
     </section>
 </template>
@@ -19,5 +14,16 @@ import MoviesItem from '@/components/movies/MoviesItem.vue';
 export default {
     name: 'MoviesList',
     components: { MoviesItem },
+
+    props: {
+        movies: {
+            type: Array,
+            required: true,
+        },
+    },
+
+    created() {
+        console.log(this.movies);
+    }
 };
 </script>

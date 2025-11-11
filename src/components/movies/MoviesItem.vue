@@ -1,15 +1,17 @@
 <template>
     <div class="w-full space-y-2">
         <div class="mb-4 cursor-pointer">
-            <img
-                :src="imageUrl ? imageUrl : '/public/images/profile/no-profile-picture.jpg'"
-                alt="image"
-                class="rounded-lg"
-            />
+            <router-link to="/movies/1">
+                <img
+                    :src="imageUrl ? imageUrl : '/public/images/profile/no-profile-picture.jpg'"
+                    alt="image"
+                    class="rounded-lg"
+                />
+            </router-link>
         </div>
 
         <div class="space-y-2">
-            <router-link :to="'/movies/1'" class="uppercase cursor-pointer"
+            <router-link to="/movies/1" class="uppercase cursor-pointer"
                 >{{ title }} ({{ releaseYear }})
             </router-link>
             <div class="flex items-center space-x-4">

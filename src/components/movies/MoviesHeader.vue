@@ -1,6 +1,6 @@
 <template>
     <header class="flex items-center justify-between w-full mb-2">
-        <h1 class="text-white font-bold! text-xl">My list of movies (Total 25)</h1>
+        <h1 class="text-white font-bold! text-xl">My list of movies (Total {{ countMovies }})</h1>
         <div class="flex items-center space-x-5">
             <div
                 v-click-outside="() => (isOpenSearchInput = false)"
@@ -52,6 +52,13 @@ export default {
             isOpenSearchInput: false,
             isOpenMovieModal: false,
         };
+    },
+
+    props: {
+        countMovies: {
+            type: Number,
+            required: true,
+        },
     },
 
     methods: {
