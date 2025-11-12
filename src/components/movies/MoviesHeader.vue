@@ -24,6 +24,7 @@
                 >
                     <SearchIcon />
                     <input
+                        @input="$emit('update:search', $event.target.value)"
                         type="text"
                         name="search"
                         placeholder="Search movies"
@@ -59,6 +60,10 @@ export default {
             type: Number,
             required: true,
         },
+        search: {
+            type: String,
+            required: false,
+        }
     },
 
     methods: {

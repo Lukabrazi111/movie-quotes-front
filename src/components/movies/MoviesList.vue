@@ -1,9 +1,14 @@
 <template>
     <section class="space-y-10 text-white">
         <div class="grid grid-cols-3 gap-10 items-center">
-            <MoviesItem title="loki mobius" imageUrl="" releaseYear="2021" comments="10" />
-            <MoviesItem title="loki mobius" imageUrl="" releaseYear="2021" comments="10" />
-            <MoviesItem title="loki mobius" imageUrl="" releaseYear="2021" comments="10" />
+            <MoviesItem
+                v-for="movie in movies"
+                :key="movie.id"
+                :title="movie.title"
+                :releaseYear="movie.release_year"
+                :imageUrl="movie.thumbnail"
+                :quotesCount="movie.quotes_count"
+            />
         </div>
     </section>
 </template>
@@ -21,9 +26,5 @@ export default {
             required: true,
         },
     },
-
-    created() {
-        console.log(this.movies);
-    }
 };
 </script>

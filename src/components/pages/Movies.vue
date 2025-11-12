@@ -2,8 +2,8 @@
     <LoadingIcon v-show="isLoading" />
 
     <div v-show="!isLoading">
-        <MoviesHeader :countMovies="count" />
-        <MoviesList :movies="movies" />
+        <MoviesHeader :countMovies="count" v-model:search="search" />
+        <MoviesList v-if="movies.length > 0" :movies="movies" />
     </div>
 </template>
 
@@ -22,26 +22,31 @@ export default {
             movies: [],
             count: 0,
             isLoading: false,
+            search: '',
         };
     },
 
-    methods: {},
+    methods: {
+        async fetchMovies() {
+            this.isLoading = true;
 
-    async mounted() {
-        this.isLoading = true;
+            try {
+                const response = await axios.get('movies');
 
-        try {
-            const response = await axios.get('movies');
-
-            if (response.status === 200) {
-                this.movies = response.data.movies;
-                this.count = response.data.count || 0;
+                if (response.status === 200) {
+                    this.movies = response.data.movies;
+                    this.count = response.data.count || 0;
+                }
+            } catch (error) {
+                console.error('Error fetching movies: ', error);
+            } finally {
+                this.isLoading = false;
             }
-        } catch (error) {
-            console.error('Error fetching movies: ', error);
-        } finally {
-            this.isLoading = false;
-        }
+        },
+    },
+
+    mounted() {
+        this.fetchMovies();
     },
 };
 </script>

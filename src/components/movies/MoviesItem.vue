@@ -5,17 +5,17 @@
                 <img
                     :src="imageUrl ? imageUrl : '/public/images/profile/no-profile-picture.jpg'"
                     alt="image"
-                    class="rounded-lg"
+                    class="rounded-lg w-full object-cover object-center"
                 />
             </router-link>
         </div>
 
         <div class="space-y-2">
-            <router-link to="/movies/1" class="uppercase cursor-pointer"
+            <router-link to="/movies/1" class="uppercase cursor-pointer text-nowrap"
                 >{{ title }} ({{ releaseYear }})
             </router-link>
             <div class="flex items-center space-x-4">
-                <span>{{ comments }}</span>
+                <span>{{ quotesCount }}</span>
                 <MovieCommentIcon />
             </div>
         </div>
@@ -41,8 +41,8 @@ export default {
             type: String,
             required: true,
         },
-        comments: {
-            type: String,
+        quotesCount: {
+            type: Number,
             required: true,
         },
     },
