@@ -2,7 +2,7 @@
     <LoadingIcon v-show="isLoading" />
 
     <div v-show="!isLoading">
-        <MoviesHeader :countMovies="count" v-model:search="search" />
+        <MoviesHeader :countMovies="count" v-model:search="queries['filter[title]']" />
         <MoviesList v-if="movies.length > 0" :movies="movies" />
     </div>
 </template>
@@ -22,7 +22,11 @@ export default {
             movies: [],
             count: 0,
             isLoading: false,
-            search: '',
+            queries: {
+                // TODO: need to add pagination part
+                'filter[title]': '',
+                ...this.$route.query,
+            },
         };
     },
 
@@ -30,15 +34,17 @@ export default {
         async fetchMovies() {
             this.isLoading = true;
 
+            const qs = new URLSearchParams(this.queries).toString();
+
             try {
-                const response = await axios.get('movies');
+                const response = await axios.get(`movies?${qs}`);
 
                 if (response.status === 200) {
                     this.movies = response.data.movies;
                     this.count = response.data.count || 0;
                 }
             } catch (error) {
-                console.error('Error fetching movies: ', error);
+                console.error('Error fetching movies:', error);
             } finally {
                 this.isLoading = false;
             }
@@ -47,6 +53,16 @@ export default {
 
     mounted() {
         this.fetchMovies();
+    },
+
+    watch: {
+        queries: {
+            handler(value) {
+                this.fetchMovies();
+                this.$router.push({ query: value });
+            },
+            deep: true,
+        },
     },
 };
 </script>
