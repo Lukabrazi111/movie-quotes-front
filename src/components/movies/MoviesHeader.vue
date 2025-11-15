@@ -25,7 +25,7 @@
                     <SearchIcon />
                     <input
                         @blur="$emit('update:search', $event.target.value)"
-                        @keyup.enter="onPageChange"
+                        @keyup.enter="$event.target.blur()"
                         type="text"
                         name="search"
                         placeholder="Search movies"
@@ -70,9 +70,6 @@ export default {
     methods: {
         toggleSearchInput() {
             this.isOpenSearchInput = !this.isOpenSearchInput;
-        },
-        onPageChange(event) {
-            event.target.blur();
         },
     },
 };
