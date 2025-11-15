@@ -45,18 +45,34 @@
             </div>
         </div>
 
+        <div class="text-white space-x-4">
+            <span>Quotes (total 7)</span>
+            <span class="text-[#6C757D]">|</span>
+            <BaseButton @click="isOpenCreateNewQuoteModal = true">Add quote</BaseButton>
+        </div>
+
         <!-- Quote lists -->
         <MovieQuoteLists />
+
+        <!-- Create quote form modal -->
+        <CreateQuoteForMovieModal
+            v-if="isOpenCreateNewQuoteModal"
+            v-model="isOpenCreateNewQuoteModal"
+        />
     </section>
 </template>
 
 <script>
 import MovieQuoteLists from '@/components/movies/quotes/MovieQuoteLists.vue';
 import MovieActionOptions from '@/components/movies/MovieActionOptions.vue';
+import CreateQuoteForMovieModal from '@/components/modals/movies/CreateQuoteForMovieModal.vue';
+import BaseButton from '@/components/ui/buttons/BaseButton.vue';
 
 export default {
     name: 'MoviesView',
     components: {
+        BaseButton,
+        CreateQuoteForMovieModal,
         MovieActionOptions,
         MovieQuoteLists,
     },
@@ -64,6 +80,7 @@ export default {
     data() {
         return {
             isOpenMovieActionOptions: false,
+            isOpenCreateNewQuoteModal: false,
         };
     },
 };

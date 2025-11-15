@@ -1,5 +1,5 @@
 <template>
-    <div id="bgOpacity" class="relative text-white rounded-lg px-5 py-4 space-y-4 max-w-xl">
+    <div id="bgOpacity" class="relative text-white rounded-lg px-5 py-4 space-y-4">
         <MovieQuoteOptionsMenu
             @toggleQuoteOptions="toggleQuoteOptions"
             @closeQuoteOptions="closeQuoteOptions"
