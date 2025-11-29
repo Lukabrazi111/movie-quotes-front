@@ -1,7 +1,7 @@
 export default {
     beforeMount(el, binding) {
         el.clickOutsideEvent = function (event) {
-            if(!(el === event.target || el.contains(event.target))) {
+            if (!(el === event.target || el.contains(event.target))) {
                 binding.value(event);
             }
         };
@@ -13,4 +13,4 @@ export default {
         // Remove listener when bound element is unmounted
         document.removeEventListener('click', el.clickOutsideEvent);
     },
-}
+};
