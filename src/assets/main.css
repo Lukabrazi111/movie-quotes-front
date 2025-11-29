@@ -1,8 +1,8 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 /* TODO: maybe need to change, need to think about that */
 * {
-    font-family: "Helvetica Neue", sans-serif;
+    font-family: 'Helvetica Neue', sans-serif;
     font-weight: 300;
 }
 
@@ -11,65 +11,65 @@ button {
 }
 
 .bg-gradient-primary {
-    background: linear-gradient(#181623, #191725, #0D0B14) !important;
+    background: linear-gradient(#181623, #191725, #0d0b14) !important;
 }
 
 @theme {
     /* Red colors */
-    --color-primary: #E31221;
-    --color-primary-hover: #CC0E10;
-    --color-disabled: #EC4C57;
+    --color-primary: #e31221;
+    --color-primary-hover: #cc0e10;
+    --color-disabled: #ec4c57;
 
     /* Dark colors */
     --color-primary-dark: #181623;
-    --color-border-gray: #EFEFEF4D;
+    --color-border-gray: #efefef4d;
 
     /* Background colors */
     --color-secondary-dark: #222030;
-    --color-content-dark: #11101A;
+    --color-content-dark: #11101a;
 
     /* Light colors */
-    --color-cream: #DDCCAA;
-    --color-gray-main: #CED4DA;
+    --color-cream: #ddccaa;
+    --color-gray-main: #ced4da;
 
-    --font-montserrat: "Montserrat", sans-serif;
-    --font-helvetica: "Helvetica Neue", sans-serif;
+    --font-montserrat: 'Montserrat', sans-serif;
+    --font-helvetica: 'Helvetica Neue', sans-serif;
 }
 
 /* Montserrat */
 @font-face {
-    font-family: "Montserrat";
-    src: url("@/assets/fonts/montserrat/Montserrat-Bold.ttf") format("truetype");
+    font-family: 'Montserrat';
+    src: url('@/assets/fonts/montserrat/Montserrat-Bold.ttf') format('truetype');
     font-weight: 700;
 }
 
 @font-face {
-    font-family: "Montserrat";
-    src: url("@/assets/fonts/montserrat/Montserrat-Regular.ttf") format("truetype");
+    font-family: 'Montserrat';
+    src: url('@/assets/fonts/montserrat/Montserrat-Regular.ttf') format('truetype');
     font-weight: 400;
 }
 
 @font-face {
-    font-family: "Montserrat";
-    src: url("@/assets/fonts/montserrat/Montserrat-Light.ttf") format("truetype");
+    font-family: 'Montserrat';
+    src: url('@/assets/fonts/montserrat/Montserrat-Light.ttf') format('truetype');
     font-weight: 300;
 }
 
 /* Helvetica */
 @font-face {
-    font-family: "Helvetica Neue";
-    src: url("@/assets/fonts/helvetica-neue-5/HelveticaNeueBold.otf") format("opentype");
+    font-family: 'Helvetica Neue';
+    src: url('@/assets/fonts/helvetica-neue-5/HelveticaNeueBold.otf') format('opentype');
     font-weight: 700;
 }
 
 @font-face {
-    font-family: "Helvetica Neue";
-    src: url("@/assets/fonts/helvetica-neue-5/HelveticaNeueMedium.otf") format("opentype");
+    font-family: 'Helvetica Neue';
+    src: url('@/assets/fonts/helvetica-neue-5/HelveticaNeueMedium.otf') format('opentype');
     font-weight: 500;
 }
 
 @font-face {
-    font-family: "Helvetica Neue";
-    src: url("@/assets/fonts/helvetica-neue-5/HelveticaNeueLight.otf") format("opentype");
+    font-family: 'Helvetica Neue';
+    src: url('@/assets/fonts/helvetica-neue-5/HelveticaNeueLight.otf') format('opentype');
     font-weight: 300;
 }

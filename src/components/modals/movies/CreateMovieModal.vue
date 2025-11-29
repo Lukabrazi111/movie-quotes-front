@@ -12,7 +12,7 @@
                     </div>
                 </div>
 
-                <div class="border border-[#6C757D] flex items-center py-1.5">
+                <div class="border border-[#6C757D] flex items-center py-1.5 relative">
                     <ul v-if="this.tags.length > 0" class="flex items-start px-2 space-x-2">
                         <li v-for="tag in tags" :key="tag"
                             class="text-white bg-gray-400 rounded flex items-center space-x-1 px-1 text-nowrap">
@@ -21,7 +21,15 @@
                         </li>
                     </ul>
                     <input class="border-none outline-none w-full px-2" type="text" name="tag" id="tag"
-                        v-model="tagName" placeholder="Enter tag name..." @keydown.enter.prevent="addTag" />
+                        v-model="tagName" @focusin="toggleGenresDropdown" placeholder="Enter tag name..."
+                        @keydown.enter.prevent="addTag" autocomplete="off" />
+                    <div v-if="isOpenGenresDropdown" class="absolute top-10 left-0 bg-content-dark rounded z-20">
+                        <ul class="flex flex-col max-h-60 overflow-auto" style="scrollbar-width: none;">
+                            <li v-for="genre in genres" :key="genre"
+                                class="px-20 py-2 cursor-pointer rounded hover:bg-gray-800" @click="selectGenre(genre)">
+                                {{ genre.name }}</li>
+                        </ul>
+                    </div>
                 </div>
 
                 <div>
@@ -71,6 +79,7 @@ import BaseButton from '@/components/ui/buttons/BaseButton.vue';
 import { Form as FormSection } from 'vee-validate';
 import TagCloseIcon from '@/components/icons/modal/form/TagCloseIcon.vue';
 import CameraIcon from '@/components/icons/news-feed/CameraIcon.vue';
+import { axios } from '@/configs/axios/index.js';
 
 export default {
     name: 'CreateMovieModal',
@@ -80,6 +89,8 @@ export default {
         return {
             tagName: '',
             tags: [],
+            genres: [],
+            isOpenGenresDropdown: false,
         };
     },
 
@@ -87,29 +98,101 @@ export default {
         modelValue: Boolean,
     },
 
+    async created() {
+        await this.fetchGenres();
+    },
+
     methods: {
         addTag() {
-            if (this.tagName.trim() === '') return;
+            const trimmedTagName = this.tagName.trim();
+            if (trimmedTagName === '') return;
 
-            if (this.tagName.length >= 15) {
-                alert('tag name is too long, max 15 characters');
+            const validationResult = this.validateTagName(trimmedTagName);
+            if (!validationResult.isValid) {
+                this.tagName = '';
+                alert(validationResult.errorMessage);
                 return;
             }
 
-            if (this.tags.length >= 5) {
+            if (this.checkTagsLength()) {
                 this.tagName = '';
                 alert('you can not add more tag');
                 return;
             }
 
-            if (this.tags.includes(this.tagName)) {
+            if (this.isTagExists(trimmedTagName)) {
                 this.tagName = '';
                 alert('tag already exists');
                 return;
             }
 
-            this.tags.push(this.tagName);
+            const genre = this.findGenreByName(trimmedTagName);
+            if (!genre) {
+                this.tagName = '';
+                alert('genre not found');
+                return;
+            }
+
+            this.tags.push(genre.name);
             this.tagName = '';
+        },
+
+        async toggleGenresDropdown() {
+            if (!this.isOpenGenresDropdown && this.genres.length === 0) {
+                await this.fetchGenres();
+            }
+            this.isOpenGenresDropdown = !this.isOpenGenresDropdown;
+        },
+
+        selectGenre(genre) {
+            this.isOpenGenresDropdown = false;
+
+            if (this.checkTagsLength()) {
+                alert('you can not add more tag');
+                return;
+            }
+
+            if (this.isTagExists(genre.name)) {
+                alert('tag already exists');
+                return;
+            }
+
+            this.tags.push(genre.name);
+        },
+
+        async fetchGenres() {
+            try {
+                const response = await axios.get('/genres');
+
+                if (response.status === 200) {
+                    this.genres = response.data.genres;
+                }
+            } catch (error) {
+                console.error('Error fetching tags:', error);
+            }
+        },
+
+        validateTagName(tagName) {
+            if (tagName.length > 15) {
+                return {
+                    isValid: false,
+                    errorMessage: 'tag name is too long, max 15 characters',
+                };
+            }
+
+            return { isValid: true };
+        },
+
+        isTagExists(tagName) {
+            return this.tags.some(tag => tag.toLowerCase() === tagName.toLowerCase());
+        },
+
+        findGenreByName(tagName) {
+            return this.genres.find(genre => genre.name.toLowerCase() === tagName.toLowerCase());
+        },
+
+        checkTagsLength() {
+            return this.tags.length >= 5;
         },
 
         removeTag(tag) {
@@ -126,12 +209,29 @@ export default {
     },
 
     watch: {
+        modelValue(newVal) {
+            if (newVal === true) {
+                document.body.classList.add('overflow-hidden');
+            } else {
+                document.body.classList.remove('overflow-hidden');
+            }
+        },
         tagName(newVal) {
             if (newVal.includes(',')) {
                 this.tagName = newVal.replace(',', '');
                 this.addTag();
             }
         }
+    },
+
+    mounted() {
+        if (this.modelValue === true) {
+            document.body.classList.add('overflow-hidden');
+        }
+    },
+
+    beforeUnmount() {
+        document.body.classList.remove('overflow-hidden');
     }
 };
 </script>
