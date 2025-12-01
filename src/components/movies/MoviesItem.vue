@@ -3,8 +3,8 @@
         <div class="mb-4 cursor-pointer">
             <router-link :to="`/movies/${id}`">
                 <img
-                    :src="imageUrl ? imageUrl : '/public/images/profile/no-profile-picture.jpg'"
-                    alt="image"
+                    :src="imageUrl ? imageUrl : '/public/images/movie-detail.jpg'"
+                    alt="movie-image"
                     class="rounded-lg w-full object-cover object-center"
                 />
             </router-link>
