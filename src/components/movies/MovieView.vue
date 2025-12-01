@@ -45,7 +45,7 @@
         </div>
 
         <!-- Quote lists -->
-        <MovieQuoteLists />
+        <MovieQuoteLists :quotes="movie?.quotes || []" />
 
         <!-- Create quote form modal -->
         <CreateQuoteForMovieModal

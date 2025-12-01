@@ -1,5 +1,5 @@
 <template>
-    <div id="bgOpacity" class="relative text-white rounded-lg px-5 py-4 space-y-4">
+    <div id="bgOpacity" class="relative text-white rounded-lg px-5 py-4 space-y-4 w-full max-w-2xl">
         <MovieQuoteOptionsMenu
             @toggleQuoteOptions="toggleQuoteOptions"
             @closeQuoteOptions="closeQuoteOptions"
@@ -8,13 +8,13 @@
 
         <div class="flex items-center text-center">
             <img
-                src="/public/images/movie-detail.jpg"
+                :src="quote.image ? quote.image : '/public/images/movie-detail.jpg'"
                 alt="movie-image"
-                class="rounded-md w-full max-w-40"
+                class="rounded-md w-full max-w-40 object-cover object-center"
             />
 
             <p class="mx-auto px-5">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis, quidem!
+                {{ quote.description }}
             </p>
         </div>
         <div class="flex items-center space-x-6 border-t border-border-gray pt-4">
@@ -51,6 +51,17 @@ export default {
         return {
             isQuoteOptionsOpen: false,
         };
+    },
+
+    props: {
+        quote: {
+            type: Object,
+            required: true,
+        },
+    },
+
+    mounted() {
+        console.log(this.quote);
     },
 
     methods: {
