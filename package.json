@@ -44,7 +44,7 @@
     "jsdom": "^26.1.0",
     "npm-run-all2": "^8.0.4",
     "oxlint": "~1.1.0",
-    "prettier": "3.5.3",
+    "prettier": "^3.5.3",
     "start-server-and-test": "^2.0.12",
     "vite": "npm:rolldown-vite@latest",
     "vite-plugin-vue-devtools": "^7.7.7",

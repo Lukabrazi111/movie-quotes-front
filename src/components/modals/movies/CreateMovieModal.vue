@@ -6,51 +6,87 @@
             <div class="px-5 space-y-5 mt-5">
                 <div class="flex flex-col items-center py-1.5">
                     <div class="w-full relative">
-                        <textarea name="quote_eng" id="quote_eng" cols="30" rows="2"
+                        <textarea
+                            name="quote_eng"
+                            id="quote_eng"
+                            cols="30"
+                            rows="2"
                             class="w-full border-[#6C757D] border px-2 py-1 outline-none placeholder:italic"
-                            placeholder="Start create new quote..." />
+                            placeholder="Start create new quote..."
+                        />
                     </div>
                 </div>
 
                 <div class="border border-[#6C757D] flex items-center py-1.5 relative">
                     <ul v-if="this.tags.length > 0" class="flex items-start px-2 space-x-2">
-                        <li v-for="tag in tags" :key="tag"
-                            class="text-white bg-gray-400 rounded flex items-center space-x-1 px-1 text-nowrap">
+                        <li
+                            v-for="tag in tags"
+                            :key="tag"
+                            class="text-white bg-gray-400 rounded flex items-center space-x-1 px-1 text-nowrap"
+                        >
                             <span>{{ tag }}</span>
                             <TagCloseIcon class="cursor-pointer" @click="removeTag(tag)" />
                         </li>
                     </ul>
-                    <input class="border-none outline-none w-full px-2" type="text" name="tag" id="tag"
-                        v-model="tagName" @focusin="toggleGenresDropdown" placeholder="Enter tag name..."
-                        @keydown.enter.prevent="addTag" autocomplete="off" />
-                    <div v-if="isOpenGenresDropdown" class="absolute top-10 left-0 bg-content-dark rounded z-20">
-                        <ul class="flex flex-col max-h-60 overflow-auto" style="scrollbar-width: none;">
-                            <li v-for="genre in genres" :key="genre"
-                                class="px-20 py-2 cursor-pointer rounded hover:bg-gray-800" @click="selectGenre(genre)">
-                                {{ genre.name }}</li>
+                    <input
+                        class="border-none outline-none w-full px-2"
+                        type="text"
+                        name="tag"
+                        id="tag"
+                        v-model="tagName"
+                        @focusin="toggleGenresDropdown"
+                        placeholder="Enter tag name..."
+                        @keydown.enter.prevent="addTag"
+                        autocomplete="off"
+                    />
+                    <div
+                        v-if="isOpenGenresDropdown"
+                        class="absolute top-10 left-0 bg-content-dark rounded z-20"
+                    >
+                        <ul
+                            class="flex flex-col max-h-60 overflow-auto"
+                            style="scrollbar-width: none"
+                        >
+                            <li
+                                v-for="genre in genres"
+                                :key="genre"
+                                class="px-20 py-2 cursor-pointer rounded hover:bg-gray-800"
+                                @click="selectGenre(genre)"
+                            >
+                                {{ genre.name }}
+                            </li>
                         </ul>
                     </div>
                 </div>
 
                 <div>
-                    <input type="text"
+                    <input
+                        type="text"
                         class="border border-[#6C757D] py-1.5 px-2 outline-none w-full text-white placeholder:italic"
-                        placeholder="Year" />
+                        placeholder="Year"
+                    />
                 </div>
 
                 <div class="flex flex-col items-center">
                     <div class="w-full relative">
-                        <input type="text"
+                        <input
+                            type="text"
                             class="border border-[#6C757D] py-1.5 px-2 outline-none w-full text-white placeholder:italic"
-                            placeholder="Director" />
+                            placeholder="Director"
+                        />
                     </div>
                 </div>
 
                 <div class="flex flex-col items-center">
                     <div class="w-full relative">
-                        <textarea name="description_eng" id="description_eng" cols="30" rows="2"
+                        <textarea
+                            name="description_eng"
+                            id="description_eng"
+                            cols="30"
+                            rows="2"
                             class="w-full border-[#6C757D] border px-2 py-1 outline-none placeholder:italic"
-                            placeholder="Movie description" />
+                            placeholder="Movie description"
+                        />
                     </div>
                 </div>
 
@@ -58,14 +94,19 @@
                     <div class="flex justify-start items-center space-x-4">
                         <CameraIcon />
                         <span>Drag & drop your image here or</span>
-                        <label for="quote_image" type="button" class="bg-[#9747FF66] px-2 py-1 rounded cursor-pointer">
+                        <label
+                            for="quote_image"
+                            type="button"
+                            class="bg-[#9747FF66] px-2 py-1 rounded cursor-pointer"
+                        >
                             <input type="file" id="quote_image" class="hidden" />
                             Choose file
                         </label>
                     </div>
                 </div>
 
-                <BaseButton type="button" class="text-center w-full" @click="createMovie">Add movie
+                <BaseButton type="button" class="text-center w-full" @click="createMovie"
+                    >Add movie
                 </BaseButton>
             </div>
         </FormSection>
@@ -184,11 +225,11 @@ export default {
         },
 
         isTagExists(tagName) {
-            return this.tags.some(tag => tag.toLowerCase() === tagName.toLowerCase());
+            return this.tags.some((tag) => tag.toLowerCase() === tagName.toLowerCase());
         },
 
         findGenreByName(tagName) {
-            return this.genres.find(genre => genre.name.toLowerCase() === tagName.toLowerCase());
+            return this.genres.find((genre) => genre.name.toLowerCase() === tagName.toLowerCase());
         },
 
         checkTagsLength() {
@@ -196,7 +237,7 @@ export default {
         },
 
         removeTag(tag) {
-            this.tags = this.tags.filter(t => t !== tag);
+            this.tags = this.tags.filter((t) => t !== tag);
         },
 
         createMovie() {
@@ -221,7 +262,7 @@ export default {
                 this.tagName = newVal.replace(',', '');
                 this.addTag();
             }
-        }
+        },
     },
 
     mounted() {
@@ -232,6 +273,6 @@ export default {
 
     beforeUnmount() {
         document.body.classList.remove('overflow-hidden');
-    }
+    },
 };
 </script>

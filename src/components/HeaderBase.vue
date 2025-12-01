@@ -1,10 +1,16 @@
 <template>
-    <HeaderLayout class="bg-secondary-dark" :class="{
-        'bg-gradient-primary h-[80vh]': !this.authStore.isAuthenticated,
-    }" ref="headerRef">
+    <HeaderLayout
+        class="bg-secondary-dark"
+        :class="{
+            'bg-gradient-primary h-[80vh]': !this.authStore.isAuthenticated,
+        }"
+        ref="headerRef"
+    >
         <template v-slot:nav-content>
             <div class="relative" v-if="this.authStore.isAuthenticated">
-                <div class="bg-red-500 text-white text-center rounded-full absolute -top-2.5 -right-2 w-6 h-6">
+                <div
+                    class="bg-red-500 text-white text-center rounded-full absolute -top-2.5 -right-2 w-6 h-6"
+                >
                     3
                 </div>
                 <BellNotificationIcon v-if="this.authStore.isAuthenticated" />
@@ -12,7 +18,9 @@
 
             <div class="space-x-6" v-if="!this.authStore.isAuthenticated">
                 <BaseButton @click="toggleModal('visibleSignUpModal')">Sign up</BaseButton>
-                <SecondaryButton @click="toggleModal('visibleLoginModal', 'visibleForgotPasswordModal')">
+                <SecondaryButton
+                    @click="toggleModal('visibleLoginModal', 'visibleForgotPasswordModal')"
+                >
                     Log in
                 </SecondaryButton>
             </div>
@@ -24,7 +32,9 @@
 
         <template v-slot:header-content v-if="!this.authStore.isAuthenticated">
             <div class="flex flex-col items-center justify-center space-y-5 text-center h-[50vh]">
-                <h1 class="text-5xl w-full max-w-xl text-cream leading-18 font-montserrat! font-bold!">
+                <h1
+                    class="text-5xl w-full max-w-xl text-cream leading-18 font-montserrat! font-bold!"
+                >
                     Find any quote in millions of movie lines
                 </h1>
                 <BaseButton @click="scrollToSpecificSection">Get started</BaseButton>
@@ -33,30 +43,61 @@
     </HeaderLayout>
 
     <!-- Modals -->
-    <SignUpModal @switchModal="handleSwitchModal" @emailSentModal="toggleModal('visibleEmailSentModal')"
-        v-show="visibleSignUpModal" v-model="visibleSignUpModal" />
-    <LoginModal @switchModal="handleSwitchModal"
+    <SignUpModal
+        @switchModal="handleSwitchModal"
+        @emailSentModal="toggleModal('visibleEmailSentModal')"
+        v-show="visibleSignUpModal"
+        v-model="visibleSignUpModal"
+    />
+    <LoginModal
+        @switchModal="handleSwitchModal"
         @switchResetPasswordModal="toggleModal('visibleForgotPasswordModal', 'visibleLoginModal')"
-        v-show="visibleLoginModal" v-model="visibleLoginModal" />
-    <ForgotPasswordModal @switchLoginModal="toggleModal('visibleLoginModal', 'visibleForgotPasswordModal')"
-        @emailSentModal="toggleModal('visibleEmailPasswordRecoveryModal')" v-show="visibleForgotPasswordModal"
-        v-model="visibleForgotPasswordModal" />
-    <ResetPasswordModal @switchLoginModal="toggleModal('visibleLoginModal', 'visibleResetPasswordModal')"
-        @passwordChangedModal="toggleModal('visiblePasswordChangedModal')" v-show="visibleResetPasswordModal"
-        v-model="visibleResetPasswordModal" />
+        v-show="visibleLoginModal"
+        v-model="visibleLoginModal"
+    />
+    <ForgotPasswordModal
+        @switchLoginModal="toggleModal('visibleLoginModal', 'visibleForgotPasswordModal')"
+        @emailSentModal="toggleModal('visibleEmailPasswordRecoveryModal')"
+        v-show="visibleForgotPasswordModal"
+        v-model="visibleForgotPasswordModal"
+    />
+    <ResetPasswordModal
+        @switchLoginModal="toggleModal('visibleLoginModal', 'visibleResetPasswordModal')"
+        @passwordChangedModal="toggleModal('visiblePasswordChangedModal')"
+        v-show="visibleResetPasswordModal"
+        v-model="visibleResetPasswordModal"
+    />
     <!-- Success Modals -->
-    <EmailSentModal @switchModal="handleSwitchModal" v-show="visibleEmailSentModal" v-model="visibleEmailSentModal" />
-    <EmailVerifiedModal @switchModal="handleSwitchModal" @switchLinkExpiredEmailVerificationModal="
-        toggleModal('visibleLinkExpiredEmailVerificationModal', 'visibleEmailVerifiedModal')
-        " v-show="visibleEmailVerifiedModal" v-model="visibleEmailVerifiedModal" />
-    <EmailPasswordRecoveryModal @switchModal="handleSwitchModal"
+    <EmailSentModal
+        @switchModal="handleSwitchModal"
+        v-show="visibleEmailSentModal"
+        v-model="visibleEmailSentModal"
+    />
+    <EmailVerifiedModal
+        @switchModal="handleSwitchModal"
+        @switchLinkExpiredEmailVerificationModal="
+            toggleModal('visibleLinkExpiredEmailVerificationModal', 'visibleEmailVerifiedModal')
+        "
+        v-show="visibleEmailVerifiedModal"
+        v-model="visibleEmailVerifiedModal"
+    />
+    <EmailPasswordRecoveryModal
+        @switchModal="handleSwitchModal"
         @switchLoginModal="toggleModal('visibleLoginModal', 'visibleEmailPasswordRecoveryModal')"
-        v-show="visibleEmailPasswordRecoveryModal" v-model="visibleEmailPasswordRecoveryModal" />
-    <PasswordChangedModal @switchModal="handleSwitchModal" v-show="visiblePasswordChangedModal"
-        v-model="visiblePasswordChangedModal" />
+        v-show="visibleEmailPasswordRecoveryModal"
+        v-model="visibleEmailPasswordRecoveryModal"
+    />
+    <PasswordChangedModal
+        @switchModal="handleSwitchModal"
+        v-show="visiblePasswordChangedModal"
+        v-model="visiblePasswordChangedModal"
+    />
     <!-- Error Modals -->
-    <LinkExpiredEmailVerificationModal @switchEmailSentModal="toggleModal('visibleEmailSentModal')"
-        v-show="visibleLinkExpiredEmailVerificationModal" v-model="visibleLinkExpiredEmailVerificationModal" />
+    <LinkExpiredEmailVerificationModal
+        @switchEmailSentModal="toggleModal('visibleEmailSentModal')"
+        v-show="visibleLinkExpiredEmailVerificationModal"
+        v-model="visibleLinkExpiredEmailVerificationModal"
+    />
 </template>
 
 <script>
