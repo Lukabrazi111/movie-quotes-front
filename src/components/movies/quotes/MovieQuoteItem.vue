@@ -8,13 +8,13 @@
 
         <div class="flex items-center text-center">
             <img
-                src="/images/movie-detail.jpg"
+                src="/public/images/movie-detail.jpg"
                 alt="movie-image"
                 class="rounded-md w-full max-w-40"
             />
 
             <p class="mx-auto px-5">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere, odio?
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis, quidem!
             </p>
         </div>
         <div class="flex items-center space-x-6 border-t border-border-gray pt-4">

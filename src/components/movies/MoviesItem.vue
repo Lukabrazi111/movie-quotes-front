@@ -1,7 +1,7 @@
 <template>
     <div class="w-full space-y-2">
         <div class="mb-4 cursor-pointer">
-            <router-link to="/movies/1">
+            <router-link :to="`/movies/${id}`">
                 <img
                     :src="imageUrl ? imageUrl : '/public/images/profile/no-profile-picture.jpg'"
                     alt="image"
@@ -11,7 +11,7 @@
         </div>
 
         <div class="space-y-2">
-            <router-link to="/movies/1" class="uppercase cursor-pointer text-nowrap"
+            <router-link :to="`/movies/${id}`" class="uppercase cursor-pointer text-nowrap"
                 >{{ title }} ({{ releaseYear }})
             </router-link>
             <div class="flex items-center space-x-4">
@@ -29,6 +29,10 @@ export default {
     name: 'MoviesItem',
     components: { MovieCommentIcon },
     props: {
+        id: {
+            type: Number,
+            required: true,
+        },
         imageUrl: {
             type: String,
             required: true,

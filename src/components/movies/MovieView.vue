@@ -11,42 +11,35 @@
         >
             <MovieActionOptions v-show="isOpenMovieActionOptions" />
 
-            <div>
+            <div class="w-full max-w-4xl">
                 <img
-                    src="/public/images/movie-detail.jpg"
+                    :src="movie.thumbnail ? movie.thumbnail : '/public/images/movie-detail.jpg'"
                     alt="movie-image"
-                    class="rounded-lg w-full max-w-4xl"
+                    class="rounded-lg w-full object-cover object-center"
                 />
             </div>
             <div class="flex flex-col space-y-4 text-white w-full max-w-xl">
-                <h1 class="text-xl text-cream">Commitment hasan (1999)</h1>
+                <h1 class="text-xl text-cream">{{ movie.title }} ({{ movie.release_year }})</h1>
                 <div>
                     <ul class="flex items-start space-x-2">
                         <li
+                            v-for="genre in movie.genres"
+                            :key="genre.id"
                             class="text-white bg-gray-400 rounded flex items-center space-x-1 px-1 text-nowrap"
                         >
-                            <span>Drama</span>
-                        </li>
-                        <li
-                            class="text-white bg-gray-400 rounded flex items-center space-x-1 px-1 text-nowrap"
-                        >
-                            <span>Romance</span>
+                            <span>{{ genre.name }}</span>
                         </li>
                     </ul>
                 </div>
-                <div>Director: Nick cassavetes</div>
+                <div>Director: {{ movie.director }}</div>
                 <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem deleniti earum
-                    error ipsa laudantium nam nemo perferendis perspiciatis placeat sit. Alias iste
-                    molestiae necessitatibus repellat soluta tempore vel. Culpa deleniti eius id
-                    minus necessitatibus perferendis, provident qui ut. Ab ad at culpa fugiat
-                    impedit nulla obcaecati sed. Adipisci delectus, sapiente?
+                    {{ movie.description }}
                 </p>
             </div>
         </div>
 
         <div class="text-white space-x-4">
-            <span>Quotes (total 7)</span>
+            <span>Quotes (total {{ movie.quotes_count }})</span>
             <span class="text-[#6C757D]">|</span>
             <BaseButton @click="isOpenCreateNewQuoteModal = true">Add quote</BaseButton>
         </div>
@@ -67,6 +60,7 @@ import MovieQuoteLists from '@/components/movies/quotes/MovieQuoteLists.vue';
 import MovieActionOptions from '@/components/movies/MovieActionOptions.vue';
 import CreateQuoteForMovieModal from '@/components/modals/movies/CreateQuoteForMovieModal.vue';
 import BaseButton from '@/components/ui/buttons/BaseButton.vue';
+import { axios } from '@/configs/axios/index.js';
 
 export default {
     name: 'MoviesView',
@@ -81,7 +75,28 @@ export default {
         return {
             isOpenMovieActionOptions: false,
             isOpenCreateNewQuoteModal: false,
+            movie: {},
         };
+    },
+
+    mounted() {
+        this.fetchMovie();
+    },
+
+    methods: {
+        async fetchMovie() {
+            try {
+                const response = await axios.get(`/movies/${this.$route.params.id}`);
+
+                if (response.status === 200) {
+                    this.movie = response.data.movie;
+                }
+            } catch (error) {
+                const response = error.response;
+
+                console.log(response);
+            }
+        },
     },
 };
 </script>

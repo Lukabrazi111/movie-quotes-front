@@ -4,6 +4,7 @@
             <MoviesItem
                 v-for="movie in movies"
                 :key="movie.id"
+                :id="movie.id"
                 :title="movie.title"
                 :releaseYear="movie.release_year"
                 :imageUrl="movie.thumbnail"
