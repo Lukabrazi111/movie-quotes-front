@@ -12,7 +12,6 @@
                     />
                     <h3>{{ this.user.username }}</h3>
                 </div>
-
                 <!-- Movie details -->
                 <div class="flex items-center space-x-6">
                     <img
@@ -31,7 +30,7 @@
                         <p>Director: {{ movie.director }}</p>
                     </div>
                 </div>
-
+                <!-- Quote description -->
                 <div class="flex flex-col items-center">
                     <div class="w-full relative">
                         <textarea
@@ -50,25 +49,8 @@
                         :message="errors.description"
                     />
                 </div>
-                <div class="border px-3 py-4 border-[#6C757D]">
-                    <div class="flex justify-start items-center space-x-4">
-                        <CameraIcon />
-                        <span>Drag & drop your image here or</span>
-                        <label
-                            for="quote_image"
-                            type="button"
-                            class="bg-[#9747FF66] px-2 py-1 rounded cursor-pointer"
-                        >
-                            <input
-                                type="file"
-                                id="quote_image"
-                                class="hidden"
-                                @change="handleImageUpload"
-                            />
-                            Choose file
-                        </label>
-                    </div>
-                </div>
+                <!-- Handle quote image upload -->
+                <HandleQuoteImageUpload v-model:image="image" />
                 <div class="flex justify-start items-start w-full">
                     <FieldError v-if="errors.image" :message="errors.image" />
                 </div>
@@ -80,7 +62,6 @@
 
 <script>
 import BaseButton from '@/components/ui/buttons/BaseButton.vue';
-import CameraIcon from '@/components/icons/news-feed/CameraIcon.vue';
 import ModalLayout from '@/components/layouts/ModalLayout.vue';
 import FormHeader from '@/components/modals/dashboard-form/FormHeader.vue';
 import GenreTags from '@/components/ui/GenreTags.vue';
@@ -89,17 +70,18 @@ import { mapState } from 'pinia';
 import { useAuthStore } from '@/stores/user/auth.js';
 import { axios } from '@/configs/axios';
 import FieldError from '@/components/ui/form/FieldError.vue';
+import HandleQuoteImageUpload from '@/components/modals/quotes/HandleQuoteImageUpload.vue';
 
 export default {
     name: 'CreateQuoteForMovieModal',
     components: {
         FormHeader,
         ModalLayout,
-        CameraIcon,
         BaseButton,
         FormSection,
         GenreTags,
         FieldError,
+        HandleQuoteImageUpload,
     },
 
     data() {
@@ -172,7 +154,7 @@ export default {
 
                 if (response.status === 422) {
                     this.errors.description = response.data?.errors?.description[0];
-                    this.errors.image = response.data?.errors?.image[0];
+                    this.errors.image = response.data?.errors?.image?.[0];
                 }
             }
         },
@@ -181,10 +163,6 @@ export default {
             this.description = '';
             this.image = null;
             this.errors = {};
-        },
-
-        handleImageUpload(event) {
-            this.image = event.target.files[0] || null;
         },
     },
 };

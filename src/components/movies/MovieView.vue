@@ -52,7 +52,7 @@
 <script>
 import MovieQuoteLists from '@/components/movies/quotes/MovieQuoteLists.vue';
 import MovieActionOptions from '@/components/movies/MovieActionOptions.vue';
-import CreateQuoteForMovieModal from '@/components/modals/movies/CreateQuoteForMovieModal.vue';
+import CreateQuoteForMovieModal from '@/components/modals/quotes/CreateQuoteForMovieModal.vue';
 import BaseButton from '@/components/ui/buttons/BaseButton.vue';
 import GenreTags from '@/components/ui/GenreTags.vue';
 import { axios } from '@/configs/axios/index.js';
