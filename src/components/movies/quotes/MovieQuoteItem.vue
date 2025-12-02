@@ -19,13 +19,13 @@
         </div>
         <div class="flex items-center space-x-6 border-t border-border-gray pt-4">
             <div class="flex items-center space-x-2">
-                <span>3</span>
+                <span>{{ quote.comments_count }}</span>
                 <button>
                     <CommentIcon />
                 </button>
             </div>
             <div class="flex items-center space-x-2">
-                <span>3</span>
+                <span>{{ quote.likes_count }}</span>
                 <button>
                     <LikeIcon />
                 </button>
@@ -58,10 +58,6 @@ export default {
             type: Object,
             required: true,
         },
-    },
-
-    mounted() {
-        console.log(this.quote);
     },
 
     methods: {

@@ -21,15 +21,7 @@
             <div class="flex flex-col space-y-4 text-white w-full max-w-xl">
                 <h1 class="text-xl text-cream">{{ movie.title }} ({{ movie.release_year }})</h1>
                 <div>
-                    <ul class="flex items-start space-x-2">
-                        <li
-                            v-for="genre in movie.genres"
-                            :key="genre.id"
-                            class="text-white bg-gray-400 rounded flex items-center space-x-1 px-1 text-nowrap"
-                        >
-                            <span>{{ genre.name }}</span>
-                        </li>
-                    </ul>
+                    <GenreTags :genres="movie.genres || []" />
                 </div>
                 <div>Director: {{ movie.director }}</div>
                 <p>
@@ -49,8 +41,10 @@
 
         <!-- Create quote form modal -->
         <CreateQuoteForMovieModal
-            v-if="isOpenCreateNewQuoteModal"
+            v-show="isOpenCreateNewQuoteModal"
             v-model="isOpenCreateNewQuoteModal"
+            :movie="movie || {}"
+            @quote-created="handleQuoteCreated"
         />
     </section>
 </template>
@@ -60,6 +54,7 @@ import MovieQuoteLists from '@/components/movies/quotes/MovieQuoteLists.vue';
 import MovieActionOptions from '@/components/movies/MovieActionOptions.vue';
 import CreateQuoteForMovieModal from '@/components/modals/movies/CreateQuoteForMovieModal.vue';
 import BaseButton from '@/components/ui/buttons/BaseButton.vue';
+import GenreTags from '@/components/ui/GenreTags.vue';
 import { axios } from '@/configs/axios/index.js';
 
 export default {
@@ -69,6 +64,7 @@ export default {
         CreateQuoteForMovieModal,
         MovieActionOptions,
         MovieQuoteLists,
+        GenreTags,
     },
 
     data() {
@@ -94,8 +90,18 @@ export default {
             } catch (error) {
                 const response = error.response;
 
-                console.log(response);
+                if (response.status === 404) {
+                    alert(response.data.message);
+                    this.$router.push({ name: 'movies' });
+                } else {
+                    alert(response.data.message);
+                    this.$router.push({ name: 'news-feed' });
+                }
             }
+        },
+
+        handleQuoteCreated() {
+            this.fetchMovie();
         },
     },
 };

@@ -1,6 +1,6 @@
 <template>
-    <ModalLayout @click="toggleModal">
-        <FormHeader @closeDropdown="this.$emit('update:modelValue', false)" title="Add Quote" />
+    <ModalLayout @click="closeModal">
+        <FormHeader @closeDropdown="closeModal" title="Add Quote" />
 
         <FormSection @submit="createQuote" novalidate class="w-full text-white">
             <div class="px-5 space-y-5 mt-5">
@@ -13,34 +13,42 @@
                     <h3>{{ this.user.username }}</h3>
                 </div>
 
-                <!-- Need to add spacific movie details -->
-                <div>
-                    <h1>MOVIE DETAILS</h1>
+                <!-- Movie details -->
+                <div class="flex items-center space-x-6">
+                    <img
+                        :src="movie.thumbnail || '/public/images/movie-detail.jpg'"
+                        alt="movie-image"
+                        class="w-full max-w-32 object-cover object-center rounded"
+                    />
+                    <div class="flex flex-col space-y-4">
+                        <span class="flex items-center space-x-2">
+                            <p class="text-xl font-bold text-cream">
+                                {{ movie.title?.charAt(0).toUpperCase() + movie.title?.slice(1) }}
+                            </p>
+                            <p class="text-xl font-bold text-cream">({{ movie.release_year }})</p>
+                        </span>
+                        <GenreTags :genres="movie.genres || []" />
+                        <p>Director: {{ movie.director }}</p>
+                    </div>
                 </div>
 
                 <div class="flex flex-col items-center">
                     <div class="w-full relative">
                         <textarea
-                            name="quote_eng"
-                            id="quote_eng"
+                            name="quote_description"
+                            id="quote_description"
+                            v-model="description"
                             cols="30"
                             rows="2"
                             class="w-full border-[#6C757D] border px-2 py-1 outline-none placeholder:italic"
                             placeholder="Start create new quote..."
                         />
-                        <span class="absolute top-2.5 right-4">Eng</span>
                     </div>
-                    <div class="w-full relative">
-                        <textarea
-                            name="quote_geo"
-                            id="quote_geo"
-                            cols="30"
-                            rows="2"
-                            class="w-full border-[#6C757D] border px-2 py-1 outline-none placeholder:italic"
-                            placeholder="Start create new quote..."
-                        />
-                        <span class="absolute top-2.5 right-4">ქარ</span>
-                    </div>
+                    <FieldError
+                        class="flex justify-start items-start w-full"
+                        v-if="errors.description"
+                        :message="errors.description[0]"
+                    />
                 </div>
                 <div class="border px-3 py-4 border-[#6C757D]">
                     <div class="flex justify-start items-center space-x-4">
@@ -51,12 +59,20 @@
                             type="button"
                             class="bg-[#9747FF66] px-2 py-1 rounded cursor-pointer"
                         >
-                            <input type="file" id="quote_image" class="hidden" />
+                            <input
+                                type="file"
+                                id="quote_image"
+                                class="hidden"
+                                @change="handleImageUpload"
+                            />
                             Choose file
                         </label>
                     </div>
                 </div>
-                <BaseButton type="submit" class="text-center w-full">Add quote</BaseButton>
+                <div class="flex justify-start items-start w-full">
+                    <FieldError v-if="errors.image" :message="errors.image[0]" />
+                </div>
+                <BaseButton type="submit" class="text-center w-full"> Add quote </BaseButton>
             </div>
         </FormSection>
     </ModalLayout>
@@ -67,17 +83,40 @@ import BaseButton from '@/components/ui/buttons/BaseButton.vue';
 import CameraIcon from '@/components/icons/news-feed/CameraIcon.vue';
 import ModalLayout from '@/components/layouts/ModalLayout.vue';
 import FormHeader from '@/components/modals/dashboard-form/FormHeader.vue';
+import GenreTags from '@/components/ui/GenreTags.vue';
 import { Form as FormSection } from 'vee-validate';
 import { mapState } from 'pinia';
 import { useAuthStore } from '@/stores/user/auth.js';
+import { axios } from '@/configs/axios';
+import FieldError from '@/components/ui/form/FieldError.vue';
 
 export default {
     name: 'CreateQuoteForMovieModal',
-    components: { FormHeader, ModalLayout, CameraIcon, BaseButton, FormSection },
+    components: {
+        FormHeader,
+        ModalLayout,
+        CameraIcon,
+        BaseButton,
+        FormSection,
+        GenreTags,
+        FieldError,
+    },
+
+    data() {
+        return {
+            description: '',
+            image: null,
+            errors: {},
+        };
+    },
 
     props: {
         modelValue: {
             type: Boolean,
+            required: true,
+        },
+        movie: {
+            type: Object,
             required: true,
         },
     },
@@ -86,13 +125,66 @@ export default {
         ...mapState(useAuthStore, ['user']),
     },
 
+    watch: {
+        modelValue(newVal) {
+            if (newVal === true) {
+                document.body.classList.add('overflow-hidden');
+            } else {
+                document.body.classList.remove('overflow-hidden');
+            }
+        },
+    },
+
+    mounted() {
+        if (this.modelValue === true) {
+            document.body.classList.add('overflow-hidden');
+        }
+    },
+
+    beforeUnmount() {
+        document.body.classList.remove('overflow-hidden');
+    },
+
     methods: {
-        toggleModal() {
-            return this.$emit('update:modelValue', !this.modelValue);
+        closeModal() {
+            this.$emit('update:modelValue', false);
         },
 
-        createQuote() {
-            console.log('creating...');
+        async createQuote() {
+            try {
+                let formData = new FormData();
+                formData.append('description', this.description);
+                formData.append('image', this.image);
+
+                const response = await axios.post(`/movies/${this.movie.id}/quotes`, formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                });
+
+                if (response.status === 200) {
+                    this.clearAllFields();
+                    this.$emit('quote-created');
+                    this.closeModal();
+                }
+            } catch (error) {
+                const response = error.response;
+
+                if (response.status === 422) {
+                    this.errors.description = response.data?.errors?.description;
+                    this.errors.image = response.data?.errors?.image;
+                }
+            }
+        },
+
+        clearAllFields() {
+            this.description = '';
+            this.image = null;
+            this.errors = {};
+        },
+
+        handleImageUpload(event) {
+            this.image = event.target.files[0] || null;
         },
     },
 };
