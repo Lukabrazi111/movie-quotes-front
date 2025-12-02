@@ -9,7 +9,11 @@
             @mouseleave="isOpenMovieActionOptions = false"
             class="relative flex items-start justify-between space-x-6"
         >
-            <MovieActionOptions v-show="isOpenMovieActionOptions" />
+            <MovieActionOptions
+                v-show="isOpenMovieActionOptions"
+                v-model="isOpenEditMovieModal"
+                @edit-movie="isOpenEditMovieModal = true"
+            />
 
             <div class="w-full max-w-4xl">
                 <img
@@ -46,6 +50,13 @@
             :movie="movie || {}"
             @quote-created="handleQuoteCreated"
         />
+        <!-- Edit quote form modal -->
+        <EditMovieModal
+            v-show="isOpenEditMovieModal"
+            v-model="isOpenEditMovieModal"
+            @movie-updated="this.fetchMovie()"
+            :movie="movie || {}"
+        />
     </section>
 </template>
 
@@ -55,6 +66,7 @@ import MovieActionOptions from '@/components/movies/MovieActionOptions.vue';
 import CreateQuoteForMovieModal from '@/components/modals/quotes/CreateQuoteForMovieModal.vue';
 import BaseButton from '@/components/ui/buttons/BaseButton.vue';
 import GenreTags from '@/components/ui/GenreTags.vue';
+import EditMovieModal from '@/components/modals/movies/EditMovieModal.vue';
 import { axios } from '@/configs/axios/index.js';
 
 export default {
@@ -65,12 +77,14 @@ export default {
         MovieActionOptions,
         MovieQuoteLists,
         GenreTags,
+        EditMovieModal,
     },
 
     data() {
         return {
             isOpenMovieActionOptions: false,
             isOpenCreateNewQuoteModal: false,
+            isOpenEditMovieModal: false,
             movie: {},
         };
     },

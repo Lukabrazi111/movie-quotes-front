@@ -51,6 +51,8 @@
                 </div>
                 <!-- Handle quote image upload -->
                 <HandleQuoteImageUpload v-model:image="image" />
+
+                <!-- Error message for quote image upload -->
                 <div class="flex justify-start items-start w-full">
                     <FieldError v-if="errors.image" :message="errors.image" />
                 </div>

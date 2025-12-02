@@ -3,7 +3,7 @@
         class="bg-[#24222F] px-4 py-2 flex items-center space-x-4 rounded-lg absolute top-0 right-0"
     >
         <div>
-            <EditPencilIcon class="cursor-pointer" />
+            <EditPencilIcon class="cursor-pointer" @click="$emit('edit-movie')" />
         </div>
         <span class="text-[#6C757D]">|</span>
         <div>
