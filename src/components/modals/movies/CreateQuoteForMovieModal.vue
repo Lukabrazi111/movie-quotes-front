@@ -47,7 +47,7 @@
                     <FieldError
                         class="flex justify-start items-start w-full"
                         v-if="errors.description"
-                        :message="errors.description[0]"
+                        :message="errors.description"
                     />
                 </div>
                 <div class="border px-3 py-4 border-[#6C757D]">
@@ -70,7 +70,7 @@
                     </div>
                 </div>
                 <div class="flex justify-start items-start w-full">
-                    <FieldError v-if="errors.image" :message="errors.image[0]" />
+                    <FieldError v-if="errors.image" :message="errors.image" />
                 </div>
                 <BaseButton type="submit" class="text-center w-full"> Add quote </BaseButton>
             </div>
@@ -171,8 +171,8 @@ export default {
                 const response = error.response;
 
                 if (response.status === 422) {
-                    this.errors.description = response.data?.errors?.description;
-                    this.errors.image = response.data?.errors?.image;
+                    this.errors.description = response.data?.errors?.description[0];
+                    this.errors.image = response.data?.errors?.image[0];
                 }
             }
         },
