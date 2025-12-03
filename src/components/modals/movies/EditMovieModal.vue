@@ -125,65 +125,7 @@
                 </div>
 
                 <!-- Image upload with preview -->
-                <div class="border px-3 py-4 border-[#6C757D]">
-                    <div
-                        v-show="!thumbnail && !imagePreview"
-                        class="flex justify-start items-center space-x-4"
-                    >
-                        <CameraIcon />
-                        <span>Drag & drop your image here or</span>
-                        <label
-                            for="movie_image"
-                            type="button"
-                            class="bg-[#9747FF66] px-2 py-1 rounded cursor-pointer"
-                        >
-                            <input
-                                type="file"
-                                id="movie_image"
-                                class="hidden"
-                                accept="image/*"
-                                @change="handleImageUpload"
-                            />
-                            Choose file
-                        </label>
-                    </div>
-
-                    <div
-                        v-show="thumbnail || imagePreview"
-                        class="flex justify-start items-start space-x-4"
-                    >
-                        <div class="object-cover object-center rounded flex-1">
-                            <img
-                                :src="imagePreview || thumbnail"
-                                alt="movie-image-preview"
-                                class="w-full max-w-52 object-cover object-center rounded"
-                            />
-                        </div>
-                        <div
-                            class="flex flex-col items-center justify-center my-auto flex-1 space-y-3"
-                        >
-                            <h1 class="text-cream font-bold text-lg uppercase">Replace image</h1>
-                            <div class="flex items-center space-x-2">
-                                <CameraIcon />
-                                <span>Drag & drop your image here or</span>
-                            </div>
-                            <label
-                                for="movie_image_replace"
-                                type="button"
-                                class="bg-[#9747FF66] px-2 py-1 rounded cursor-pointer"
-                            >
-                                <input
-                                    type="file"
-                                    id="movie_image_replace"
-                                    class="hidden"
-                                    accept="image/jpeg, image/png, image/jpg"
-                                    @change="handleImageUpload"
-                                />
-                                Choose file
-                            </label>
-                        </div>
-                    </div>
-                </div>
+                <ImageUploadSection v-model:image="thumbnail" />
                 <FieldError
                     class="flex justify-start items-start w-full"
                     v-if="errors.thumbnail"
@@ -203,15 +145,15 @@ import FormHeader from '@/components/modals/dashboard-form/FormHeader.vue';
 import ModalLayout from '@/components/layouts/ModalLayout.vue';
 import BaseButton from '@/components/ui/buttons/BaseButton.vue';
 import FieldError from '@/components/ui/form/FieldError.vue';
-import { Form as FormSection } from 'vee-validate';
 import TagCloseIcon from '@/components/icons/modal/form/TagCloseIcon.vue';
-import CameraIcon from '@/components/icons/news-feed/CameraIcon.vue';
+import ImageUploadSection from '@/components/movies/ImageUploadSection.vue';
 import { axios } from '@/configs/axios/index.js';
+import { Form as FormSection } from 'vee-validate';
 
 export default {
     name: 'EditMovieModal',
     components: {
-        CameraIcon,
+        ImageUploadSection,
         BaseButton,
         ModalLayout,
         FormHeader,
@@ -231,8 +173,6 @@ export default {
             director: '',
             description: '',
             thumbnail: null,
-            image: null,
-            imagePreview: null,
             errors: {},
         };
     },
@@ -271,9 +211,6 @@ export default {
                 this.addTag();
             }
         },
-        image(newImage) {
-            this.updateImagePreview(newImage);
-        },
     },
 
     async created() {
@@ -289,7 +226,6 @@ export default {
 
     beforeUnmount() {
         document.body.classList.remove('overflow-hidden');
-        this.cleanupImagePreview();
     },
 
     methods: {
@@ -305,8 +241,6 @@ export default {
                 this.description = this.movie.description || '';
                 this.thumbnail = this.movie.thumbnail || null;
                 this.tags = this.movie.genres?.map((genre) => genre.name) || [];
-                this.image = null;
-                this.imagePreview = null;
                 this.errors = {};
             }
         },
@@ -407,28 +341,6 @@ export default {
             this.tags = this.tags.filter((t) => t !== tag);
         },
 
-        handleImageUpload(event) {
-            const file = event.target.files[0] || null;
-            this.image = file;
-        },
-
-        updateImagePreview(imageFile) {
-            this.cleanupImagePreview();
-
-            if (imageFile && imageFile instanceof File) {
-                this.imagePreview = URL.createObjectURL(imageFile);
-            } else {
-                this.imagePreview = null;
-            }
-        },
-
-        cleanupImagePreview() {
-            if (this.imagePreview) {
-                URL.revokeObjectURL(this.imagePreview);
-                this.imagePreview = null;
-            }
-        },
-
         async updateMovie() {
             this.errors = {};
 
@@ -445,8 +357,8 @@ export default {
                     });
                 }
 
-                if (this.image) {
-                    formData.append('thumbnail', this.image);
+                if (this.thumbnail) {
+                    formData.append('thumbnail', this.thumbnail);
                 }
 
                 formData.append('_method', 'PUT');
@@ -487,8 +399,6 @@ export default {
             this.director = '';
             this.description = '';
             this.thumbnail = null;
-            this.image = null;
-            this.imagePreview = null;
             this.errors = {};
         },
     },

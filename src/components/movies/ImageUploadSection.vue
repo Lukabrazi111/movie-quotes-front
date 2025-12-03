@@ -4,11 +4,17 @@
             <CameraIcon />
             <span>Drag & drop your image here or</span>
             <label
-                for="quote_image"
+                :for="inputId"
                 type="button"
                 class="bg-[#9747FF66] px-2 py-1 rounded cursor-pointer"
             >
-                <input type="file" id="quote_image" class="hidden" @change="handleImageUpload" />
+                <input
+                    type="file"
+                    :id="inputId"
+                    name="image"
+                    class="hidden"
+                    @change="handleImageUpload"
+                />
                 Choose file
             </label>
         </div>
@@ -17,7 +23,7 @@
             <div class="object-cover object-center rounded flex-1">
                 <img
                     :src="imagePreview"
-                    alt="quote-image-preview"
+                    alt="image-preview"
                     class="w-full max-w-52 object-cover object-center rounded"
                 />
             </div>
@@ -28,14 +34,15 @@
                     <span>Drag & drop your image here or</span>
                 </div>
                 <label
-                    for="quote_image_uploaded"
+                    :for="replaceInputId"
                     type="button"
                     class="bg-[#9747FF66] px-2 py-1 rounded cursor-pointer"
                 >
                     <input
                         type="file"
-                        id="quote_image_uploaded"
+                        :id="replaceInputId"
                         class="hidden"
+                        accept="image/*"
                         @change="handleImageUpload"
                     />
                     Choose file
@@ -49,7 +56,7 @@
 import CameraIcon from '@/components/icons/news-feed/CameraIcon.vue';
 
 export default {
-    name: 'HandleQuoteImageUpload',
+    name: 'ImageUploadSection',
     components: {
         CameraIcon,
     },
@@ -64,7 +71,17 @@ export default {
     data() {
         return {
             imagePreview: null,
+            uniqueId: `image-upload-${Math.random().toString(36).substring(2, 9)}`,
         };
+    },
+
+    computed: {
+        inputId() {
+            return `${this.uniqueId}-input`;
+        },
+        replaceInputId() {
+            return `${this.uniqueId}-replace`;
+        },
     },
 
     watch: {

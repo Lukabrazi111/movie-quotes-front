@@ -12,7 +12,7 @@
 import CloseFormIcon from '@/components/icons/news-feed/CloseFormIcon.vue';
 
 export default {
-    name: 'NewQuoteFormHeader',
+    name: 'CreateNewQuoteFormHeader',
     components: { CloseFormIcon },
 
     props: {

@@ -4,18 +4,20 @@
     <div v-show="!isLoading">
         <MoviesHeader :countMovies="count" v-model:search="queries['filter[title]']" />
         <MoviesList v-if="movies.length > 0" :movies="movies" />
+        <NotFoundMovie v-else-if="!isLoading && movies.length <= 0" />
     </div>
 </template>
 
 <script>
 import MoviesHeader from '@/components/movies/MoviesHeader.vue';
 import MoviesList from '@/components/movies/MoviesList.vue';
-import { axios } from '@/configs/axios/index.js';
 import LoadingIcon from '@/components/icons/LoadingIcon.vue';
+import NotFoundMovie from '@/components/movies/NotFoundMovie.vue';
+import { axios } from '@/configs/axios/index.js';
 
 export default {
     name: 'MovieList',
-    components: { LoadingIcon, MoviesList, MoviesHeader },
+    components: { LoadingIcon, MoviesList, MoviesHeader, NotFoundMovie },
 
     data() {
         return {

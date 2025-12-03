@@ -50,7 +50,7 @@
                     />
                 </div>
                 <!-- Handle quote image upload -->
-                <HandleQuoteImageUpload v-model:image="image" />
+                <ImageUploadSection v-model:image="image" />
 
                 <!-- Error message for quote image upload -->
                 <div class="flex justify-start items-start w-full">
@@ -72,7 +72,7 @@ import { mapState } from 'pinia';
 import { useAuthStore } from '@/stores/user/auth.js';
 import { axios } from '@/configs/axios';
 import FieldError from '@/components/ui/form/FieldError.vue';
-import HandleQuoteImageUpload from '@/components/modals/quotes/HandleQuoteImageUpload.vue';
+import ImageUploadSection from '@/components/movies/ImageUploadSection.vue';
 
 export default {
     name: 'CreateQuoteForMovieModal',
@@ -83,7 +83,7 @@ export default {
         FormSection,
         GenreTags,
         FieldError,
-        HandleQuoteImageUpload,
+        ImageUploadSection,
     },
 
     data() {

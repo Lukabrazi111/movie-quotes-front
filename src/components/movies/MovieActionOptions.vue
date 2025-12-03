@@ -7,7 +7,7 @@
         </div>
         <span class="text-[#6C757D]">|</span>
         <div>
-            <DeleteTrashIcon class="cursor-pointer" />
+            <DeleteTrashIcon class="cursor-pointer" @click="$emit('delete-movie')" />
         </div>
     </div>
 </template>

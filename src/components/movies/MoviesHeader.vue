@@ -37,6 +37,7 @@
         </div>
     </header>
 
+    <!-- Create movie modal -->
     <CreateMovieModal v-show="isOpenMovieModal" v-model="isOpenMovieModal" />
 </template>
 

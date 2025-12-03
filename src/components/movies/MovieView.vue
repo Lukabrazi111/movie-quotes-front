@@ -15,6 +15,7 @@
                 v-show="isOpenMovieActionOptions"
                 v-model="isOpenEditMovieModal"
                 @edit-movie="isOpenEditMovieModal = true"
+                @delete-movie="handleDeleteMovie"
             />
 
             <div class="w-full max-w-4xl">
@@ -106,6 +107,29 @@ export default {
 
                 if (response.status === 200) {
                     this.movie = response.data.movie;
+                }
+            } catch (error) {
+                const response = error.response;
+
+                if (response.status === 404) {
+                    alert(response.data.message);
+                    this.$router.push({ name: 'movies' });
+                } else {
+                    alert(response.data.message);
+                    this.$router.push({ name: 'news-feed' });
+                }
+            } finally {
+                this.isLoading = false;
+            }
+        },
+
+        async handleDeleteMovie() {
+            try {
+                this.isLoading = true;
+                const response = await axios.delete(`/movies/${this.movie.id}`);
+
+                if (response.status === 200) {
+                    this.$router.push({ name: 'movies' });
                 }
             } catch (error) {
                 const response = error.response;
