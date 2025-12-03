@@ -213,6 +213,7 @@ export default {
                 });
 
                 if (response.status === 200) {
+                    this.$emit('fetch-movies');
                     this.closeModal();
                 }
             } catch (error) {

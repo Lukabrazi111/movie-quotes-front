@@ -2,7 +2,11 @@
     <LoadingIcon v-show="isLoading" />
 
     <div v-show="!isLoading">
-        <MoviesHeader :countMovies="count" v-model:search="queries['filter[title]']" />
+        <MoviesHeader
+            :countMovies="count"
+            v-model:search="queries['filter[title]']"
+            :fetch-movies="fetchMovies"
+        />
         <MoviesList v-if="movies.length > 0" :movies="movies" />
         <NotFoundMovie v-else-if="!isLoading && movies.length <= 0" />
     </div>
@@ -25,8 +29,8 @@ export default {
             count: 0,
             isLoading: false,
             queries: {
-                // TODO: need to add pagination part
                 'filter[title]': '',
+                'filter[release_year]': '',
                 ...this.$route.query,
             },
         };

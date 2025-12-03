@@ -38,7 +38,11 @@
     </header>
 
     <!-- Create movie modal -->
-    <CreateMovieModal v-show="isOpenMovieModal" v-model="isOpenMovieModal" />
+    <CreateMovieModal
+        v-show="isOpenMovieModal"
+        v-model="isOpenMovieModal"
+        @fetch-movies="fetchMovies"
+    />
 </template>
 
 <script>
@@ -65,6 +69,10 @@ export default {
         search: {
             type: String,
             required: false,
+        },
+        fetchMovies: {
+            type: Function,
+            required: true,
         },
     },
 
