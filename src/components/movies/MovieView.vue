@@ -3,7 +3,9 @@
         <h1 class="text-white font-bold! text-xl">Movie description</h1>
     </header>
 
-    <section class="space-y-5">
+    <LoadingIcon v-show="isLoading" />
+
+    <section v-show="!isLoading" class="space-y-5">
         <div
             @mouseover="isOpenMovieActionOptions = true"
             @mouseleave="isOpenMovieActionOptions = false"
@@ -67,6 +69,7 @@ import CreateQuoteForMovieModal from '@/components/modals/quotes/CreateQuoteForM
 import BaseButton from '@/components/ui/buttons/BaseButton.vue';
 import GenreTags from '@/components/ui/GenreTags.vue';
 import EditMovieModal from '@/components/modals/movies/EditMovieModal.vue';
+import LoadingIcon from '@/components/icons/LoadingIcon.vue';
 import { axios } from '@/configs/axios/index.js';
 
 export default {
@@ -78,10 +81,12 @@ export default {
         MovieQuoteLists,
         GenreTags,
         EditMovieModal,
+        LoadingIcon,
     },
 
     data() {
         return {
+            isLoading: false,
             isOpenMovieActionOptions: false,
             isOpenCreateNewQuoteModal: false,
             isOpenEditMovieModal: false,
@@ -96,6 +101,7 @@ export default {
     methods: {
         async fetchMovie() {
             try {
+                this.isLoading = true;
                 const response = await axios.get(`/movies/${this.$route.params.id}`);
 
                 if (response.status === 200) {
@@ -111,6 +117,8 @@ export default {
                     alert(response.data.message);
                     this.$router.push({ name: 'news-feed' });
                 }
+            } finally {
+                this.isLoading = false;
             }
         },
 

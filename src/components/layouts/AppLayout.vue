@@ -81,6 +81,8 @@ export default {
                 this.homeIconColor = 'red';
             } else if (name === 'movies') {
                 this.cameraIconColor = 'red';
+            } else if (name === 'movie') {
+                this.cameraIconColor = 'red';
             }
         },
     },

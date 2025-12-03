@@ -21,6 +21,12 @@ export default {
     name: 'MoviesList',
     components: { MoviesItem },
 
+    data() {
+        return {
+            isLoading: false,
+        };
+    },
+
     props: {
         movies: {
             type: Array,
