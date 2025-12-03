@@ -30,7 +30,6 @@ export default {
             isLoading: false,
             queries: {
                 'filter[title]': '',
-                'filter[release_year]': '',
                 ...this.$route.query,
             },
         };
