@@ -15,44 +15,37 @@
                     />
                     <h3>{{ this.user.username }}</h3>
                 </div>
+
+                <!-- Quote description -->
                 <div class="flex flex-col items-center">
                     <div class="w-full relative">
                         <textarea
-                            name="quote_eng"
-                            id="quote_eng"
+                            name="quote_description"
+                            id="quote_description"
+                            v-model="quote"
                             cols="30"
                             rows="2"
                             class="w-full border-[#6C757D] border px-2 py-1 outline-none placeholder:italic"
                             placeholder="Start create new quote..."
                         />
-                        <span class="absolute top-2.5 right-4">Eng</span>
                     </div>
-                    <div class="w-full relative">
-                        <textarea
-                            name="quote_geo"
-                            id="quote_geo"
-                            cols="30"
-                            rows="2"
-                            class="w-full border-[#6C757D] border px-2 py-1 outline-none placeholder:italic"
-                            placeholder="Start create new quote..."
-                        />
-                        <span class="absolute top-2.5 right-4">ქარ</span>
-                    </div>
+                    <FieldError
+                        class="flex justify-start items-start w-full"
+                        v-if="errors.description"
+                        :message="errors.description"
+                    />
                 </div>
-                <div class="border px-3 py-4 border-[#6C757D]">
-                    <div class="flex justify-start items-center space-x-4">
-                        <CameraIcon />
-                        <span>Drag & drop your image here or</span>
-                        <label
-                            for="quote_image"
-                            type="button"
-                            class="bg-[#9747FF66] px-2 py-1 rounded cursor-pointer"
-                        >
-                            <input type="file" id="quote_image" class="hidden" />
-                            Choose file
-                        </label>
-                    </div>
-                </div>
+
+                <!-- Image upload section -->
+                <ImageUploadSection v-model:image="image" />
+
+                <FieldError
+                    class="flex justify-start items-start w-full"
+                    v-if="errors.image"
+                    :message="errors.image"
+                />
+
+                <!-- Movie selection section -->
                 <div class="relative">
                     <div
                         @click="toggleDropdown"
@@ -60,7 +53,7 @@
                     >
                         <div class="flex items-center space-x-4">
                             <StudioCameraIcon color="white" />
-                            <span>Choose movie</span>
+                            <span>{{ selectedMovie ? selectedMovie.title : 'Choose movie' }}</span>
                         </div>
                         <ArrowIcon :isOpenDropdown="isOpenDropdown" />
                     </div>
@@ -70,10 +63,21 @@
                         class="z-10 bg-black rounded-b-lg shadow-sm w-full absolute h-auto max-h-80 overflow-auto"
                     >
                         <ul>
-                            <li class="hover:bg-gray-600 px-4 py-2 cursor-pointer">First movie</li>
-                            <li class="hover:bg-gray-600 px-4 py-2 cursor-pointer">Second movie</li>
+                            <li
+                                v-for="movie in movies"
+                                :key="movie.id"
+                                class="hover:bg-gray-600 px-4 py-2 cursor-pointer"
+                                @click="selectMovie(movie)"
+                            >
+                                {{ movie.title }}
+                            </li>
                         </ul>
                     </div>
+                    <FieldError
+                        class="flex justify-start items-start w-full mt-2"
+                        v-if="errors.movie"
+                        :message="errors.movie"
+                    />
                 </div>
 
                 <BaseButton type="submit" class="text-center w-full">Post</BaseButton>
@@ -84,31 +88,43 @@
 
 <script>
 import ModalLayout from '@/components/layouts/ModalLayout.vue';
-import CameraIcon from '@/components/icons/news-feed/CameraIcon.vue';
 import StudioCameraIcon from '@/components/icons/sidebar/StudioCameraIcon.vue';
 import BaseButton from '@/components/ui/buttons/BaseButton.vue';
 import ArrowIcon from '@/components/icons/ArrowIcon.vue';
 import FormHeader from '@/components/modals/dashboard-form/FormHeader.vue';
+import FieldError from '@/components/ui/form/FieldError.vue';
+import ImageUploadSection from '@/components/ui/form/ImageUploadSection.vue';
 import { Form as FormSection } from 'vee-validate';
 import { mapState } from 'pinia';
 import { useAuthStore } from '@/stores/user/auth.js';
+import { axios } from '@/configs/axios/index.js';
 
 export default {
     name: 'CreateNewQuoteFormModal',
     components: {
         ArrowIcon,
         StudioCameraIcon,
-        CameraIcon,
         FormSection,
         ModalLayout,
         BaseButton,
         FormHeader,
+        FieldError,
+        ImageUploadSection,
     },
 
     data() {
         return {
             isOpenDropdown: false,
+            movies: [],
+            selectedMovie: null,
+            errors: {},
+            quote: '',
+            image: null,
         };
+    },
+
+    mounted() {
+        this.fetchMovies();
     },
 
     computed: {
@@ -128,8 +144,88 @@ export default {
             this.isOpenDropdown = !this.isOpenDropdown;
         },
 
-        createQuote() {
-            console.log('Create quote');
+        handleImageChange(event) {
+            this.image = event.target.files[0] || null;
+        },
+
+        async createQuote() {
+            this.errors = {};
+
+            if (this.selectedMovie === null) {
+                this.errors.movie = 'Please select a movie';
+                return;
+            }
+
+            try {
+                const formData = new FormData();
+                formData.append('description', this.quote);
+                formData.append('image', this.image);
+
+                const response = await axios.post(
+                    `/movies/${this.selectedMovie.id}/quotes`,
+                    formData,
+                    {
+                        headers: {
+                            'Content-Type': 'multipart/form-data',
+                        },
+                    },
+                );
+
+                if (response.status === 200) {
+                    this.$emit('update:modelValue', false);
+                    this.$router.push({ name: 'news-feed' });
+                }
+            } catch (error) {
+                const response = error.response;
+
+                if (response.status === 422) {
+                    const errors = response.data.errors;
+
+                    Object.keys(errors).forEach((key) => {
+                        this.errors[key] = errors[key][0];
+                    });
+                }
+            }
+        },
+
+        selectMovie(movie) {
+            if (this.selectedMovie === movie) {
+                this.selectedMovie = null;
+                this.isOpenDropdown = false;
+            } else {
+                this.selectedMovie = movie;
+                this.isOpenDropdown = false;
+            }
+        },
+
+        async fetchMovies() {
+            try {
+                const response = await axios.get('/movies/all');
+
+                if (response.status === 200) {
+                    this.movies = response.data.movies || [];
+                }
+            } catch (error) {
+                const response = error.response;
+
+                if (response.status === 401) {
+                    alert(response.data.message);
+                    this.$router.push({ name: 'login' });
+                } else {
+                    alert(response.data.message);
+                    this.$router.push({ name: 'news-feed' });
+                }
+            }
+        },
+    },
+
+    watch: {
+        modelValue(newVal) {
+            if (newVal) {
+                document.body.classList.add('overflow-hidden');
+            } else {
+                document.body.classList.remove('overflow-hidden');
+            }
         },
     },
 };

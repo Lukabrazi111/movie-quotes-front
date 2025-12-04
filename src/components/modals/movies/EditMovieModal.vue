@@ -146,7 +146,7 @@ import ModalLayout from '@/components/layouts/ModalLayout.vue';
 import BaseButton from '@/components/ui/buttons/BaseButton.vue';
 import FieldError from '@/components/ui/form/FieldError.vue';
 import TagCloseIcon from '@/components/icons/modal/form/TagCloseIcon.vue';
-import ImageUploadSection from '@/components/movies/ImageUploadSection.vue';
+import ImageUploadSection from '@/components/ui/form/ImageUploadSection.vue';
 import { axios } from '@/configs/axios/index.js';
 import { Form as FormSection } from 'vee-validate';
 

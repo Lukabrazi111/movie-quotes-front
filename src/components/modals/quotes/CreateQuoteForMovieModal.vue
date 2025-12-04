@@ -72,7 +72,7 @@ import { mapState } from 'pinia';
 import { useAuthStore } from '@/stores/user/auth.js';
 import { axios } from '@/configs/axios';
 import FieldError from '@/components/ui/form/FieldError.vue';
-import ImageUploadSection from '@/components/movies/ImageUploadSection.vue';
+import ImageUploadSection from '@/components/ui/form/ImageUploadSection.vue';
 
 export default {
     name: 'CreateQuoteForMovieModal',
