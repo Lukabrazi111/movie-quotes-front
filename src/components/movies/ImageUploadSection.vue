@@ -63,7 +63,7 @@ export default {
 
     props: {
         image: {
-            type: [File, null],
+            type: [File, String, null],
             required: true,
         },
     },
@@ -104,6 +104,8 @@ export default {
 
             if (imageFile && imageFile instanceof File) {
                 this.imagePreview = URL.createObjectURL(imageFile);
+            } else if (imageFile && typeof imageFile === 'string') {
+                this.imagePreview = imageFile;
             } else {
                 this.imagePreview = null;
             }
