@@ -194,7 +194,6 @@ export default {
                 formData.append('release_year', this.releaseYear);
                 formData.append('director', this.director);
                 formData.append('description', this.description);
-                formData.append('thumbnail', this.thumbnail);
 
                 if (this.tags.length > 0) {
                     this.tags.forEach((tag) => {
@@ -202,7 +201,7 @@ export default {
                     });
                 }
 
-                if (this.thumbnail) {
+                if (this.thumbnail && this.thumbnail instanceof File) {
                     formData.append('thumbnail', this.thumbnail);
                 }
 

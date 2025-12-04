@@ -27,7 +27,6 @@ app.use(PrimeVue, {
 // Use apps
 app.use(createPinia());
 app.use(router);
-
 // Directives
 app.directive('click-outside', clickOutsideDirective);
 

@@ -357,7 +357,7 @@ export default {
                     });
                 }
 
-                if (this.thumbnail) {
+                if (this.thumbnail && this.thumbnail instanceof File) {
                     formData.append('thumbnail', this.thumbnail);
                 }
 
