@@ -26,6 +26,7 @@
                     <input
                         @blur="$emit('update:search', $event.target.value)"
                         @keyup.enter="$event.target.blur()"
+                        v-model="searchValue"
                         type="text"
                         name="search"
                         placeholder="Search movies"
@@ -58,7 +59,19 @@ export default {
         return {
             isOpenSearchInput: false,
             isOpenMovieModal: false,
+            searchValue: '',
         };
+    },
+
+    watch: {
+        searchValue: {
+            handler(newValue) {
+                if (newValue.trim() === '') {
+                    this.$emit('update:search', '');
+                }
+            },
+            immediate: true,
+        },
     },
 
     props: {
