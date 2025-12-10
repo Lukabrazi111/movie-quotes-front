@@ -6,13 +6,14 @@
                 src="/src/assets/images/person.jpg"
                 alt="profile-image"
             />
-            <h3 class="text-lg">Luka Khangoshvili</h3>
+            <h3 class="text-lg">{{ quote.user.username }}</h3>
         </router-link>
 
         <div>
             <p>
-                “Follow your dream.”movie -
-                <span class="text-cream font-bold">Billy Elliot.</span> <span>(2000)</span>
+                “{{ quote.description }}” movie -
+                <span class="text-cream font-bold">{{ quote.movie.title }}&nbsp;</span>
+                <span>({{ quote.movie.release_year }})</span>
             </p>
         </div>
 
@@ -22,13 +23,13 @@
 
         <div class="flex items-center space-x-6 border-b border-border-gray pb-3">
             <div class="flex items-center space-x-2">
-                <span>3</span>
+                <span>{{ quote.comments_count }}</span>
                 <button>
                     <CommentIcon />
                 </button>
             </div>
             <div class="flex items-center space-x-2">
-                <span>3</span>
+                <span>{{ quote.likes_count }}</span>
                 <button>
                     <LikeIcon />
                 </button>
@@ -36,37 +37,37 @@
         </div>
 
         <!-- Comments -->
-        <section class="pt-3">
-            <div class="flex items-start space-x-5 border-border-gray pb-5">
-                <router-link :to="{ name: 'profile' }" class="w-full max-w-12 h-12 -translate-y-3">
-                    <img
-                        class="w-full max-w-12 h-12 object-cover rounded-full"
-                        src="/src/assets/images/person.jpg"
-                        alt="profile-image"
-                    />
-                </router-link>
-                <div class="border-b border-border-gray pb-4">
-                    <h3 class="text-lg font-medium!">Luka Khangoshvili</h3>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis
-                        delectus dolorum ducimus eaque explicabo facere fugit laudantium nemo
-                        ratione totam.
-                    </p>
-                </div>
-            </div>
-        </section>
+        <CommentList :comments="comments || []" />
 
         <!-- Comment post -->
-        <NewsCommentPost />
+        <CommentPostForm :user="currentUser" />
     </div>
 </template>
 <script>
 import CommentIcon from '@/components/icons/news-feed/CommentIcon.vue';
 import LikeIcon from '@/components/icons/news-feed/LikeIcon.vue';
-import NewsCommentPost from '@/components/news-feed/NewsCommentPost.vue';
+import CommentPostForm from '@/components/news-feed/CommentPostForm.vue';
+import CommentList from '@/components/news-feed/CommentList.vue';
+import { mapState } from 'pinia';
+import { useAuthStore } from '@/stores/user/auth.js';
 
 export default {
     name: 'NewsItem',
-    components: { NewsCommentPost, LikeIcon, CommentIcon },
+    components: { CommentPostForm, LikeIcon, CommentIcon, CommentList },
+
+    props: {
+        quote: {
+            type: Object,
+            required: true,
+        },
+        comments: {
+            type: Array,
+            required: true,
+        },
+    },
+
+    computed: {
+        ...mapState(useAuthStore, ['currentUser']),
+    },
 };
 </script>

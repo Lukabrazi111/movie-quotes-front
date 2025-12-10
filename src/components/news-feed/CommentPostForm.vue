@@ -3,7 +3,7 @@
         <router-link :to="{ name: 'profile' }" class="w-full max-w-12 h-12 transform">
             <img
                 class="w-full max-w-12 h-12 object-cover rounded-full"
-                src="/src/assets/images/person.jpg"
+                :src="user.avatar || '/public/images/profile/no-profile-picture.jpg'"
                 alt="profile-image"
             />
         </router-link>
@@ -21,6 +21,13 @@
 
 <script>
 export default {
-    name: 'NewsCommentPost',
-}
+    name: 'CommentPostForm',
+
+    props: {
+        user: {
+            type: Object,
+            required: true,
+        },
+    },
+};
 </script>
