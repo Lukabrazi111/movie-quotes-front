@@ -3,7 +3,7 @@
         <router-link :to="{ name: 'profile' }" class="flex items-center space-x-4 w-full py-1">
             <img
                 class="w-full max-w-12 h-12 object-cover rounded-full"
-                src="/src/assets/images/person.jpg"
+                :src="quote.user.avatar ? quote.user.avatar : '/src/assets/images/person.jpg'"
                 alt="profile-image"
             />
             <h3 class="text-lg">{{ quote.user.username }}</h3>
@@ -18,7 +18,11 @@
         </div>
 
         <div>
-            <img src="/src/assets/images/person.jpg" alt="image" class="rounded-lg" />
+            <img
+                :src="quote.image ? quote.image : '/src/assets/images/person.jpg'"
+                alt="image"
+                class="rounded-lg w-full object-cover object-center"
+            />
         </div>
 
         <div class="flex items-center space-x-6 border-b border-border-gray pb-3">
