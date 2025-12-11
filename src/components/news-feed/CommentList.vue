@@ -1,6 +1,11 @@
 <template>
     <section>
-        <CommentItem v-for="comment in comments" :key="comment.id" :comment="comment" />
+        <CommentItem
+            class="first:mt-6 last:mb-0 last:pb-0"
+            v-for="comment in comments"
+            :key="comment.id"
+            :comment="comment"
+        />
     </section>
 </template>
 

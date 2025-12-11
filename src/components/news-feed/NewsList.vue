@@ -1,13 +1,7 @@
 <template>
     <div class="mt-5 space-y-10 text-white">
         <LoadingIcon v-show="isLoading" />
-        <NewsItem
-            v-show="!isLoading"
-            v-for="quote in quotes"
-            :key="quote.id"
-            :quote="quote"
-            :comments="comments || []"
-        />
+        <NewsItem v-show="!isLoading" v-for="quote in quotes" :key="quote.id" :quote="quote" />
     </div>
 </template>
 <script>
@@ -24,7 +18,6 @@ export default {
     data() {
         return {
             quotes: [],
-            comments: [],
             isLoading: false,
         };
     },
@@ -42,7 +35,6 @@ export default {
 
                 if (response.status === 200) {
                     this.quotes = response.data.quotes;
-                    this.comments = response.data.comments;
                 }
             } catch (error) {
                 const response = error.response;

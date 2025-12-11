@@ -14,6 +14,8 @@
                 type="text"
                 placeholder="Write a comment"
                 name="comment"
+                v-model="comment"
+                @keyup.enter="createComment"
             />
         </div>
     </div>
@@ -23,10 +25,22 @@
 export default {
     name: 'CommentPostForm',
 
+    data() {
+        return {
+            comment: '',
+        };
+    },
+
     props: {
         user: {
             type: Object,
             required: true,
+        },
+    },
+
+    methods: {
+        createComment() {
+            this.$emit('create-comment', this.comment);
         },
     },
 };

@@ -28,12 +28,12 @@
         <div
             class="flex items-center space-x-6"
             :class="{
-                'border-b border-border-gray pb-3': comments.length > 0,
+                'border-b border-border-gray pb-3': comments.length > 0 && isCommentsOpen,
             }"
         >
             <div class="flex items-center space-x-2">
                 <span>{{ quote.comments_count }}</span>
-                <button>
+                <button @click="isCommentsOpen = !isCommentsOpen">
                     <CommentIcon />
                 </button>
             </div>
@@ -46,10 +46,10 @@
         </div>
 
         <!-- Comments -->
-        <CommentList :comments="comments || []" />
+        <CommentList v-show="isCommentsOpen" :comments="comments" />
 
         <!-- Comment post -->
-        <CommentPostForm :user="currentUser" />
+        <CommentPostForm :user="currentUser" @create-comment="createComment" />
     </div>
 </template>
 <script>
@@ -69,6 +69,8 @@ export default {
         return {
             localLikesCount: null,
             localLikes: null,
+            comments: [],
+            isCommentsOpen: false,
         };
     },
 
@@ -77,10 +79,10 @@ export default {
             type: Object,
             required: true,
         },
-        comments: {
-            type: Array,
-            required: true,
-        },
+    },
+
+    mounted() {
+        this.fetchComments();
     },
 
     computed: {
@@ -97,6 +99,25 @@ export default {
     },
 
     methods: {
+        async createComment(commentBody) {
+            // Need to finish it
+            console.log(commentBody);
+        },
+
+        async fetchComments() {
+            try {
+                const response = await axios.get(`/quotes/${this.quote.id}/comments`);
+
+                if (response.status === 200) {
+                    this.comments = response.data.comments;
+                } else {
+                    console.error(response.data.message);
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        },
+
         async handleToggleLike() {
             const wasLiked = this.isLikedQuote;
             const currentCount = this.displayLikesCount;
