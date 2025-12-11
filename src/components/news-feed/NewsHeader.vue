@@ -44,7 +44,11 @@
     </div>
 
     <!-- Modal -->
-    <CreateNewQuoteFormModal v-model="isOpenForm" v-show="isOpenForm" />
+    <CreateNewQuoteFormModal
+        v-model="isOpenForm"
+        v-show="isOpenForm"
+        @quote-created="handleQuoteCreated"
+    />
 </template>
 <script>
 import SearchIcon from '@/components/icons/news-feed/SearchIcon.vue';
@@ -54,6 +58,7 @@ import CreateNewQuoteFormModal from '@/components/modals/news-feed/CreateNewQuot
 export default {
     name: 'NewsHeader',
     components: { CreateNewQuoteFormModal, PencilWriteIcon, SearchIcon },
+    emits: ['quote-created'],
     data() {
         return {
             isOpenSearchInput: false,
@@ -68,6 +73,10 @@ export default {
 
         toggleForm() {
             return (this.isOpenForm = !this.isOpenForm);
+        },
+
+        handleQuoteCreated() {
+            this.$emit('quote-created');
         },
     },
 };

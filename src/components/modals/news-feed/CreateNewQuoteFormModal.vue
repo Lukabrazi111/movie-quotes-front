@@ -112,6 +112,8 @@ export default {
         ImageUploadSection,
     },
 
+    emits: ['update:modelValue', 'quote-created'],
+
     data() {
         return {
             isOpenDropdown: false,
@@ -137,7 +139,7 @@ export default {
 
     methods: {
         toggleModal() {
-            return this.$emit('update:modelValue', !this.modelValue);
+            this.$emit('update:modelValue', !this.modelValue);
         },
 
         toggleDropdown() {
@@ -173,6 +175,7 @@ export default {
 
                 if (response.status === 200) {
                     this.$emit('update:modelValue', false);
+                    this.$emit('quote-created');
                     this.$router.push({ name: 'news-feed' });
                 }
             } catch (error) {

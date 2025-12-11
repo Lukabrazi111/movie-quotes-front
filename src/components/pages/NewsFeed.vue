@@ -1,7 +1,7 @@
 <template>
     <AuthContentLayout>
-        <NewsHeader />
-        <NewsList />
+        <NewsHeader @quote-created="handleQuoteCreated" />
+        <NewsList ref="newsListRef" />
     </AuthContentLayout>
 </template>
 <script>
@@ -12,5 +12,11 @@ import AuthContentLayout from '@/components/layouts/AuthContentLayout.vue';
 export default {
     name: 'NewsFeed',
     components: { NewsList, NewsHeader, AuthContentLayout },
+
+    methods: {
+        handleQuoteCreated() {
+            this.$refs.newsListRef?.fetchNews();
+        },
+    },
 };
 </script>
