@@ -1,5 +1,5 @@
 <template>
-    <section class="pt-3">
+    <section>
         <CommentItem v-for="comment in comments" :key="comment.id" :comment="comment" />
     </section>
 </template>
