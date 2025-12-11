@@ -38,9 +38,9 @@
                 </button>
             </div>
             <div class="flex items-center space-x-2">
-                <span>{{ isLikedQuote }}</span>
+                <span>{{ displayLikesCount }}</span>
                 <button @click="handleToggleLike">
-                    <LikeIcon v-model="isLiked" />
+                    <LikeIcon :is-liked="isLikedQuote" />
                 </button>
             </div>
         </div>
@@ -67,7 +67,8 @@ export default {
 
     data() {
         return {
-            isLiked: false,
+            localLikesCount: null,
+            localLikes: null,
         };
     },
 
@@ -84,28 +85,60 @@ export default {
 
     computed: {
         ...mapState(useAuthStore, ['currentUser']),
+        currentLikes() {
+            return this.localLikes !== null ? this.localLikes : this.quote.likes || [];
+        },
         isLikedQuote() {
-            return this.quote.likes?.some((like) => like.user_id === this.currentUser.id);
+            return this.currentLikes.some((like) => like.user_id === this.currentUser.id);
+        },
+        displayLikesCount() {
+            return this.localLikesCount !== null ? this.localLikesCount : this.quote.likes_count;
         },
     },
 
     methods: {
         async handleToggleLike() {
+            const wasLiked = this.isLikedQuote;
+            const currentCount = this.displayLikesCount;
+            const currentLikes = [...this.currentLikes];
+
+            if (wasLiked) {
+                this.localLikesCount = Math.max(0, currentCount - 1);
+                this.localLikes = currentLikes.filter(
+                    (like) => like.user_id !== this.currentUser.id,
+                );
+            } else {
+                this.localLikesCount = currentCount + 1;
+                this.localLikes = [
+                    ...currentLikes,
+                    {
+                        user_id: this.currentUser.id,
+                        quote_id: this.quote.id,
+                    },
+                ];
+            }
+
             const payload = {
                 user_id: this.currentUser.id,
                 quote_id: this.quote.id,
+                like: !wasLiked,
             };
 
             try {
                 const response = await axios.post(`/quotes/${this.quote.id}/likes`, payload);
 
                 if (response.status === 200) {
-                    console.log(response);
+                    const serverLikesCount = response.data?.likes_count ?? this.localLikesCount;
+                    const serverLikes = response.data?.likes ?? this.localLikes;
+
+                    this.localLikesCount = serverLikesCount;
+                    this.localLikes = serverLikes;
                 }
             } catch (error) {
-                const response = error.response;
+                this.localLikesCount = null;
+                this.localLikes = null;
 
-                console.log(response);
+                console.error(error);
             }
         },
     },
