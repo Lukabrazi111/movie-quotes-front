@@ -11,6 +11,7 @@
 
 <script>
 import CommentItem from '@/components/news-feed/CommentItem.vue';
+
 export default {
     name: 'CommentList',
     components: { CommentItem },

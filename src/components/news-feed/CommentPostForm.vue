@@ -41,6 +41,7 @@ export default {
     methods: {
         createComment() {
             this.$emit('create-comment', this.comment);
+            this.comment = '';
         },
     },
 };

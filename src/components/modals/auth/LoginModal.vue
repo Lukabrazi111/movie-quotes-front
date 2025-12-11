@@ -137,8 +137,8 @@ export default {
                     this.authStore.setToken(token);
 
                     this.clearFields();
-
                     this.$router.push({ name: 'news-feed' });
+                    document.body.classList.remove('overflow-hidden');
                 }
             } catch (error) {
                 const response = error.response;

@@ -46,10 +46,16 @@
         </div>
 
         <!-- Comments -->
-        <CommentList v-show="isCommentsOpen" :comments="comments" />
-
+        <CommentList
+            v-show="isCommentsOpen"
+            :comments="comments"
+            :error-message="errors?.comment ?? ''"
+        />
         <!-- Comment post -->
         <CommentPostForm :user="currentUser" @create-comment="createComment" />
+
+        <!-- Comment error -->
+        <FieldError v-show="errors?.comment" :message="errors?.comment" />
     </div>
 </template>
 <script>
@@ -60,17 +66,19 @@ import CommentList from '@/components/news-feed/CommentList.vue';
 import { mapState } from 'pinia';
 import { useAuthStore } from '@/stores/user/auth.js';
 import { axios } from '@/configs/axios/index.js';
+import FieldError from '@/components/ui/form/FieldError.vue';
 
 export default {
     name: 'NewsItem',
-    components: { CommentPostForm, LikeIcon, CommentIcon, CommentList },
+    components: { CommentPostForm, LikeIcon, CommentIcon, CommentList, FieldError },
 
     data() {
         return {
             localLikesCount: null,
             localLikes: null,
-            comments: [],
             isCommentsOpen: false,
+            comments: [],
+            errors: {},
         };
     },
 
@@ -100,16 +108,41 @@ export default {
 
     methods: {
         async createComment(commentBody) {
-            // Need to finish it
-            console.log(commentBody);
-        },
+            try {
+                const payload = {
+                    user_id: this.currentUser.id,
+                    quote_id: this.quote.id,
+                    body: commentBody,
+                };
 
+                const response = await axios.post(`/quotes/${this.quote.id}/comments`, payload);
+
+                if (response.status === 200) {
+                    await this.fetchComments();
+                    this.isCommentsOpen = true;
+                    this.errors.comment = '';
+                }
+            } catch (error) {
+                const response = error.response;
+
+                if (response?.status === 422) {
+                    this.errors.comment = response.data?.message;
+                }
+
+                if (response?.status === 401) {
+                    this.authStore.logout();
+                    this.$router.push({ name: 'login' });
+                }
+            } finally {
+                this.comment = '';
+            }
+        },
         async fetchComments() {
             try {
                 const response = await axios.get(`/quotes/${this.quote.id}/comments`);
 
                 if (response.status === 200) {
-                    this.comments = response.data.comments;
+                    this.comments = response.data?.comments ?? [];
                 } else {
                     console.error(response.data.message);
                 }
