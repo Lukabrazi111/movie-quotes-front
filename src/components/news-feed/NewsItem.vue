@@ -46,11 +46,17 @@
         </div>
 
         <!-- Comments -->
-        <CommentList
-            v-show="isCommentsOpen"
-            :comments="comments"
-            :error-message="errors?.comment ?? ''"
+        <div v-show="isCommentsOpen" data-comments-section>
+            <CommentList :comments="comments" :error-message="errors?.comment ?? ''" />
+        </div>
+
+        <!-- Pagination -->
+        <BasePagination
+            :pagination="pagination"
+            @page-change="handlePageChange"
+            :show-pagination="isCommentsOpen"
         />
+
         <!-- Comment post -->
         <CommentPostForm :user="currentUser" @create-comment="createComment" />
 
@@ -67,10 +73,11 @@ import { mapState } from 'pinia';
 import { useAuthStore } from '@/stores/user/auth.js';
 import { axios } from '@/configs/axios/index.js';
 import FieldError from '@/components/ui/form/FieldError.vue';
+import BasePagination from '@/components/ui/BasePagination.vue';
 
 export default {
     name: 'NewsItem',
-    components: { CommentPostForm, LikeIcon, CommentIcon, CommentList, FieldError },
+    components: { CommentPostForm, LikeIcon, CommentIcon, CommentList, FieldError, BasePagination },
 
     data() {
         return {
@@ -79,6 +86,7 @@ export default {
             isCommentsOpen: false,
             comments: [],
             errors: {},
+            pagination: null,
         };
     },
 
@@ -90,7 +98,7 @@ export default {
     },
 
     mounted() {
-        this.fetchComments();
+        this.getPaginatedComments();
     },
 
     computed: {
@@ -107,6 +115,7 @@ export default {
     },
 
     methods: {
+        // Create comment request
         async createComment(commentBody) {
             try {
                 const payload = {
@@ -118,7 +127,8 @@ export default {
                 const response = await axios.post(`/quotes/${this.quote.id}/comments`, payload);
 
                 if (response.status === 200) {
-                    await this.fetchComments();
+                    // Refresh comments - go to page 1 to show the new comment
+                    await this.getPaginatedComments(1);
                     this.isCommentsOpen = true;
                     this.errors.comment = '';
                 }
@@ -137,20 +147,26 @@ export default {
                 this.comment = '';
             }
         },
-        async fetchComments() {
-            try {
-                const response = await axios.get(`/quotes/${this.quote.id}/comments`);
 
-                if (response.status === 200) {
-                    this.comments = response.data?.comments ?? [];
-                } else {
-                    console.error(response.data.message);
-                }
+        handlePageChange(page) {
+            if (page === '...' || !this.pagination) return;
+            if (page < 1 || page > this.pagination.last_page) return;
+
+            this.getPaginatedComments(page);
+        },
+
+        // Get paginated comments request
+        async getPaginatedComments(page = 1) {
+            try {
+                const { data } = await axios.get(`/quotes/${this.quote.id}/comments?page=${page}`);
+                this.pagination = data?.meta ?? null;
+                this.comments = data?.data ?? [];
             } catch (error) {
                 console.error(error);
             }
         },
 
+        // Toggle like request
         async handleToggleLike() {
             const wasLiked = this.isLikedQuote;
             const currentCount = this.displayLikesCount;
