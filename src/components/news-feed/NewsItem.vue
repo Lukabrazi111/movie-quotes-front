@@ -32,7 +32,7 @@
             }"
         >
             <div class="flex items-center space-x-2">
-                <span>{{ quote.comments_count }}</span>
+                <span>{{ displayCommentsCount }}</span>
                 <button @click="isCommentsOpen = !isCommentsOpen">
                     <CommentIcon />
                 </button>
@@ -111,6 +111,9 @@ export default {
         },
         displayLikesCount() {
             return this.localLikesCount !== null ? this.localLikesCount : this.quote.likes_count;
+        },
+        displayCommentsCount() {
+            return this.pagination?.total ?? 0;
         },
     },
 
