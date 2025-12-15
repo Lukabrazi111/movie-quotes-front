@@ -130,7 +130,6 @@ export default {
 
                 if (response.status === 200) {
                     this.$router.push({ name: 'movies' });
-                    // TODO: need to create success toast message
                 }
             } catch (error) {
                 const response = error.response;

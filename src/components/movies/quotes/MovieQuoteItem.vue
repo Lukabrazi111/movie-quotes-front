@@ -4,6 +4,7 @@
             @toggleQuoteOptions="toggleQuoteOptions"
             @closeQuoteOptions="closeQuoteOptions"
             v-model="isQuoteOptionsOpen"
+            :quote="quote || {}"
         />
 
         <div class="flex items-center text-center">
@@ -20,15 +21,15 @@
         <div class="flex items-center space-x-6 border-t border-border-gray pt-4">
             <div class="flex items-center space-x-2">
                 <span>{{ quote.comments_count }}</span>
-                <button>
+                <div>
                     <CommentIcon />
-                </button>
+                </div>
             </div>
             <div class="flex items-center space-x-2">
                 <span>{{ quote.likes_count }}</span>
-                <button>
+                <div>
                     <LikeIcon />
-                </button>
+                </div>
             </div>
         </div>
     </div>
@@ -38,7 +39,6 @@
 import CommentIcon from '@/components/icons/news-feed/CommentIcon.vue';
 import LikeIcon from '@/components/icons/news-feed/LikeIcon.vue';
 import MovieQuoteOptionsMenu from '@/components/movies/quotes/MovieQuoteOptionsMenu.vue';
-
 export default {
     name: 'MovieQuoteItem',
     components: {

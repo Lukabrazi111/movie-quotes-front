@@ -12,6 +12,7 @@
         >
             <ul>
                 <li
+                    @click="openQuoteViewModal"
                     class="flex items-start justify-start space-x-4 hover:underline cursor-pointer pl-5 pr-20 py-4"
                 >
                     <div>
@@ -37,6 +38,12 @@
                 </li>
             </ul>
         </div>
+        <!-- Quote view modal -->
+        <QuoteView
+            v-show="isOpenQuoteViewModal"
+            v-model="isOpenQuoteViewModal"
+            :quote="quote || {}"
+        />
     </div>
 </template>
 
@@ -45,18 +52,50 @@ import ThreeDotsOptionsIcon from '@/components/icons/ThreeDotsOptionsIcon.vue';
 import EditPencilIcon from '@/components/icons/EditPencilIcon.vue';
 import ViewDetailsIcon from '@/components/icons/ViewDetailsIcon.vue';
 import DeleteTrashIcon from '@/components/icons/DeleteTrashIcon.vue';
+import QuoteView from '@/components/movies/quotes/QuoteView.vue';
 
 export default {
     name: 'MovieQuoteOptionMenu',
-    components: { DeleteTrashIcon, ViewDetailsIcon, EditPencilIcon, ThreeDotsOptionsIcon },
+
+    data() {
+        return {
+            isOpenQuoteViewModal: false,
+        };
+    },
+
+    components: {
+        DeleteTrashIcon,
+        ViewDetailsIcon,
+        EditPencilIcon,
+        ThreeDotsOptionsIcon,
+        QuoteView,
+    },
 
     props: {
         modelValue: Boolean,
+        quote: {
+            type: Object,
+            required: true,
+        },
     },
 
     methods: {
         closeQuoteOptions() {
             this.$emit('closeQuoteOptions');
+        },
+        openQuoteViewModal() {
+            this.isOpenQuoteViewModal = true;
+            this.closeQuoteOptions();
+        },
+    },
+
+    watch: {
+        isOpenQuoteViewModal(newVal) {
+            if (newVal) {
+                document.body.classList.add('overflow-hidden');
+            } else {
+                document.body.classList.remove('overflow-hidden');
+            }
         },
     },
 };

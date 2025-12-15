@@ -14,7 +14,8 @@ export default {
     props: {
         isLiked: {
             type: Boolean,
-            required: true,
+            required: false,
+            default: false,
         },
     },
 };
