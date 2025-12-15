@@ -14,7 +14,11 @@
                     @closeDropdown="closeModal"
                     title="View Quote"
                     class="bg-content-dark flex-shrink-0"
-                />
+                >
+                    <template #header-content>
+                        <ActionOptions @edit-quote="editQuote" @delete-quote="deleteQuote" />
+                    </template>
+                </FormHeader>
 
                 <div
                     class="bg-content-dark rounded-lg px-5 py-4 space-y-4 overflow-y-auto flex-1 min-h-0"
@@ -39,7 +43,7 @@
                             id="quote_description_view"
                             :value="'“' + quote.description + '”'"
                             cols="30"
-                            rows="1"
+                            rows="2"
                             class="w-full border-[#6C757D] border px-2 py-1 outline-none placeholder:italic rounded"
                             placeholder="Quote description..."
                         />
@@ -112,6 +116,7 @@ import FormHeader from '@/components/modals/dashboard-form/FormHeader.vue';
 import FieldError from '@/components/ui/form/FieldError.vue';
 import BasePagination from '@/components/ui/BasePagination.vue';
 import CommentPostForm from '@/components/news-feed/CommentPostForm.vue';
+import ActionOptions from '@/components/ui/modal/ActionOptions.vue';
 import { useAuthStore } from '@/stores/user/auth.js';
 import { mapState } from 'pinia';
 import { axios } from '@/configs/axios/index.js';
@@ -125,6 +130,7 @@ export default {
         FieldError,
         BasePagination,
         CommentPostForm,
+        ActionOptions,
     },
     name: 'QuoteView',
 
@@ -175,6 +181,16 @@ export default {
             if (event.target.id === 'bgTransparent') {
                 this.closeModal();
             }
+        },
+        async editQuote() {
+            this.$emit('update:modelValue', false);
+            // open edit quote modal
+
+            console.log('editQuote');
+        },
+
+        async deleteQuote() {
+            console.log('deleteQuote');
         },
 
         closeModal() {
