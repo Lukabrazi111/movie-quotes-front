@@ -22,6 +22,11 @@ export default {
             quotes: [],
             isLoading: false,
             pagination: null,
+            queries: {
+                'filter[movie.title]': '',
+                'filter[description]': '',
+                ...this.$route.query,
+            },
         };
     },
 
@@ -30,11 +35,17 @@ export default {
     },
 
     methods: {
-        async fetchNews(page = 1) {
+        async fetchNews(page = 1, query = '') {
             this.isLoading = true;
 
+            this.applyQueryFilters(query);
+
             try {
-                const response = await axios.get(`/quotes?page=${page}`);
+                const qs = new URLSearchParams({
+                    ...this.queries,
+                }).toString();
+
+                const response = await axios.get(`/quotes?page=${page}&${qs}`);
 
                 if (response.status === 200) {
                     this.quotes = response.data?.data ?? [];
@@ -53,6 +64,21 @@ export default {
                 }
             } finally {
                 this.isLoading = false;
+            }
+        },
+
+        applyQueryFilters(query) {
+            this.queries['filter[movie.title]'] = '';
+            this.queries['filter[description]'] = '';
+
+            if (!query || typeof query !== 'string') return;
+
+            const trimmedQuery = query.trim();
+
+            if (trimmedQuery.startsWith('@')) {
+                this.queries['filter[movie.title]'] = trimmedQuery.slice(1);
+            } else if (trimmedQuery.startsWith('#')) {
+                this.queries['filter[description]'] = trimmedQuery.slice(1);
             }
         },
 

@@ -57,7 +57,6 @@ export default {
                 const response = await axios.get(`movies?page=${page}&${qs}`);
 
                 if (response.status === 200) {
-                    console.log(response);
                     this.movies = response?.data?.data ?? [];
                     this.pagination = response?.data?.meta ?? null;
                     this.count = response?.data?.count || 0;

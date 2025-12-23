@@ -1,6 +1,6 @@
 <template>
     <AuthContentLayout>
-        <NewsHeader @quote-created="handleQuoteCreated" />
+        <NewsHeader @quote-created="handleQuoteCreated" @search="handleSearch" />
         <NewsList ref="newsListRef" />
     </AuthContentLayout>
 </template>
@@ -16,6 +16,10 @@ export default {
     methods: {
         handleQuoteCreated() {
             this.$refs.newsListRef?.fetchNews();
+        },
+
+        handleSearch(query) {
+            this.$refs.newsListRef?.fetchNews(1, query);
         },
     },
 };

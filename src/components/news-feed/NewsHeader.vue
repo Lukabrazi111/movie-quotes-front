@@ -34,6 +34,8 @@
             >
                 <SearchIcon />
                 <input
+                    @blur="$emit('search', $event.target.value)"
+                    @keyup.enter="$event.target.blur()"
                     type="text"
                     name="search"
                     placeholder="Enter @ to search movies, Enter # to search quotes"
@@ -58,7 +60,7 @@ import CreateNewQuoteFormModal from '@/components/modals/news-feed/CreateNewQuot
 export default {
     name: 'NewsHeader',
     components: { CreateNewQuoteFormModal, PencilWriteIcon, SearchIcon },
-    emits: ['quote-created'],
+    emits: ['quote-created', 'search'],
     data() {
         return {
             isOpenSearchInput: false,
